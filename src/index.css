@@ -24,6 +24,7 @@
   /* Glassmorphism surface */
   --glass-bg: rgba(255, 255, 255, 0.75);
   --glass-border: rgba(0, 0, 0, 0.09);
+  --gradual-blur-fallback-bg: rgba(248, 249, 252, 0.35);
 
   /* Shadows */
   --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.05);
@@ -120,6 +121,7 @@
   /* Glassmorphism surface */
   --glass-bg: rgba(17, 17, 34, 0.7);
   --glass-border: rgba(255, 255, 255, 0.08);
+  --gradual-blur-fallback-bg: rgba(7, 7, 15, 0.35);
 
   /* Shadows */
   --shadow-card: 0 4px 32px rgba(0, 0, 0, 0.45);

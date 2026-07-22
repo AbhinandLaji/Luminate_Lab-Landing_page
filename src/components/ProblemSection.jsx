@@ -1,6 +1,7 @@
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { motion, useScroll, useTransform, useMotionValueEvent, useAnimate, stagger } from 'framer-motion'
 import SwipeCarousel from './mobile/SwipeCarousel'
+import GradualBlur from './GradualBlur'
 
 /* ══════════════════════════════════════════════════════
    PROBLEM DATA
@@ -82,51 +83,54 @@ function Watermark({ p, idx, scrollY }) {
    — Outer move/opacity: pure MV (always smooth)
    — Inner reveals: useAnimate fired by phase threshold
 ────────────────────────────────────────────── */
-function ProblemPanel({ p, idx, scrollY }) {
-    const center = (idx + 0.5) / N
-    const phase = useTransform(scrollY, v => (v - center) * N)
+function ProblemPanel({ p, idx, activeIdx }) {
+    const isActive = idx === activeIdx
+    const isPast = idx < activeIdx
 
-    // Outer — pure MotionValue (never lags at any scroll speed)
-    const panelOpacity = useTransform(phase, [-0.65, -0.38, 0.38, 0.65], [0, 1, 1, 0])
-    const panelY = useTransform(phase, [-1, 0, 1], [72, 0, -72])
+    const opacity = isActive ? 1 : 0
+    const y = isActive ? 0 : (isPast ? -72 : 72)
 
     // Inner — imperative via useAnimate (rich animations, fired on panel entry)
     const [scope, run] = useAnimate()
     const active = useRef(false)
 
-    useMotionValueEvent(phase, 'change', v => {
-        if (Math.abs(v) < 0.36 && !active.current) {
+    useEffect(() => {
+        if (isActive && !active.current) {
             active.current = true
             // Stagger the title lines in
             run('.pl', { opacity: 1, y: 0 }, { delay: stagger(0.09), duration: 0.58, ease: [0.16, 1, 0.3, 1] })
             run('.ph', { opacity: 1, y: 0 }, { delay: 0.30, duration: 0.5, ease: [0.16, 1, 0.3, 1] })
             run('.pd', { opacity: 1, y: 0 }, { delay: 0.40, duration: 0.5, ease: [0.16, 1, 0.3, 1] })
             run('.ps', { opacity: 1, x: 0, scale: 1 }, { delay: 0.18, duration: 0.65, ease: [0.16, 1, 0.3, 1] })
-        } else if (Math.abs(v) > 0.58 && active.current) {
-            // Instant reset — ready for next visit
+        } else if (!isActive && active.current) {
             active.current = false
-            run('.pl', { opacity: 0, y: 24 }, { duration: 0 })
-            run('.ph', { opacity: 0, y: 14 }, { duration: 0 })
-            run('.pd', { opacity: 0, y: 14 }, { duration: 0 })
-            run('.ps', { opacity: 0, x: 32, scale: 0.96 }, { duration: 0 })
+            // Smooth reset to prevent visual pop
+            run('.pl', { opacity: 0, y: 24 }, { duration: 0.25, ease: 'easeOut' })
+            run('.ph', { opacity: 0, y: 14 }, { duration: 0.25, ease: 'easeOut' })
+            run('.pd', { opacity: 0, y: 14 }, { duration: 0.25, ease: 'easeOut' })
+            run('.ps', { opacity: 0, x: 32, scale: 0.96 }, { duration: 0.25, ease: 'easeOut' })
         }
-    })
+    }, [isActive, run])
 
     return (
-        <motion.div style={{
-            position: 'absolute', inset: 0, zIndex: 5,
-            display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-            padding: '0 24px',
-            opacity: panelOpacity, y: panelY,
-            willChange: 'transform,opacity',
-        }}>
+        <motion.div 
+            animate={{ opacity, y }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+                position: 'absolute', inset: 0, zIndex: isActive ? 5 : 4,
+                display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                padding: '0 24px',
+                pointerEvents: isActive ? 'auto' : 'none',
+                willChange: 'transform,opacity',
+            }}
+        >
             <div ref={scope} style={{ maxWidth: 960, width: '100%' }}>
                 {/* Label row */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 44 }}>
                     <span style={{ padding: '5px 14px', borderRadius: 100, background: `var(--accent-${p.accentName}-bg)`, border: `1px solid var(--accent-${p.accentName}-border)`, fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: `var(--accent-${p.accentName})` }}>
                         The Reality
                     </span>
-                    <span style={{ fontSize: '0.72rem', fontWeight: 700, color: 'rgba(255,255,255,0.2)', letterSpacing: '0.06em' }}>
+                    <span style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-faint)', letterSpacing: '0.06em' }}>
                         Problem {p.number}
                     </span>
                 </div>
@@ -228,7 +232,7 @@ function MobileCard({ p }) {
             </div>
             <div style={{ fontSize: '0.77rem', color: 'var(--text-muted)', marginBottom: 12 }}>{p.stat.unit} — {p.stat.context}</div>
             <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', lineHeight: 1.72 }}>{p.desc}</p>
-            <div aria-hidden style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg,transparent,${p.accent},transparent)` }} />
+            <div aria-hidden style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg,transparent,var(--accent-${p.accentName}),transparent)` }} />
         </motion.div>
     )
 }
@@ -240,6 +244,47 @@ export default function ProblemSection() {
     const containerRef = useRef(null)
     const { scrollYProgress } = useScroll({ target: containerRef, offset: ['start start', 'end end'] })
 
+    const [activeIdx, setActiveIdx] = useState(0)
+
+    useMotionValueEvent(scrollYProgress, 'change', latest => {
+        const progressPerCard = 1 / N
+        const rawIndex = latest / progressPerCard
+        const roundedIndex = Math.min(N - 1, Math.max(0, Math.floor(rawIndex)))
+        if (roundedIndex !== activeIdx) {
+            setActiveIdx(roundedIndex)
+        }
+    })
+
+    const [isScrolling, setIsScrolling] = useState(false)
+    const scrollTimeoutRef = useRef(null)
+    const rafRef = useRef(null)
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (rafRef.current) return
+
+            rafRef.current = requestAnimationFrame(() => {
+                rafRef.current = null
+                setIsScrolling(true)
+
+                if (scrollTimeoutRef.current) {
+                    clearTimeout(scrollTimeoutRef.current)
+                }
+
+                scrollTimeoutRef.current = setTimeout(() => {
+                    setIsScrolling(false)
+                }, 80)
+            })
+        }
+
+        window.addEventListener('scroll', handleScroll, { passive: true })
+        return () => {
+            window.removeEventListener('scroll', handleScroll)
+            if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current)
+            if (rafRef.current) cancelAnimationFrame(rafRef.current)
+        }
+    }, [])
+
     return (
         <section id="problem" style={{ background: 'var(--bg-primary)', position: 'relative' }}>
             <div className="section-divider absolute top-0 left-0 right-0" style={{ zIndex: 10 }} />
@@ -247,13 +292,35 @@ export default function ProblemSection() {
             {/* ══ DESKTOP — 500vh sticky ══ */}
             <div ref={containerRef} className="hidden lg:block" style={{ height: `${N * 100}vh`, position: 'relative' }}>
                 <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden' }}>
+                    <div style={{ opacity: isScrolling ? 1 : 0, transition: 'opacity 120ms ease-out', pointerEvents: 'none', zIndex: 30 }}>
+                        <GradualBlur
+                            target="parent"
+                            position="top"
+                            height="8rem"
+                            strength={2.5}
+                            divCount={4}
+                            curve="bezier"
+                            animated={false}
+                            opacity={1}
+                        />
+                        <GradualBlur
+                            target="parent"
+                            position="bottom"
+                            height="8rem"
+                            strength={2.5}
+                            divCount={4}
+                            curve="bezier"
+                            animated={false}
+                            opacity={1}
+                        />
+                    </div>
 
                     {/* Subtle grid */}
                     <div aria-hidden style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, backgroundImage: 'linear-gradient(var(--grid-lines) 1px,transparent 1px),linear-gradient(90deg,var(--grid-lines) 1px,transparent 1px)', backgroundSize: '64px 64px', maskImage: 'radial-gradient(ellipse 80% 70% at 50% 50%,black 0%,transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 70% at 50% 50%,black 0%,transparent 100%)' }} />
 
                     {problems.map((p, i) => <ProblemBg key={p.number} p={p} idx={i} scrollY={scrollYProgress} />)}
                     {problems.map((p, i) => <Watermark key={p.number} p={p} idx={i} scrollY={scrollYProgress} />)}
-                    {problems.map((p, i) => <ProblemPanel key={p.number} p={p} idx={i} scrollY={scrollYProgress} />)}
+                    {problems.map((p, i) => <ProblemPanel key={p.number} p={p} idx={i} activeIdx={activeIdx} />)}
 
                     {/* Progress pills */}
                     <div style={{ position: 'absolute', bottom: 28, left: '50%', transform: 'translateX(-50%)', display: 'flex', alignItems: 'center', gap: 8, zIndex: 20 }}>
@@ -269,7 +336,29 @@ export default function ProblemSection() {
             </div>
 
             {/* ══ MOBILE — horizontal swipe carousel ══ */}
-            <div className="lg:hidden" style={{ background: 'var(--bg-primary)' }}>
+            <div className="lg:hidden relative" style={{ background: 'var(--bg-primary)' }}>
+                <div style={{ opacity: isScrolling ? 1 : 0, transition: 'opacity 120ms ease-out', pointerEvents: 'none', zIndex: 30 }}>
+                    <GradualBlur
+                        target="parent"
+                        position="top"
+                        height="4rem"
+                        strength={1.5}
+                        divCount={3}
+                        curve="bezier"
+                        animated={false}
+                        opacity={1}
+                    />
+                    <GradualBlur
+                        target="parent"
+                        position="bottom"
+                        height="4rem"
+                        strength={1.5}
+                        divCount={3}
+                        curve="bezier"
+                        animated={false}
+                        opacity={1}
+                    />
+                </div>
                 {/* Section header */}
                 <div style={{ textAlign: 'center', padding: '64px 20px 32px' }}>
                     <span className="section-label">The Reality</span>
@@ -282,14 +371,14 @@ export default function ProblemSection() {
                 <SwipeCarousel
                     items={problems}
                     keyProp={p => p.number}
-                    accentFn={p => p.accent}
+                    accentFn={p => `var(--accent-${p.accentName})`}
                     cardWidth="82vw"
                     gap={12}
                     renderItem={(p) => (
                         <div style={{
                             borderRadius: 24, overflow: 'hidden',
-                            background: `linear-gradient(160deg, rgba(10,10,28,0.97) 0%, ${p.accent}12 100%)`,
-                            border: `1px solid ${p.accent}28`,
+                            background: `linear-gradient(160deg, var(--bg-card) 0%, var(--accent-${p.accentName}-bg) 100%)`,
+                            border: `1px solid var(--accent-${p.accentName}-border)`,
                             padding: '28px 24px 24px',
                             position: 'relative',
                             minHeight: 380,
@@ -297,34 +386,34 @@ export default function ProblemSection() {
                         }}>
                             {/* Top badge row */}
                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
-                                <span style={{ fontSize: '0.62rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', color: p.accent, padding: '4px 12px', borderRadius: 100, background: `${p.accent}15`, border: `1px solid ${p.accent}28` }}>
+                                <span style={{ fontSize: '0.62rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', color: `var(--accent-${p.accentName})`, padding: '4px 12px', borderRadius: 100, background: `var(--accent-${p.accentName}-bg)`, border: `1px solid var(--accent-${p.accentName}-border)` }}>
                                     Problem {p.number}
                                 </span>
-                                <span style={{ fontSize: '0.6rem', color: 'rgba(255,255,255,0.2)', fontWeight: 600, letterSpacing: '0.08em' }}>THE REALITY</span>
+                                <span style={{ fontSize: '0.6rem', color: 'var(--text-faint)', fontWeight: 600, letterSpacing: '0.08em' }}>THE REALITY</span>
                             </div>
 
                             {/* Title */}
                             <h3 style={{ fontSize: 'clamp(1.8rem, 7vw, 2.4rem)', fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1.05, color: 'var(--text-primary)', marginBottom: 18 }}>
                                 {p.title.map((l, i) => (
-                                    <span key={i} style={{ display: 'block', color: i === p.title.length - 1 ? p.accent : 'var(--text-primary)' }}>{l}</span>
+                                    <span key={i} style={{ display: 'block', color: i === p.title.length - 1 ? `var(--accent-${p.accentName})` : 'var(--text-primary)' }}>{l}</span>
                                 ))}
                             </h3>
 
                             {/* Stat big number */}
-                            <div style={{ fontSize: '3.8rem', fontWeight: 900, letterSpacing: '-0.05em', color: p.accent, lineHeight: 1, marginBottom: 6 }}>
+                            <div style={{ fontSize: '3.8rem', fontWeight: 900, letterSpacing: '-0.05em', color: `var(--accent-${p.accentName})`, lineHeight: 1, marginBottom: 6 }}>
                                 {p.stat.value}
                             </div>
                             <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: 16, lineHeight: 1.5 }}>
-                                <strong style={{ color: 'rgba(255,255,255,0.5)' }}>{p.stat.unit}</strong> — {p.stat.context}
+                                <strong style={{ color: 'var(--text-secondary)' }}>{p.stat.unit}</strong> — {p.stat.context}
                             </div>
 
                             {/* Hook quote */}
-                            <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.4)', fontStyle: 'italic', lineHeight: 1.65, marginTop: 'auto', borderTop: `1px solid ${p.accent}18`, paddingTop: 14 }}>
+                            <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontStyle: 'italic', lineHeight: 1.65, marginTop: 'auto', borderTop: `1px solid var(--accent-${p.accentName}-border)`, paddingTop: 14 }}>
                                 &ldquo;{p.hook}&rdquo;
                             </p>
 
                             {/* Bottom accent line */}
-                            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg, transparent, ${p.accent}, transparent)` }} />
+                            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg, transparent, var(--accent-${p.accentName}), transparent)` }} />
                         </div>
                     )}
                 />
