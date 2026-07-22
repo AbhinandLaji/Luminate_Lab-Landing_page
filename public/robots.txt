@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Block any build artifacts or admin paths if needed
+Disallow: /dist/
+
+# Primary sitemap location
+Sitemap: https://luminatelabs.com/sitemap.xml
