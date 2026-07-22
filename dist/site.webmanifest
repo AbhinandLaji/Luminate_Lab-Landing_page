@@ -1,0 +1,32 @@
+{
+    "name": "Luminate Labs",
+    "short_name": "Luminate",
+    "description": "Premium customer acquisition agency — paid media, funnels, CRM, and growth systems.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#07070f",
+    "theme_color": "#5b7cf7",
+    "orientation": "portrait-primary",
+    "lang": "en-US",
+    "scope": "/",
+    "categories": [
+        "business",
+        "productivity"
+    ],
+    "icons": [
+        {
+            "src": "/favicon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "/og-image.png",
+            "sizes": "1200x630",
+            "type": "image/png",
+            "label": "Luminate Labs homepage"
+        }
+    ]
+}

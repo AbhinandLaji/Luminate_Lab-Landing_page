@@ -1,0 +1,2 @@
+# Netlify SPA routing — any unmatched path serves index.html
+/*    /index.html   200
