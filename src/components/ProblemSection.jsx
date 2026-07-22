@@ -79,16 +79,69 @@ function Watermark({ p, idx, scrollY }) {
 }
 
 /* ──────────────────────────────────────────────
+   Stat number count-up animation
+────────────────────────────────────────────── */
+function StatCountUp({ value, isActive }) {
+    const [displayVal, setDisplayVal] = useState('0')
+
+    useEffect(() => {
+        if (!isActive) {
+            setDisplayVal('0')
+            return
+        }
+
+        const match = value.match(/^([^\d]*)([\d.]+)(.*)$/)
+        if (!match) {
+            setDisplayVal(value)
+            return
+        }
+
+        const prefix = match[1]
+        const numVal = parseFloat(match[2])
+        const suffix = match[3]
+
+        let startTimestamp = null
+        const duration = 850
+
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp
+            const elapsed = timestamp - startTimestamp
+            const progress = Math.min(elapsed / duration, 1)
+            
+            const easeProgress = 1 - Math.pow(1 - progress, 3)
+            const currentNum = numVal * easeProgress
+            
+            const formattedNum = Number.isInteger(numVal) 
+                ? Math.floor(currentNum).toString()
+                : currentNum.toFixed(1)
+
+            setDisplayVal(`${prefix}${formattedNum}${suffix}`)
+
+            if (progress < 1) {
+                window.requestAnimationFrame(step)
+            }
+        }
+
+        const animFrame = window.requestAnimationFrame(step)
+        return () => window.cancelAnimationFrame(animFrame)
+    }, [value, isActive])
+
+    return displayVal
+}
+
+/* ──────────────────────────────────────────────
    HYBRID panel:
    — Outer move/opacity: pure MV (always smooth)
    — Inner reveals: useAnimate fired by phase threshold
-────────────────────────────────────────────── */
+ ────────────────────────────────────────────── */
 function ProblemPanel({ p, idx, activeIdx }) {
     const isActive = idx === activeIdx
     const isPast = idx < activeIdx
 
     const opacity = isActive ? 1 : 0
     const y = isActive ? 0 : (isPast ? -72 : 72)
+    const scale = isActive ? 1 : (isPast ? 0.94 : 0.97)
+    const rotate = isActive ? 0 : (isPast ? -2.5 : 2.5)
 
     // Inner — imperative via useAnimate (rich animations, fired on panel entry)
     const [scope, run] = useAnimate()
@@ -97,14 +150,16 @@ function ProblemPanel({ p, idx, activeIdx }) {
     useEffect(() => {
         if (isActive && !active.current) {
             active.current = true
-            // Stagger the title lines in
-            run('.pl', { opacity: 1, y: 0 }, { delay: stagger(0.09), duration: 0.58, ease: [0.16, 1, 0.3, 1] })
-            run('.ph', { opacity: 1, y: 0 }, { delay: 0.30, duration: 0.5, ease: [0.16, 1, 0.3, 1] })
-            run('.pd', { opacity: 1, y: 0 }, { delay: 0.40, duration: 0.5, ease: [0.16, 1, 0.3, 1] })
-            run('.ps', { opacity: 1, x: 0, scale: 1 }, { delay: 0.18, duration: 0.65, ease: [0.16, 1, 0.3, 1] })
+            // Choreographed stagger: badge -> heading -> stat card -> description/hook
+            run('.pb', { opacity: 1, y: 0 }, { delay: 0.0, type: 'spring', stiffness: 120, damping: 15 })
+            run('.pl', { opacity: 1, y: 0 }, { delay: stagger(0.06, { startDelay: 0.08 }), type: 'spring', stiffness: 110, damping: 14 })
+            run('.ps', { opacity: 1, x: 0, scale: 1 }, { delay: 0.20, type: 'spring', stiffness: 95, damping: 13 })
+            run('.ph', { opacity: 1, y: 0 }, { delay: 0.28, type: 'spring', stiffness: 100, damping: 15 })
+            run('.pd', { opacity: 1, y: 0 }, { delay: 0.36, type: 'spring', stiffness: 100, damping: 15 })
         } else if (!isActive && active.current) {
             active.current = false
             // Smooth reset to prevent visual pop
+            run('.pb', { opacity: 0, y: 14 }, { duration: 0.25, ease: 'easeOut' })
             run('.pl', { opacity: 0, y: 24 }, { duration: 0.25, ease: 'easeOut' })
             run('.ph', { opacity: 0, y: 14 }, { duration: 0.25, ease: 'easeOut' })
             run('.pd', { opacity: 0, y: 14 }, { duration: 0.25, ease: 'easeOut' })
@@ -114,8 +169,13 @@ function ProblemPanel({ p, idx, activeIdx }) {
 
     return (
         <motion.div 
-            animate={{ opacity, y }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            animate={{ opacity, y, scale, rotate }}
+            transition={{ 
+                opacity: { duration: 0.4 },
+                y: { type: 'spring', stiffness: 85, damping: 14 },
+                scale: { type: 'spring', stiffness: 85, damping: 14 },
+                rotate: { type: 'spring', stiffness: 65, damping: 12 }
+            }}
             style={{
                 position: 'absolute', inset: 0, zIndex: isActive ? 5 : 4,
                 display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
@@ -126,14 +186,14 @@ function ProblemPanel({ p, idx, activeIdx }) {
         >
             <div ref={scope} style={{ maxWidth: 960, width: '100%' }}>
                 {/* Label row */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 44 }}>
+                <motion.div className="pb" initial={{ opacity: 0, y: 14 }} style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 44 }}>
                     <span style={{ padding: '5px 14px', borderRadius: 100, background: `var(--accent-${p.accentName}-bg)`, border: `1px solid var(--accent-${p.accentName}-border)`, fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: `var(--accent-${p.accentName})` }}>
                         The Reality
                     </span>
                     <span style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-faint)', letterSpacing: '0.06em' }}>
                         Problem {p.number}
                     </span>
-                </div>
+                </motion.div>
 
                 {/* Two-column grid */}
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 72, alignItems: 'center' }}>
@@ -187,7 +247,7 @@ function ProblemPanel({ p, idx, activeIdx }) {
                     >
                         <div aria-hidden style={{ position: 'absolute', bottom: '-30%', right: '-10%', width: 280, height: 280, borderRadius: '50%', background: `radial-gradient(circle, var(--accent-${p.accentName}-bg) 0%, transparent 70%)`, pointerEvents: 'none' }} />
                         <div style={{ fontSize: 'clamp(4rem,10vw,8rem)', fontWeight: 900, lineHeight: 1, letterSpacing: '-0.05em', color: `var(--accent-${p.accentName})`, position: 'relative', zIndex: 2 }}>
-                            {p.stat.value}
+                            <StatCountUp value={p.stat.value} isActive={isActive} />
                         </div>
                         <div style={{ marginTop: 14, position: 'relative', zIndex: 2 }}>
                             <div style={{ fontSize: '0.93rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: 4 }}>{p.stat.unit}</div>
@@ -244,9 +304,16 @@ export default function ProblemSection() {
     const containerRef = useRef(null)
     const { scrollYProgress } = useScroll({ target: containerRef, offset: ['start start', 'end end'] })
 
-    const [activeIdx, setActiveIdx] = useState(0)
+    const [activeIdx, setActiveIdx] = useState(-1)
 
     useMotionValueEvent(scrollYProgress, 'change', latest => {
+        if (latest <= 0.015) {
+            if (activeIdx !== -1) {
+                setActiveIdx(-1)
+            }
+            return
+        }
+
         const progressPerCard = 1 / N
         const rawIndex = latest / progressPerCard
         const roundedIndex = Math.min(N - 1, Math.max(0, Math.floor(rawIndex)))
