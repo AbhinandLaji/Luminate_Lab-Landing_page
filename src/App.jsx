@@ -13,6 +13,7 @@ import ScrollProgress from './components/ScrollProgress'
 import FloatingCTA from './components/mobile/FloatingCTA'
 import MobileNav from './components/mobile/MobileNav'
 import DetailsPage from './components/DetailsPage'
+import ContinuousAuroraWrapper from './components/ContinuousAuroraWrapper'
 
 function DeepLinksBlock() {
   return (
@@ -107,12 +108,12 @@ export default function App() {
     const handleLinkClick = (e) => {
       const target = e.target.closest('a')
       if (!target) return
-      
+
       const href = target.getAttribute('href')
       if (href && (href.startsWith('/') || href.startsWith('#'))) {
         // Skip external target="_blank" or modifier key clicks
         if (target.target === '_blank' || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
-        
+
         try {
           const url = new URL(target.href)
           if (url.origin === window.location.origin) {
@@ -120,7 +121,7 @@ export default function App() {
             const oldPath = window.location.pathname
             const newPath = url.pathname
             const newHash = url.hash
-            
+
             if (oldPath !== newPath) {
               window.history.pushState(null, '', target.href)
               window.dispatchEvent(new PopStateEvent('popstate'))
@@ -151,22 +152,24 @@ export default function App() {
       <ScrollProgress />
       <Navbar currentPath={currentPath} />
       <MobileNav currentPath={currentPath} />
-      
+
       <main id="main-content" aria-label="Luminate Labs — Customer Acquisition Agency" style={{ paddingTop: isDetailsPage ? '80px' : '0px' }}>
         {isDetailsPage ? (
           <DetailsPage />
         ) : (
           <>
             <HeroSection />
-            <ProblemSection />
-            <OurEdgeSection />
-            <WhyUsSection />
+            <ContinuousAuroraWrapper>
+              <ProblemSection />
+              <OurEdgeSection />
+              <WhyUsSection />
+            </ContinuousAuroraWrapper>
             <CTASection />
             <DeepLinksBlock />
           </>
         )}
       </main>
-      
+
       <Footer />
       <FloatingCTA />
     </div>

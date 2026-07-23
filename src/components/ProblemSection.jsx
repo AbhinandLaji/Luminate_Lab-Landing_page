@@ -2,7 +2,6 @@ import { useRef, useState, useEffect } from 'react'
 import { motion, useScroll, useTransform, useMotionValueEvent, useAnimate, stagger } from 'framer-motion'
 import SwipeCarousel from './mobile/SwipeCarousel'
 import GradualBlur from './GradualBlur'
-import AmbientAurora from './AmbientAurora'
 
 /* ══════════════════════════════════════════════════════
    PROBLEM DATA
@@ -307,10 +306,6 @@ export default function ProblemSection() {
         target: sectionRef,
         offset: ['start end', 'start start']
     })
-    
-    // Fade in AmbientAurora as the section scrolls into view (from 40vh to 80vh up the screen).
-    // This perfectly overlaps with the Hero fade-out to prevent an empty dead zone.
-    const auroraOpacity = useTransform(sectionProgress, [0.4, 0.8], [0, 1])
 
     const containerRef = useRef(null)
     const { scrollYProgress } = useScroll({ target: containerRef, offset: ['start start', 'end end'] })
@@ -364,10 +359,7 @@ export default function ProblemSection() {
     }, [])
 
     return (
-        <section ref={sectionRef} id="problem" style={{ background: 'var(--bg-primary)', position: 'relative' }}>
-            <motion.div style={{ opacity: auroraOpacity, position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none' }}>
-                <AmbientAurora position="left" />
-            </motion.div>
+        <section ref={sectionRef} id="problem" style={{ position: 'relative' }}>
             <div className="section-divider absolute top-0 left-0 right-0" style={{ zIndex: 10 }} />
 
             {/* ══ DESKTOP — 500vh sticky ══ */}
@@ -417,7 +409,7 @@ export default function ProblemSection() {
             </div>
 
             {/* ══ MOBILE — horizontal swipe carousel ══ */}
-            <div className="lg:hidden relative" style={{ background: 'var(--bg-primary)' }}>
+            <div className="lg:hidden relative">
                 <div style={{ opacity: isScrolling ? 1 : 0, transition: 'opacity 75ms ease-out', pointerEvents: 'none', zIndex: 30 }}>
                     <GradualBlur
                         target="parent"
