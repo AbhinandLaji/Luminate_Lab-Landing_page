@@ -55,9 +55,7 @@ export default function SwipeCarousel({
                     scrollbarWidth: 'none',
                     msOverflowStyle: 'none',
                     gap: `${gap}px`,
-                    paddingLeft: '20px',
-                    paddingRight: '8px',
-                    paddingBottom: '16px',
+                    padding: '0 8vw 16px',
                 }}
             >
                 <style>{`.swipe-track::-webkit-scrollbar{display:none}`}</style>
@@ -70,7 +68,7 @@ export default function SwipeCarousel({
                         viewport={{ once: true, amount: 0.3 }}
                         transition={{ duration: 0.45, delay: Math.min(i * 0.05, 0.2) }}
                         style={{
-                            scrollSnapAlign: 'start',
+                            scrollSnapAlign: 'center',
                             flexShrink: 0,
                             width: cardWidth,
                         }}

@@ -300,7 +300,7 @@ export default function OurEdgeSection() {
             </div>
 
             {/* ════ MOBILE STAT GRID VIEW ════ */}
-            <div className="md:hidden relative" style={{ background: 'var(--bg-primary)' }}>
+            <div className="md:hidden relative" style={{ background: 'transparent' }}>
                 {/* Mobile ambient */}
                 <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
                     <div style={{ position: 'absolute', top: '-10%', left: '50%', transform: 'translateX(-50%)', width: '130vw', height: '60vw', background: 'radial-gradient(ellipse, var(--accent-blue-bg) 0%, var(--accent-violet-bg) 40%, transparent 70%)' }} />
