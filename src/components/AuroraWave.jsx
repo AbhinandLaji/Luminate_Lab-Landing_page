@@ -99,9 +99,10 @@ const SEGMENTS = 24 // points per path — enough smooth, cheap enough to comput
 
 const AuroraWave = memo(function AuroraWave({
     interactive = true,
-    position = 'full',   // 'full' | 'left' | 'right'
+    position = 'full',   // 'full' | 'left' | 'right' | 'crossover'
     opacity = null,
     maskRect = null,     // { cx, cy, rx, ry } in relative [0..1] coordinates
+    scrollYProgress = null, // Framer Motion motion value for crossover position
 }) {
     const svgRef = useRef(null)
     const containerRef = useRef(null)
@@ -140,6 +141,7 @@ const AuroraWave = memo(function AuroraWave({
     const cStrands = [useRef(null), useRef(null), useRef(null)]
 
     const [isDark, setIsDark] = useState(false)
+    const [winWidth, setWinWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1920)
 
     // ── Theme detection ──
     useEffect(() => {
@@ -150,6 +152,14 @@ const AuroraWave = memo(function AuroraWave({
         window.addEventListener('themechange', check)
         return () => window.removeEventListener('themechange', check)
     }, [])
+
+    useEffect(() => {
+        if (position !== 'crossover') return
+        const onResize = () => setWinWidth(window.innerWidth)
+        onResize()
+        window.addEventListener('resize', onResize)
+        return () => window.removeEventListener('resize', onResize)
+    }, [position])
 
     // ── Reduced motion ──
     useEffect(() => {
@@ -166,8 +176,9 @@ const AuroraWave = memo(function AuroraWave({
         const container = containerRef.current
         if (!svg || !container) return
 
-        const isVertical = position === 'left' || position === 'right'
-        const VW = isVertical ? 300 : 1000
+        const isCrossover = position === 'crossover'
+        const isVertical = position === 'left' || position === 'right' || isCrossover
+        const VW = isCrossover ? winWidth : (isVertical ? 300 : 1000)
         const VH = isVertical ? 1000 : 500
         const totalLength = isVertical ? VH + 100 : VW + 100
         const startCoord = -50
@@ -254,11 +265,66 @@ const AuroraWave = memo(function AuroraWave({
         ]
 
         // Build center-Y function for a config at a given time + mouse state
-        const makeCYFn = (cfg, t) => (x) => {
+        const makeCYFn = (cfg, t, ri) => (x) => {
             const angle = ((x + 50) / 1000) * Math.PI * cfg.freq + cfg.phase
             let cy = cfg.baseY
-            cy += Math.sin(angle + t * cfg.speed) * cfg.amp
-            cy += Math.cos(angle * 1.88 - t * cfg.speed * 0.72) * (cfg.amp * 0.30)
+
+            if (isCrossover && scrollYProgress) {
+                const sp = scrollYProgress.get()
+                // Stagger ribbons based on their index to entangle them
+                // Ribbon 0 starts earliest, Ribbon 2 starts latest
+                const stagger = (ri - 1) * 0.02
+
+                // Transition 1: Problem -> OurEdge
+                // Boundary is at 500vh. Total scrollable is 600vh.
+                // Boundary enters bottom at 400vh (sp = 0.666).
+                // Boundary reaches top at 500vh (sp = 0.833).
+                // We want the crossover to happen exactly as the boundary moves across the screen.
+                const t1Center = 0.75 // (450vh / 600vh)
+                const t1Start = t1Center - 0.05 + stagger
+                const t1End = t1Center + 0.05 + stagger
+
+                // Transition 2: OurEdge -> WhyUs
+                // Boundary is at 590vh.
+                // Boundary enters bottom at 490vh (sp = 0.816).
+                // Boundary reaches top at 590vh (sp = 0.983).
+                const t2Center = 0.90 // (540vh / 600vh)
+                const t2Start = t2Center - 0.05 + stagger
+                const t2End = t2Center + 0.05 + stagger
+
+                // 35px is the center of the old 200px div (left: -65px)
+                const leftPos = 35
+                const rightPos = winWidth - 35
+                let targetX = leftPos
+
+                if (sp >= t1Start && sp < t1End) {
+                    const p = (sp - t1Start) / (t1End - t1Start)
+                    const ease = p * p * (3 - 2 * p) // smoothstep
+                    targetX = leftPos + ease * (rightPos - leftPos)
+                } else if (sp >= t1End && sp < t2Start) {
+                    targetX = rightPos
+                } else if (sp >= t2Start && sp < t2End) {
+                    const p = (sp - t2Start) / (t2End - t2Start)
+                    const ease = p * p * (3 - 2 * p)
+                    targetX = rightPos - ease * (rightPos - leftPos)
+                } else if (sp >= t2End) {
+                    targetX = leftPos
+                }
+
+                // DIAGNOSTIC LOG (Throttle logs by only logging when sp changes significantly)
+                if (!window.lastLogSp || Math.abs(sp - window.lastLogSp) > 0.05) {
+                    window.lastLogSp = sp;
+                    console.log(`[Diagnostic] sp=${sp.toFixed(4)}, targetX=${targetX.toFixed(2)}, winWidth=${winWidth}, t1Start=${t1Start.toFixed(2)}, t1End=${t1End.toFixed(2)}`);
+                }
+
+                cy = targetX
+            }
+
+            // Adjust amplitudes for crossover (0.666x to match physical pixel scale of old 200px div)
+            const amp = isCrossover ? cfg.amp * 0.666 : cfg.amp
+
+            cy += Math.sin(angle + t * cfg.speed) * amp
+            cy += Math.cos(angle * 1.88 - t * cfg.speed * 0.72) * (amp * 0.30)
 
             // Mouse influence (horizontal only, distance-weighted)
             if (interactive && !isVertical) {
@@ -275,10 +341,16 @@ const AuroraWave = memo(function AuroraWave({
         const drawAll = (t, doHighlightDrift) => {
             cfgs.forEach((cfg, ri) => {
                 const refs = ribbonRefs[ri]
-                const getCY = makeCYFn(cfg, t)
-                const hwFn = (i) => cosineTaper(i, SEGMENTS, cfg.hwGlow)
-                const hwBodyFn = (i) => cosineTaper(i, SEGMENTS, cfg.hwBody)
-                const hwCoreFn = (i) => cosineTaper(i, SEGMENTS, cfg.hwCore)
+                const getCY = makeCYFn(cfg, t, ri)
+
+                // Adjust widths for crossover to match physical pixel scale of old 200px div
+                const wGlow = isCrossover ? cfg.hwGlow * 0.666 : cfg.hwGlow
+                const wBody = isCrossover ? cfg.hwBody * 0.666 : cfg.hwBody
+                const wCore = isCrossover ? cfg.hwCore * 0.666 : cfg.hwCore
+
+                const hwFn = (i) => cosineTaper(i, SEGMENTS, wGlow)
+                const hwBodyFn = (i) => cosineTaper(i, SEGMENTS, wBody)
+                const hwCoreFn = (i) => cosineTaper(i, SEGMENTS, wCore)
 
                 const dBody = buildRibbon(getCY, SEGMENTS, startCoord, stepCoord, isVertical, hwBodyFn)
 
@@ -311,6 +383,36 @@ const AuroraWave = memo(function AuroraWave({
                 refs.high.current?.setAttribute('d',
                     buildHighlightEdge(getCYH, SEGMENTS, startCoord, stepCoord, isVertical, hwBodyFn, 0.58))
             })
+
+            // Move ambient blob with the ribbons
+            if (isCrossover && scrollYProgress && blobRef.current) {
+                const sp = scrollYProgress.get()
+                const t1Center = 0.75
+                const t1Start = t1Center - 0.05
+                const t1End = t1Center + 0.05
+                const t2Center = 0.90
+                const t2Start = t2Center - 0.05
+                const t2End = t2Center + 0.05
+
+                const leftPos = 35
+                const rightPos = winWidth - 35
+                let targetX = leftPos
+
+                if (sp >= t1Start && sp < t1End) {
+                    const p = (sp - t1Start) / (t1End - t1Start)
+                    const ease = p * p * (3 - 2 * p)
+                    targetX = leftPos + ease * (rightPos - leftPos)
+                } else if (sp >= t1End && sp < t2Start) {
+                    targetX = rightPos
+                } else if (sp >= t2Start && sp < t2End) {
+                    const p = (sp - t2Start) / (t2End - t2Start)
+                    const ease = p * p * (3 - 2 * p)
+                    targetX = rightPos - ease * (rightPos - leftPos)
+                } else if (sp >= t2End) {
+                    targetX = leftPos
+                }
+                blobRef.current.setAttribute('cx', targetX)
+            }
         }
 
         let time = 0
@@ -357,11 +459,12 @@ const AuroraWave = memo(function AuroraWave({
             io.disconnect()
             document.removeEventListener('visibilitychange', onVis)
         }
-    }, [interactive, position])
+    }, [interactive, position, scrollYProgress, winWidth])
 
     // ── Visual theming ──
-    const isVertical = position === 'left' || position === 'right'
-    const viewBoxStr = isVertical ? '0 0 300 1000' : '0 0 1000 500'
+    const isCrossover = position === 'crossover'
+    const isVertical = position === 'left' || position === 'right' || isCrossover
+    const viewBoxStr = isCrossover ? `0 0 ${winWidth} 1000` : (isVertical ? '0 0 300 1000' : '0 0 1000 500')
 
     // Opacity budget per layer — light mode is drastically reduced because
     // mix-blend-mode:screen on a light background produces white-out.
