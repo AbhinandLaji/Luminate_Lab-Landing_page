@@ -99,13 +99,13 @@ export default function ContactSection() {
                                     />
                                 </div>
                                 <div className="flex-1">
-                                    <label htmlFor="email" className="block text-sm font-semibold mb-2" style={{ color: 'var(--text-secondary)' }}>Email Address</label>
+                                    <label htmlFor="phone" className="block text-sm font-semibold mb-2" style={{ color: 'var(--text-secondary)' }}>Mobile Number</label>
                                     <input
-                                        type="email"
-                                        id="email"
-                                        name="email"
+                                        type="tel"
+                                        id="phone"
+                                        name="phone"
                                         required
-                                        placeholder="john@company.com"
+                                        placeholder="9496070442"
                                         className="w-full px-4 py-3 rounded-xl transition-all"
                                         style={{
                                             background: 'var(--bg-secondary)',
