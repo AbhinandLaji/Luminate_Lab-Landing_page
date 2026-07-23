@@ -548,3 +548,48 @@ article {
   background: linear-gradient(to top, var(--bg-primary), transparent);
   pointer-events: none;
 }
+
+/* ===========================
+   AMBIENT AURORA BLOBS
+   =========================== */
+:root {
+  --aurora-ambient-opacity: 0.04;
+}
+
+[data-theme="dark"] {
+  --aurora-ambient-opacity: 0.12;
+}
+
+@keyframes auroraFlow {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  }
+  33% {
+    transform: translate3d(8%, 12%, 0) scale(1.12) rotate(120deg);
+  }
+  66% {
+    transform: translate3d(-10%, -6%, 0) scale(0.92) rotate(240deg);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(360deg);
+  }
+}
+
+.ambient-aurora-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ambient-aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  -webkit-filter: blur(100px);
+  pointer-events: none;
+  animation: auroraFlow 25s ease-in-out infinite alternate;
+  will-change: transform;
+  opacity: var(--aurora-ambient-opacity);
+}

@@ -1,4 +1,5 @@
 import AnimatedSection from './AnimatedSection'
+import AmbientAurora from './AmbientAurora'
 import { TiltCard } from '../hooks/TiltCard'
 import SwipeCarousel from './mobile/SwipeCarousel'
 
@@ -118,6 +119,7 @@ function FeatureCard({ f }) {
 export default function WhyUsSection() {
     return (
         <section id="why-us" aria-labelledby="whyus-heading" className="relative py-20 md:py-32 px-5 md:px-6 overflow-hidden" style={{ background: 'var(--bg-secondary)' }}>
+            <AmbientAurora position="left" />
             <div className="section-divider absolute top-0 left-0 right-0" />
 
             {/* Rich ambient background */}

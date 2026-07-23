@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState, useCallback, memo } from 'react'
+import AmbientAurora from './AmbientAurora'
 import {
     motion, useMotionValue, useSpring, useTransform, useScroll,
 } from 'framer-motion'
@@ -264,6 +265,7 @@ export default function OurEdgeSection() {
             onMouseMove={onMouseMove}
             onMouseLeave={onMouseLeave}
         >
+            <AmbientAurora position="right" />
             <div className="section-divider absolute top-0 left-0 right-0" style={{ zIndex: 5 }} />
 
             {/* ════ DESKTOP INTERACTIVE VIEW ════ */}

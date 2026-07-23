@@ -1,0 +1,14 @@
+.strands-container {
+  position: absolute; /* Replaced relative with absolute to match AuroraWave layout */
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  pointer-events: none; /* Let mouse events pass through to buttons */
+}
+
+.strands-container canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

@@ -19,7 +19,21 @@ const NAV_LINKS = [
 ]
 
 /* ─── Bottom sheet overlay ─── */
-function BottomSheet({ open, onClose, theme, onThemeToggle }) {
+function BottomSheet({ open, onClose, theme, onThemeToggle, currentPath = '/' }) {
+    const isDetails = currentPath === '/details'
+    const dynamicLinks = NAV_LINKS.map(link => {
+        if (link.label === 'Solution') {
+            return { ...link, href: isDetails ? '#solution' : '/details#solution' }
+        }
+        if (link.label === 'Process') {
+            return { ...link, href: isDetails ? '#process' : '/details#process' }
+        }
+        if (link.label === 'Results') {
+            return { ...link, href: isDetails ? '/#our-edge' : '#our-edge' }
+        }
+        return { ...link, href: isDetails ? `/${link.href}` : link.href }
+    })
+
     return (
         <AnimatePresence>
             {open && (
@@ -73,7 +87,7 @@ function BottomSheet({ open, onClose, theme, onThemeToggle }) {
 
                         {/* Links */}
                         <nav style={{ padding: '12px 16px' }}>
-                            {NAV_LINKS.map((link, i) => (
+                            {dynamicLinks.map((link, i) => (
                                 <motion.a
                                     key={link.label}
                                     href={link.href}
@@ -138,7 +152,7 @@ function BottomSheet({ open, onClose, theme, onThemeToggle }) {
 
                             {/* CTA link */}
                             <motion.a
-                                href="#cta"
+                                href={isDetails ? '/#cta' : '#cta'}
                                 onClick={onClose}
                                 initial={{ opacity: 0, y: 8 }}
                                 animate={{ opacity: 1, y: 0 }}
@@ -167,9 +181,17 @@ function BottomSheet({ open, onClose, theme, onThemeToggle }) {
 }
 
 /* ─── Scroll-aware bottom pill nav ─── */
-function BottomPillNav({ onMenuOpen }) {
+function BottomPillNav({ onMenuOpen, currentPath = '/' }) {
     const pillRef = useRef(null)
     const lastY = useRef(0)
+
+    const isDetails = currentPath === '/details'
+    const quickLinks = [
+        { href: isDetails ? '/' : '#', label: 'Home', icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg> },
+        { href: isDetails ? '/#problem' : '#problem', label: 'Problem', icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></svg> },
+        { href: isDetails ? '#process' : '/details#process', label: 'Process', icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg> },
+        { href: isDetails ? '/#our-edge' : '#our-edge', label: 'Results', icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18" /><polyline points="17 6 23 6 23 12" /></svg> },
+    ]
 
     useEffect(() => {
         let ticking = false
@@ -224,12 +246,7 @@ function BottomPillNav({ onMenuOpen }) {
                 pointerEvents: 'auto',
             }}>
                 {/* Quick nav links */}
-                {[
-                    { href: '#', label: 'Home', icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg> },
-                    { href: '#problem', label: 'Problem', icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></svg> },
-                    { href: '#process', label: 'Process', icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg> },
-                    { href: '#our-edge', label: 'Results', icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18" /><polyline points="17 6 23 6 23 12" /></svg> },
-                ].map(item => (
+                {quickLinks.map(item => (
                     <a
                         key={item.label}
                         href={item.href}
@@ -272,7 +289,7 @@ function BottomPillNav({ onMenuOpen }) {
 }
 
 /* ═══ MAIN EXPORT ═══ */
-export default function MobileNav() {
+export default function MobileNav({ currentPath = '/' }) {
     const [sheetOpen, setSheetOpen] = useState(false)
     const openSheet = useCallback(() => setSheetOpen(true), [])
     const closeSheet = useCallback(() => setSheetOpen(false), [])
@@ -298,7 +315,7 @@ export default function MobileNav() {
             document.documentElement.setAttribute('data-theme', 'dark')
             localStorage.setItem('theme', 'dark')
         } else {
-            document.documentElement.removeAttribute('data-theme')
+            document.documentElement.setAttribute('data-theme', 'light')
             localStorage.setItem('theme', 'light')
         }
         window.dispatchEvent(new Event('themechange'))
@@ -306,8 +323,8 @@ export default function MobileNav() {
 
     return (
         <div className="md:hidden">
-            <BottomPillNav onMenuOpen={openSheet} />
-            <BottomSheet open={sheetOpen} onClose={closeSheet} theme={theme} onThemeToggle={toggleTheme} />
+            <BottomPillNav onMenuOpen={openSheet} currentPath={currentPath} />
+            <BottomSheet open={sheetOpen} onClose={closeSheet} theme={theme} onThemeToggle={toggleTheme} currentPath={currentPath} />
         </div>
     )
 }

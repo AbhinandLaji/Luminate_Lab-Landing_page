@@ -8,7 +8,7 @@ const navLinks = [
     { label: 'Why Us', href: '#why-us' },
 ]
 
-export default function Navbar() {
+export default function Navbar({ currentPath = '/' }) {
     const [scrolled, setScrolled] = useState(false)
     const [active, setActive] = useState('')
     const [theme, setTheme] = useState(() => {
@@ -16,6 +16,17 @@ export default function Navbar() {
             return document.documentElement.getAttribute('data-theme') || 'light'
         }
         return 'light'
+    })
+
+    const isDetails = currentPath === '/details'
+    const dynamicLinks = navLinks.map(link => {
+        if (link.label === 'Solution') {
+            return { ...link, href: isDetails ? '#solution' : '/details#solution' }
+        }
+        if (link.label === 'Process') {
+            return { ...link, href: isDetails ? '#process' : '/details#process' }
+        }
+        return { ...link, href: isDetails ? `/${link.href}` : link.href }
     })
 
     useEffect(() => {
@@ -32,7 +43,7 @@ export default function Navbar() {
             document.documentElement.setAttribute('data-theme', 'dark')
             localStorage.setItem('theme', 'dark')
         } else {
-            document.documentElement.removeAttribute('data-theme')
+            document.documentElement.setAttribute('data-theme', 'light')
             localStorage.setItem('theme', 'light')
         }
         window.dispatchEvent(new Event('themechange'))
@@ -74,7 +85,7 @@ export default function Navbar() {
                 <div className="max-w-7xl mx-auto px-6 lg:px-10 py-4 flex items-center justify-between">
 
                     {/* Logo */}
-                    <a href="#" className="flex items-center gap-3 group" aria-label="Luminate Labs home">
+                    <a href={isDetails ? '/' : '#'} className="flex items-center gap-3 group" aria-label="Luminate Labs home">
                         <div className="w-9 h-9 relative flex items-center justify-center">
                             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent-violet)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" className="relative z-10 logo-spin" style={{ filter: 'drop-shadow(0 0 8px var(--accent-violet-bg))' }}>
                                 <circle cx="12" cy="12" r="10" />
@@ -102,7 +113,7 @@ export default function Navbar() {
 
                     {/* Desktop links */}
                     <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
-                        {navLinks.map((link) => (
+                        {dynamicLinks.map((link) => (
                             <a
                                 key={link.label}
                                 href={link.href}
@@ -128,7 +139,7 @@ export default function Navbar() {
                         >
                             Contact
                         </a>
-                        <a href="#cta" className="btn-primary" style={{ padding: '10px 22px', fontSize: '0.85rem', borderRadius: '12px' }}>
+                        <a href={isDetails ? '/#cta' : '#cta'} className="btn-primary" style={{ padding: '10px 22px', fontSize: '0.85rem', borderRadius: '12px' }}>
                             Get Started
                             <ArrowRight size={15} />
                         </a>
