@@ -489,7 +489,7 @@ const AuroraWave = memo(function AuroraWave({
             <svg
                 ref={svgRef}
                 viewBox={viewBoxStr}
-                preserveAspectRatio="none"
+                preserveAspectRatio="xMidYMid slice"
                 style={{
                     width: '100%', height: '100%',
                     display: 'block',
