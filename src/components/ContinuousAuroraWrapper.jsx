@@ -45,7 +45,7 @@ export default function ContinuousAuroraWrapper({ children }) {
                 return 1 - outProg
             }
             // Fading in
-            return inProg < 0.4 ? 0 : inProg > 0.8 ? 1 : (inProg - 0.4) / 0.4
+            return inProg < 0.85 ? 0 : inProg > 1.0 ? 1 : (inProg - 0.85) / 0.15
         }
     )
 
@@ -62,7 +62,8 @@ export default function ContinuousAuroraWrapper({ children }) {
             >
                 <AuroraWave
                     interactive={false}
-                    position="crossover"
+                    position="full"
+                    opacity={0.35}
                     scrollYProgress={scrollYProgress}
                 />
             </motion.div>

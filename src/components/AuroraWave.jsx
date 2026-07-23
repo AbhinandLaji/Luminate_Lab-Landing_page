@@ -199,10 +199,10 @@ const AuroraWave = memo(function AuroraWave({
             {
                 gradId: 'aw-grad-a',
                 baseY: isVertical ? 150 : 250,
-                amp: isVertical ? 35 : 45,
-                freq: 1.35,
+                amp: isVertical ? 55 : 75,
+                freq: 1.9,
                 phase: 0,
-                speed: 0.013,
+                speed: 0.022,
                 hwGlow: isVertical ? 16 : 22,
                 hwBody: isVertical ? 8 : 12,
                 hwCore: isVertical ? 4 : 6,
@@ -219,10 +219,10 @@ const AuroraWave = memo(function AuroraWave({
             {
                 gradId: 'aw-grad-b',
                 baseY: isVertical ? 150 : 250,
-                amp: isVertical ? 30 : 40,
-                freq: 1.25,
+                amp: isVertical ? 48 : 65,
+                freq: 1.7,
                 phase: Math.PI * 0.6,
-                speed: 0.010,
+                speed: 0.017,
                 hwGlow: isVertical ? 14 : 18,
                 hwBody: isVertical ? 7 : 10,
                 hwCore: isVertical ? 3 : 5,
@@ -239,10 +239,10 @@ const AuroraWave = memo(function AuroraWave({
             {
                 gradId: 'aw-grad-c',
                 baseY: isVertical ? 150 : 250,
-                amp: isVertical ? 45 : 60,
-                freq: 1.55,
+                amp: isVertical ? 68 : 90,
+                freq: 2.1,
                 phase: -Math.PI * 0.45,
-                speed: 0.016,
+                speed: 0.026,
                 hwGlow: isVertical ? 10 : 14,
                 hwBody: isVertical ? 5 : 7,
                 hwCore: isVertical ? 2 : 4,
@@ -324,7 +324,7 @@ const AuroraWave = memo(function AuroraWave({
             const amp = isCrossover ? cfg.amp * 0.666 : cfg.amp
 
             cy += Math.sin(angle + t * cfg.speed) * amp
-            cy += Math.cos(angle * 1.88 - t * cfg.speed * 0.72) * (amp * 0.30)
+            cy += Math.cos(angle * 1.88 - t * cfg.speed * 0.72) * (amp * 0.45)
 
             // Mouse influence (horizontal only, distance-weighted)
             if (interactive && !isVertical) {
@@ -503,22 +503,25 @@ const AuroraWave = memo(function AuroraWave({
                     {/* Ribbon A gradient — blue → violet (or pure blue in light mode) */}
                     <linearGradient id="aw-grad-a" x1="0%" y1="0%" x2="100%" y2="0%">
                         <stop offset="0%" stopColor="var(--accent-blue)" stopOpacity="1" />
-                        <stop offset="55%" stopColor={isDark ? "var(--accent-violet)" : "var(--accent-blue)"} stopOpacity="1" />
-                        <stop offset="100%" stopColor={isDark ? "var(--accent-indigo)" : "var(--accent-blue)"} stopOpacity="1" />
+                        <stop offset="35%" stopColor="var(--accent-cyan, var(--accent-blue))" stopOpacity="1" />
+                        <stop offset="65%" stopColor="var(--accent-violet)" stopOpacity="1" />
+                        <stop offset="100%" stopColor="var(--accent-indigo)" stopOpacity="1" />
                     </linearGradient>
 
                     {/* Ribbon B gradient — violet → indigo (or pure blue in light mode) */}
                     <linearGradient id="aw-grad-b" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor={isDark ? "var(--accent-violet)" : "var(--accent-blue)"} stopOpacity="1" />
-                        <stop offset="60%" stopColor={isDark ? "var(--accent-indigo)" : "var(--accent-blue)"} stopOpacity="1" />
+                        <stop offset="0%" stopColor="var(--accent-violet)" stopOpacity="1" />
+                        <stop offset="40%" stopColor="var(--accent-indigo)" stopOpacity="1" />
+                        <stop offset="70%" stopColor="var(--accent-cyan, var(--accent-blue))" stopOpacity="1" />
                         <stop offset="100%" stopColor="var(--accent-blue)" stopOpacity="1" />
                     </linearGradient>
 
                     {/* Ribbon C gradient — indigo → blue (or pure blue in light mode) */}
                     <linearGradient id="aw-grad-c" x1="15%" y1="0%" x2="85%" y2="0%">
-                        <stop offset="0%" stopColor={isDark ? "var(--accent-indigo)" : "var(--accent-blue)"} stopOpacity="1" />
-                        <stop offset="50%" stopColor="var(--accent-blue)" stopOpacity="1" />
-                        <stop offset="100%" stopColor={isDark ? "var(--accent-violet)" : "var(--accent-blue)"} stopOpacity="1" />
+                        <stop offset="0%" stopColor="var(--accent-indigo)" stopOpacity="1" />
+                        <stop offset="35%" stopColor="var(--accent-blue)" stopOpacity="1" />
+                        <stop offset="65%" stopColor="var(--accent-cyan, var(--accent-blue))" stopOpacity="1" />
+                        <stop offset="100%" stopColor="var(--accent-violet)" stopOpacity="1" />
                     </linearGradient>
 
                     {/* Specular highlight — crisp bright fade at ends */}
