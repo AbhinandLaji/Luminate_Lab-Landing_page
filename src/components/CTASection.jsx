@@ -115,7 +115,7 @@ export default function CTASection() {
 
                         {/* CTA Button with Framer spring */}
                         <motion.a
-                            href="mailto:hello@luminatelabs.com"
+                            href="tel:+919496070442"
                             className="btn-primary"
                             style={{ fontSize: '1rem', padding: '17px 36px', display: 'inline-flex', maxWidth: 340, width: '100%', justifyContent: 'center' }}
                             whileHover={{ scale: 1.04, y: -3 }}
