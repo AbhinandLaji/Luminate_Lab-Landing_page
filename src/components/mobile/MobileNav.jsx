@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 /**
@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion'
  *
  * Layout:
  *  - Minimal transparent top bar: Logo + "Menu" button
- *  - Scroll-aware bottom pill: hides on scroll-down, shows on scroll-up
+ *  - Persistent floating bottom pill: always visible
  *  - Bottom sheet: slides up with full section links
  */
 
@@ -179,11 +179,8 @@ function BottomSheet({ open, onClose, theme, onThemeToggle, currentPath = '/' })
     )
 }
 
-/* ─── Scroll-aware bottom pill nav ─── */
+/* ─── Persistent floating bottom pill nav ─── */
 function BottomPillNav({ onMenuOpen, currentPath = '/' }) {
-    const pillRef = useRef(null)
-    const lastY = useRef(0)
-
     const isDetails = currentPath === '/details'
     const quickLinks = [
         { href: isDetails ? '/' : '#', label: 'Home', icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg> },
@@ -192,40 +189,14 @@ function BottomPillNav({ onMenuOpen, currentPath = '/' }) {
         { href: isDetails ? '/#our-edge' : '#our-edge', label: 'Results', icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18" /><polyline points="17 6 23 6 23 12" /></svg> },
     ]
 
-    useEffect(() => {
-        let ticking = false
-        const onScroll = () => {
-            if (ticking) return
-            ticking = true
-            requestAnimationFrame(() => {
-                const y = window.scrollY
-                const pill = pillRef.current
-                if (pill) {
-                    // Hide on scroll-down, show on scroll-up
-                    if (y > lastY.current && y > 120) {
-                        pill.style.transform = 'translateY(120px)'
-                    } else {
-                        pill.style.transform = 'translateY(0)'
-                    }
-                }
-                lastY.current = y
-                ticking = false
-            })
-        }
-        window.addEventListener('scroll', onScroll, { passive: true })
-        return () => window.removeEventListener('scroll', onScroll)
-    }, [])
-
     return (
         <div
-            ref={pillRef}
             style={{
                 position: 'fixed',
                 bottom: 'calc(env(safe-area-inset-bottom, 0px) + 16px)',
                 left: 0,
                 right: 0,
                 zIndex: 9980,
-                transition: 'transform 0.35s cubic-bezier(0.16,1,0.3,1)',
                 display: 'flex',
                 justifyContent: 'center',
                 pointerEvents: 'none',
@@ -235,7 +206,7 @@ function BottomPillNav({ onMenuOpen, currentPath = '/' }) {
                 display: 'flex',
                 alignItems: 'center',
                 gap: 0,
-                padding: '8px 8px',
+                padding: '6px 8px',
                 borderRadius: '100px',
                 background: 'var(--glass-bg)',
                 backdropFilter: 'blur(20px)',
@@ -246,18 +217,7 @@ function BottomPillNav({ onMenuOpen, currentPath = '/' }) {
             }}>
                 {/* Quick nav links */}
                 {quickLinks.map(item => (
-                    <a
-                        key={item.label}
-                        href={item.href}
-                        style={{
-                            width: 44, height: 44, borderRadius: '50%',
-                            display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            color: 'var(--text-muted)',
-                            textDecoration: 'none',
-                        }}
-                        onTouchStart={e => { e.currentTarget.style.background = 'var(--border-subtle)'; e.currentTarget.style.color = 'var(--accent-blue)' }}
-                        onTouchEnd={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-muted)' }}
-                    >
+                    <a key={item.label} href={item.href} style={{ width: 40, height: 40, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', textDecoration: 'none' }} onTouchStart={e => { e.currentTarget.style.background = 'var(--border-subtle)'; e.currentTarget.style.color = 'var(--accent-blue)' }} onTouchEnd={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-muted)' }}>
                         {item.icon}
                     </a>
                 ))}
@@ -269,7 +229,7 @@ function BottomPillNav({ onMenuOpen, currentPath = '/' }) {
                 <button
                     onClick={onMenuOpen}
                     style={{
-                        width: 44, height: 44, borderRadius: '50%',
+                        width: 40, height: 40, borderRadius: '50%',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                         background: 'var(--accent-blue-bg)',
                         border: '1px solid var(--accent-blue-border)',
@@ -283,7 +243,7 @@ function BottomPillNav({ onMenuOpen, currentPath = '/' }) {
                     </svg>
                 </button>
             </div>
-        </div>
+        </div >
     )
 }
 
