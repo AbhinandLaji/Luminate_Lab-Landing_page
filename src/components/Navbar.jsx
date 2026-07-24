@@ -144,17 +144,7 @@ export default function Navbar({ currentPath = '/' }) {
                     {/* Desktop links */}
                     <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
                         {activeLinks.map((link) => (
-                            <a
-                                key={link.label}
-                                href={link.href}
-                                onClick={() => setActive(link.label)}
-                                className="relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 group"
-                                style={{ color: active === link.label ? 'var(--text-secondary)' : 'var(--text-muted)' }}
-                                onMouseEnter={e => { e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.background = 'var(--border-subtle)' }}
-                                onMouseLeave={e => { e.currentTarget.style.color = active === link.label ? 'var(--text-secondary)' : 'var(--text-muted)'; e.currentTarget.style.background = 'transparent' }}
-                            >
-                                {link.label}
-                            </a>
+                            <NavPill key={link.label} link={link} active={active} setActive={setActive} />
                         ))}
                     </nav>
 
@@ -219,9 +209,83 @@ export default function Navbar({ currentPath = '/' }) {
                 </div>
             </div>
 
+            {/* Render the single GlassFilter definition for all pills to use */}
+            <GlassFilter id="glass-filter" scale={70} />
         </motion.header>
     )
 }
+
+function NavPill({ link, active, setActive }) {
+    const isActive = active === link.label
+    const [isHovered, setIsHovered] = useState(false)
+    const showGlass = isActive || isHovered
+
+    return (
+        <a
+            href={link.href}
+            onClick={() => setActive(link.label)}
+            className="relative px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
+            style={{ color: showGlass ? 'var(--text-primary)' : 'var(--text-muted)' }}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+        >
+            {showGlass && (
+                <>
+                    <div
+                        className="pointer-events-none absolute inset-0 rounded-[inherit]"
+                        style={{ boxShadow: 'var(--glass-pill-shadow)' }}
+                    />
+                    <div
+                        className="pointer-events-none absolute inset-0 isolate -z-10 overflow-hidden rounded-[inherit]"
+                        style={{ 
+                            backdropFilter: 'url(#glass-filter), blur(8px)',
+                            WebkitBackdropFilter: 'url(#glass-filter), blur(8px)' 
+                        }}
+                    />
+                </>
+            )}
+            <span className="relative z-10">{link.label}</span>
+        </a>
+    )
+}
+
+const GlassFilter = ({ id, scale = 70 }) => (
+    <svg aria-hidden="true" className="hidden" focusable={false} width="0" height="0" style={{ position: 'absolute' }}>
+      <defs>
+        <filter
+          colorInterpolationFilters="sRGB"
+          height="200%"
+          id={id}
+          width="200%"
+          x="-50%"
+          y="-50%"
+        >
+          <feTurbulence
+            baseFrequency="0.05 0.05"
+            numOctaves="1"
+            result="turbulence"
+            seed="1"
+            type="fractalNoise"
+          />
+          <feGaussianBlur
+            in="turbulence"
+            result="blurredNoise"
+            stdDeviation="2"
+          />
+          <feDisplacementMap
+            in="SourceGraphic"
+            in2="blurredNoise"
+            result="displaced"
+            scale={scale}
+            xChannelSelector="R"
+            yChannelSelector="B"
+          />
+          <feGaussianBlur in="displaced" result="finalBlur" stdDeviation="4" />
+          <feComposite in="finalBlur" in2="finalBlur" operator="over" />
+        </filter>
+      </defs>
+    </svg>
+)
 
 function ArrowRight({ size = 16 }) {
     return (
