@@ -44,8 +44,9 @@ export default function FloatingCTA() {
     const show = visible && !hiddenByCTA
 
     return (
-        // Only rendered on mobile (md:hidden via wrapper)
-        <div className="md:hidden">
+        // Hidden on mobile — the bottom sheet already has a CTA.
+        // Only shown on larger screens where there is no pill nav conflict.
+        <div className="hidden">
             <AnimatePresence>
                 {show && (
                     <motion.div
