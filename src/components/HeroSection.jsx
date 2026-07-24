@@ -7,6 +7,10 @@ import Strands from './Strands'
 const PHRASES = ['Ship Faster.', 'Scale Smarter.', 'Build to Last.', 'Innovate Daily.', 'Deliver Excellence.']
 const TICKER_ITEMS = ['Web Development', '•', 'Mobile Apps', '•', 'UI/UX Design', '•', 'Custom Software', '•', 'AI Solutions', '•', 'Product Design', '•']
 
+// Speed in pixels per second for the ticker marquee. Independent of frame rate —
+// computed from elapsed time each frame, so it stays smooth even if frames drop.
+const TICKER_SPEED_PX_PER_SEC = 40
+
     // Inject keyframes once at module load — not on every render
     ; (() => {
         if (typeof document === 'undefined') return
@@ -15,7 +19,6 @@ const TICKER_ITEMS = ['Web Development', '•', 'Mobile Apps', '•', 'UI/UX Des
         s.id = 'hero-kf'
         s.textContent = `
         @keyframes heroPing { 75%,100%{ transform:scale(2.2);opacity:0; } }
-        @keyframes heroTicker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
         @keyframes heroFloat  { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
     `
         document.head.appendChild(s)
@@ -79,11 +82,73 @@ const MagneticButton = memo(function MagneticButton({ children, href, className,
 // Background elements replaced with the dynamic AuroraWave component
 
 /* ─── Scrolling ticker strip ─── */
+// Driven by requestAnimationFrame instead of a CSS @keyframes animation: the
+// transform is written straight to the DOM node via a ref (no React re-renders),
+// and movement is computed from real elapsed time each frame, so it can't drift,
+// stutter, or fight with other transforms/animations on the page.
 function TickerStrip() {
     const items = [...TICKER_ITEMS, ...TICKER_ITEMS]
+    const trackRef = useRef(null)
+    const offsetRef = useRef(0)
+    const pausedRef = useRef(false)
+    const rafRef = useRef(null)
+    const lastTimeRef = useRef(null)
+    const halfWidthRef = useRef(0)
+
+    useEffect(() => {
+        const track = trackRef.current
+        if (!track) return
+
+        const measure = () => {
+            // Half the scrollWidth = width of one full (non-duplicated) set of items.
+            halfWidthRef.current = track.scrollWidth / 2
+        }
+        measure()
+
+        const resizeObserver = new ResizeObserver(measure)
+        resizeObserver.observe(track)
+
+        const step = (timestamp) => {
+            if (lastTimeRef.current === null) lastTimeRef.current = timestamp
+            const dt = (timestamp - lastTimeRef.current) / 1000
+            lastTimeRef.current = timestamp
+
+            if (!pausedRef.current && halfWidthRef.current > 0) {
+                offsetRef.current += TICKER_SPEED_PX_PER_SEC * dt
+                if (offsetRef.current >= halfWidthRef.current) {
+                    offsetRef.current -= halfWidthRef.current
+                }
+                track.style.transform = `translate3d(${-offsetRef.current}px, 0, 0)`
+            }
+            rafRef.current = requestAnimationFrame(step)
+        }
+        rafRef.current = requestAnimationFrame(step)
+
+        return () => {
+            cancelAnimationFrame(rafRef.current)
+            resizeObserver.disconnect()
+        }
+    }, [])
+
     return (
-        <div style={{ overflow: 'hidden', padding: '11px 0', borderTop: '1px solid var(--border-subtle)', borderBottom: '1px solid var(--border-subtle)', background: 'var(--bg-tertiary)' }} aria-hidden="true">
-            <div className="marquee-track" style={{ gap: '24px', alignItems: 'center' }}>
+        <div
+            style={{ overflow: 'hidden', padding: '11px 0', borderTop: '1px solid var(--border-subtle)', borderBottom: '1px solid var(--border-subtle)', background: 'var(--bg-tertiary)' }}
+            aria-hidden="true"
+            onMouseEnter={() => { pausedRef.current = true }}
+            onMouseLeave={() => { pausedRef.current = false }}
+        >
+            <div
+                ref={trackRef}
+                style={{
+                    display: 'flex',
+                    gap: '24px',
+                    alignItems: 'center',
+                    width: 'max-content',
+                    willChange: 'transform',
+                    transform: 'translate3d(0, 0, 0)',
+                    backfaceVisibility: 'hidden',
+                }}
+            >
                 {items.map((item, i) => (
                     <span key={i} style={{
                         fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', flexShrink: 0,
@@ -169,7 +234,7 @@ export default function HeroSection() {
         target: heroRef,
         offset: ['start start', 'end start'] // 0 = top of hero at top of viewport, 1 = bottom of hero at top of viewport
     })
-    
+
     // Fade out Strands starting halfway down the hero, fully transparent near the bottom.
     // This provides a generous overlap with the Problem Section fade-in.
     const strandsOpacity = useTransform(scrollYProgress, [0.5, 0.95], [1, 0])
@@ -183,14 +248,14 @@ export default function HeroSection() {
 
             {/* ── Dynamic Aurora Waves ── */}
             <motion.div style={{ position: 'absolute', inset: 0, opacity: strandsOpacity, zIndex: 0, pointerEvents: 'none' }}>
-                <Strands 
-                    maskRect={maskRect} 
-                    colors={themeConfig.colors} 
-                    count={2} 
+                <Strands
+                    maskRect={maskRect}
+                    colors={themeConfig.colors}
+                    count={2}
                     speed={0.12}
                     waviness={0.6}
-                    scale={2.2} 
-                    amplitude={2.5} 
+                    scale={2.2}
+                    amplitude={2.5}
                     spread={2.5}
                     glow={themeConfig.isDark ? 2.2 : 1.0}
                     intensity={themeConfig.isDark ? 0.6 : 0.95}
