@@ -107,8 +107,12 @@ function TickerStrip() {
 
         const resizeObserver = new ResizeObserver(measure)
         resizeObserver.observe(track)
+        
+        let isVisible = false
 
         const step = (timestamp) => {
+            if (!isVisible) return // Stop loop entirely if not visible
+
             if (lastTimeRef.current === null) lastTimeRef.current = timestamp
             const dt = (timestamp - lastTimeRef.current) / 1000
             lastTimeRef.current = timestamp
@@ -122,11 +126,23 @@ function TickerStrip() {
             }
             rafRef.current = requestAnimationFrame(step)
         }
-        rafRef.current = requestAnimationFrame(step)
+        
+        const io = new IntersectionObserver(([entry]) => {
+            isVisible = entry.isIntersecting
+            if (isVisible) {
+                lastTimeRef.current = null // Prevent huge jump after unpausing
+                rafRef.current = requestAnimationFrame(step)
+            } else {
+                cancelAnimationFrame(rafRef.current)
+            }
+        }, { threshold: 0 })
+        
+        io.observe(track.parentElement)
 
         return () => {
             cancelAnimationFrame(rafRef.current)
             resizeObserver.disconnect()
+            io.disconnect()
         }
     }, [])
 

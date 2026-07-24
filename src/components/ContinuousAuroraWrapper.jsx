@@ -17,48 +17,20 @@ export default function ContinuousAuroraWrapper({ children }) {
         return () => mq.removeEventListener('change', onChange)
     }, [])
 
-    // Track scroll across all 3 sections
+    // Track scroll across the entire wrapper's visibility
     const { scrollYProgress } = useScroll({
         target: containerRef,
-        // Since the sections are sticky/normal and span the document, 
-        // start start to end end captures the full scroll duration of this wrapper.
-        offset: ['start start', 'end end']
+        offset: ['start end', 'end start']
     })
 
-    // Fade in from Hero: 
-    // In ProblemSection, the original logic was fading in as the section scrolled in.
-    // The wrapper starts right at ProblemSection, so scrollYProgress=0 means top of ProblemSection is at the top of the screen.
-    // Wait! Originally `target: sectionRef, offset: ['start end', 'start start']` faded in from 0 to 1.
-    // When `scrollYProgress` of the wrapper is 0, `start start` has already been reached!
-    // So the wrapper will already be at 100% opacity if we start here.
-    // We should use `offset: ['start end', 'end end']` if we want to catch the fade-in!
-    // But then scrollYProgress=0 means ProblemSection is at the bottom of the screen.
-    // Let's adjust offset to capture the fade-in, and then map the crossover.
-    const { scrollYProgress: fadeProgress } = useScroll({
-        target: containerRef,
-        offset: ['start end', 'start start']
-    })
-
-    const { scrollYProgress: fadeOutProgress } = useScroll({
-        target: containerRef,
-        offset: ['end end', 'end start']
-    })
-
-    // Combine fade in and fade out
-    // When fadeProgress goes from 0.4 to 0.8, opacity goes 0 -> 1.
-    // When fadeOutProgress goes from 0.0 to 1.0 (as the bottom of wrapper scrolls up),
-    // opacity should go 1 -> 0.
-    // We can use a custom useTransform that maps both:
+    // Consolidated opacity transform:
+    // 0 -> 0.05: Fade in as the top enters the screen
+    // 0.05 -> 0.95: Fully visible throughout the sections
+    // 0.95 -> 1.0: Fade out as the bottom leaves the screen
     const auroraOpacity = useTransform(
-        [fadeProgress, fadeOutProgress],
-        ([inProg, outProg]) => {
-            if (outProg > 0) {
-                // Fading out
-                return 1 - outProg
-            }
-            // Fading in
-            return inProg < 0.85 ? 0 : inProg > 1.0 ? 1 : (inProg - 0.85) / 0.15
-        }
+        scrollYProgress,
+        [0, 0.05, 0.95, 1],
+        [0, 1, 1, 0] // Max opacity 1.0 (AuroraWave handles the base 0.35 opacity)
     )
 
     return (

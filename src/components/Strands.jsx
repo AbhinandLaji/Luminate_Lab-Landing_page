@@ -250,25 +250,18 @@ export default function Strands({
     resize();
 
     // Visibility gating
-    const isVisible = { current: true };
+    const isVisible = { current: false };
     const isTabVisible = { current: document.visibilityState === 'visible' };
 
-    const io = new IntersectionObserver(([entry]) => {
-      isVisible.current = entry.isIntersecting;
-    }, { threshold: 0 });
-    io.observe(ctn);
-
-    const onVis = () => { isTabVisible.current = document.visibilityState === 'visible'; };
-    document.addEventListener('visibilitychange', onVis);
-
+    let isRunning = false;
     let animateId = 0;
     let lastFrameTime = 0;
     const FRAME_INTERVAL = 1000 / 30; // 30fps cap
     let lastColors = null;
 
     const update = t => {
+      if (!isRunning) return;
       animateId = requestAnimationFrame(update);
-      if (!isVisible.current || !isTabVisible.current) return;
 
       // Throttle to 30fps
       const elapsed = t - lastFrameTime;
@@ -314,10 +307,38 @@ export default function Strands({
 
       renderer.render({ scene: mesh });
     };
-    animateId = requestAnimationFrame(update);
+
+    const startLoop = () => {
+      if (!isRunning && isVisible.current && isTabVisible.current) {
+        isRunning = true;
+        lastFrameTime = performance.now();
+        animateId = requestAnimationFrame(update);
+      }
+    };
+
+    const stopLoop = () => {
+      if (isRunning) {
+        isRunning = false;
+        cancelAnimationFrame(animateId);
+      }
+    };
+
+    const io = new IntersectionObserver(([entry]) => {
+      isVisible.current = entry.isIntersecting;
+      if (isVisible.current) startLoop();
+      else stopLoop();
+    }, { threshold: 0 });
+    io.observe(ctn);
+
+    const onVis = () => {
+      isTabVisible.current = document.visibilityState === 'visible';
+      if (isTabVisible.current) startLoop();
+      else stopLoop();
+    };
+    document.addEventListener('visibilitychange', onVis);
 
     return () => {
-      cancelAnimationFrame(animateId);
+      stopLoop();
       window.removeEventListener('resize', resize);
       window.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('visibilitychange', onVis);

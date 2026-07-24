@@ -415,6 +415,7 @@ const AuroraWave = memo(function AuroraWave({
         let lastFrameTime = 0
         const TARGET_FPS = 30
         const FRAME_INTERVAL = 1000 / TARGET_FPS
+        let isRunning = false
 
         const render = (timestamp) => {
             if (isReducedMotion.current) {
@@ -422,8 +423,8 @@ const AuroraWave = memo(function AuroraWave({
                 return
             }
 
+            if (!isRunning) return
             requestRef.current = requestAnimationFrame(render)
-            if (!isVisible.current || !isTabVisible.current) return
 
             // Throttle to ~30fps — halves CPU/GPU usage vs 60fps
             const elapsed = timestamp - lastFrameTime
@@ -446,19 +447,38 @@ const AuroraWave = memo(function AuroraWave({
             drawAll(time, true)
         }
 
-        render()
+        const startLoop = () => {
+            if (!isRunning && isVisible.current && isTabVisible.current) {
+                isRunning = true
+                lastFrameTime = performance.now()
+                requestRef.current = requestAnimationFrame(render)
+            }
+        }
+
+        const stopLoop = () => {
+            if (isRunning) {
+                isRunning = false
+                cancelAnimationFrame(requestRef.current)
+            }
+        }
 
         // Pause when off-screen
         const io = new IntersectionObserver(([entry]) => {
             isVisible.current = entry.isIntersecting
+            if (isVisible.current) startLoop()
+            else stopLoop()
         }, { threshold: 0 })
         io.observe(svg)
 
-        const onVis = () => { isTabVisible.current = document.visibilityState === 'visible' }
+        const onVis = () => { 
+            isTabVisible.current = document.visibilityState === 'visible'
+            if (isTabVisible.current) startLoop()
+            else stopLoop()
+        }
         document.addEventListener('visibilitychange', onVis, { passive: true })
 
         return () => {
-            cancelAnimationFrame(requestRef.current)
+            stopLoop()
             if (interactive) window.removeEventListener('mousemove', handleMouseMove)
             io.disconnect()
             document.removeEventListener('visibilitychange', onVis)
