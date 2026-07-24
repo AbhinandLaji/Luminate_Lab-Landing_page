@@ -1,18 +1,5 @@
-import AnimatedSection from './AnimatedSection'
+import AnimatedSection, { AnimatedItem } from './AnimatedSection'
 import { motion } from 'framer-motion'
-
-    // Inject CTA keyframes once at module load
-    ; (() => {
-        if (typeof document === 'undefined') return
-        if (document.getElementById('cta-kf')) return
-        const s = document.createElement('style')
-        s.id = 'cta-kf'
-        s.textContent = `
-        @keyframes ctaPulse  { 0%,100%{opacity:.5;transform:scale(1)} 50%{opacity:.15;transform:scale(1.15)} }
-        @keyframes ctaPulse2 { 0%,100%{opacity:.25;transform:scale(1)} 50%{opacity:.08;transform:scale(1.3)} }
-    `
-        document.head.appendChild(s)
-    })()
 
 const points = [
     'No long-term contracts required',
@@ -24,61 +11,35 @@ export default function CTASection() {
     return (
         <section
             id="cta"
-            className="relative py-20 md:py-40 px-5 md:px-6 overflow-hidden"
+            className="relative py-8 md:py-12 px-5 md:px-6 overflow-hidden"
             style={{ background: 'var(--bg-primary)' }}
         >
-
             <div className="section-divider absolute top-0 left-0 right-0" />
 
-            {/* Background glow */}
-            <div className="absolute inset-0 pointer-events-none flex items-center justify-center" aria-hidden="true">
-                {/* Center large violet-teal orb */}
-                <div style={{
-                    width: '700px', height: '700px', borderRadius: '50%',
-                    background: 'radial-gradient(circle, var(--accent-blue-bg) 0%, var(--accent-violet-bg) 30%, var(--accent-teal-bg) 60%, transparent 75%)',
-                    animation: 'ctaPulse 5s ease-in-out infinite',
-                    willChange: 'transform, opacity',
-                }} />
-                {/* Outer ring */}
-                <div style={{
-                    position: 'absolute',
-                    width: '1000px', height: '1000px', borderRadius: '50%',
-                    background: 'radial-gradient(circle, var(--accent-blue-bg) 0%, var(--accent-violet-bg) 40%, transparent 65%)',
-                    animation: 'ctaPulse2 6s ease-in-out infinite',
-                    willChange: 'transform, opacity',
-                }} />
-                {/* Rose accent — bottom left */}
-                <div style={{
-                    position: 'absolute', bottom: '0', left: '0',
-                    width: '350px', height: '350px',
-                    background: 'radial-gradient(circle, var(--accent-rose-bg) 0%, transparent 65%)',
-                }} />
-                {/* Indigo accent — top right */}
-                <div style={{
-                    position: 'absolute', top: '0', right: '0',
-                    width: '300px', height: '300px',
-                    background: 'radial-gradient(circle, var(--accent-blue-bg) 0%, transparent 65%)',
-                }} />
-            </div>
+            <AnimatedSection stagger={true} staggerDelay={0.06} className="relative z-10 max-w-4xl mx-auto">
+                {/* Mesh Gradient Background (Centered behind the card) */}
+                <div className="absolute inset-0 z-0 overflow-visible pointer-events-none rounded-2xl md:rounded-3xl flex items-center justify-center" aria-hidden="true">
+                    <div className="mesh-blob blob-1" />
+                    <div className="mesh-blob blob-2" />
+                    <div className="mesh-blob blob-3" />
+                </div>
 
-
-            <div className="relative z-10 max-w-4xl mx-auto">
-                <AnimatedSection>
-                    {/* Glass card wrapper */}
-                    <div
-                        className="glass rounded-2xl md:rounded-3xl p-7 sm:p-12 md:p-20 text-center"
-                        style={{
-                            background: 'var(--glass-bg)',
-                            border: '1px solid var(--border-subtle)',
-                            boxShadow: 'var(--shadow-card)',
-                        }}
-                    >
+                {/* Glass card wrapper - Frosts the mesh gradient behind it */}
+                <div
+                    className="glass relative z-10 rounded-2xl md:rounded-3xl p-6 md:p-8 text-center"
+                    style={{
+                        boxShadow: 'var(--shadow-card)',
+                    }}
+                >
+                    <AnimatedItem direction="up" distance={12}>
                         <span className="section-label">Ready to Build?</span>
+                    </AnimatedItem>
 
+                    <AnimatedItem direction="up" distance={16}>
                         <h2
-                            className="mt-6 md:mt-8 mb-5 md:mb-6 font-black"
+                            className="mt-4 mb-3 font-black"
                             style={{
-                                fontSize: 'clamp(2.0rem, 5.5vw, 4.25rem)',
+                                fontSize: 'clamp(1.8rem, 5vw, 3.8rem)',
                                 lineHeight: 1.06,
                                 letterSpacing: '-0.04em',
                                 color: 'var(--text-primary)',
@@ -87,16 +48,20 @@ export default function CTASection() {
                             Stop Waiting.<br />
                             <span className="gradient-text">Start Building Something Great.</span>
                         </h2>
+                    </AnimatedItem>
 
+                    <AnimatedItem direction="up" distance={16}>
                         <p
-                            className="mb-10 max-w-lg mx-auto"
+                            className="mb-5 max-w-lg mx-auto"
                             style={{ fontSize: '1.05rem', color: 'var(--text-muted)', lineHeight: 1.7 }}
                         >
                             One conversation to understand your vision. A dedicated team to bring it to life.
                         </p>
+                    </AnimatedItem>
 
-                        {/* Checklist */}
-                        <div className="flex flex-col items-center justify-center gap-3 mb-8 md:mb-10">
+                    {/* Checklist */}
+                    <AnimatedItem direction="up" distance={16}>
+                        <div className="flex flex-col items-center justify-center gap-2 mb-5">
                             {points.map(p => (
                                 <div key={p} className="flex items-center gap-2">
                                     <span
@@ -111,12 +76,22 @@ export default function CTASection() {
                                 </div>
                             ))}
                         </div>
+                    </AnimatedItem>
 
-                        {/* CTA Button with Framer spring */}
+                    {/* CTA Button with Framer spring */}
+                    <AnimatedItem direction="scale" distance={0}>
                         <motion.a
                             href="tel:+919496070442"
-                            className="btn-primary"
-                            style={{ fontSize: '1rem', padding: '17px 36px', display: 'inline-flex', maxWidth: 340, width: '100%', justifyContent: 'center' }}
+                            className="btn-primary cta-btn-glow"
+                            style={{ 
+                                fontSize: '1rem', 
+                                padding: '16px 32px', 
+                                display: 'inline-flex', 
+                                maxWidth: 340, 
+                                width: '100%', 
+                                justifyContent: 'center',
+                                animation: 'ctaButtonGlow 1.5s ease-out 0.4s 2'
+                            }}
                             whileHover={{ scale: 1.04, y: -3 }}
                             whileTap={{ scale: 0.96 }}
                             transition={{ type: 'spring', stiffness: 380, damping: 18 }}
@@ -124,20 +99,22 @@ export default function CTASection() {
                             Book a Free Consultation
                             <ArrowRight />
                         </motion.a>
+                    </AnimatedItem>
 
-                        <p className="mt-6 text-xs" style={{ color: 'var(--text-faint)' }}>
+                    <AnimatedItem direction="up" distance={12}>
+                        <p className="mt-4 text-xs" style={{ color: 'var(--text-faint)' }}>
                             No commitment. No technical jargon. Just great software.
                         </p>
-                    </div>
-                </AnimatedSection>
-            </div>
+                    </AnimatedItem>
+                </div>
+            </AnimatedSection>
         </section>
     )
 }
 
 function ArrowRight() {
     return (
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginLeft: '8px' }}>
             <path d="M3.5 9h11M10 5l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
     )
