@@ -311,13 +311,18 @@ export default function ProblemSection() {
 
     const [activeIdx, setActiveIdx] = useState(-1)
 
-    useMotionValueEvent(scrollYProgress, 'change', latest => {
-        if (latest <= 0.015) {
-            if (activeIdx !== -1) {
+    useMotionValueEvent(sectionProgress, 'change', latest => {
+        if (latest >= 0.85) {
+            if (activeIdx === -1) setActiveIdx(0)
+        } else {
+            if (activeIdx !== -1 && scrollYProgress.get() <= 0.001) {
                 setActiveIdx(-1)
             }
-            return
         }
+    })
+
+    useMotionValueEvent(scrollYProgress, 'change', latest => {
+        if (latest === 0 && sectionProgress.get() < 0.85) return
 
         const progressPerCard = 1 / N
         const rawIndex = latest / progressPerCard
