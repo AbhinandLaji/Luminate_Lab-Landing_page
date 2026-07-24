@@ -17,6 +17,7 @@ const detailsLinks = [
 export default function Navbar({ currentPath = '/' }) {
     const [scrolled, setScrolled] = useState(false)
     const [active, setActive] = useState('')
+    const [hoveredLink, setHoveredLink] = useState(null)
     const [theme, setTheme] = useState(() => {
         if (typeof window !== 'undefined') {
             return document.documentElement.getAttribute('data-theme') || 'light'
@@ -144,7 +145,14 @@ export default function Navbar({ currentPath = '/' }) {
                     {/* Desktop links */}
                     <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
                         {activeLinks.map((link) => (
-                            <NavPill key={link.label} link={link} active={active} setActive={setActive} />
+                            <NavPill 
+                                key={link.label} 
+                                link={link} 
+                                active={active} 
+                                setActive={setActive}
+                                hoveredLink={hoveredLink}
+                                setHoveredLink={setHoveredLink}
+                            />
                         ))}
                     </nav>
 
@@ -215,19 +223,24 @@ export default function Navbar({ currentPath = '/' }) {
     )
 }
 
-function NavPill({ link, active, setActive }) {
+function NavPill({ link, active, setActive, hoveredLink, setHoveredLink }) {
     const isActive = active === link.label
-    const [isHovered, setIsHovered] = useState(false)
+    const isHovered = hoveredLink === link.label
+    const isOtherHovered = hoveredLink !== null && hoveredLink !== link.label
     const showGlass = isActive || isHovered
+    const shouldDim = isActive && isOtherHovered
 
     return (
         <a
             href={link.href}
             onClick={() => setActive(link.label)}
-            className="relative px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
-            style={{ color: showGlass ? 'var(--text-primary)' : 'var(--text-muted)' }}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
+            className="relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200"
+            style={{ 
+                color: showGlass ? 'var(--text-primary)' : 'var(--text-muted)',
+                opacity: shouldDim ? 0.5 : 1
+            }}
+            onMouseEnter={() => setHoveredLink(link.label)}
+            onMouseLeave={() => setHoveredLink(null)}
         >
             {showGlass && (
                 <>
