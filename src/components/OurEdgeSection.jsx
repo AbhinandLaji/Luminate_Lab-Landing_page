@@ -228,14 +228,20 @@ export default function OurEdgeSection() {
     const spY = useSpring(spotY, { stiffness: 120, damping: 28 })
     const spotOpacity = useMotionValue(0)
 
+    const rafMouseRef = useRef(null)
     const onMouseMove = useCallback((e) => {
-        const rect = sectionRef.current?.getBoundingClientRect()
-        if (!rect) return
-        rawX.set(e.clientX - (rect.left + rect.width / 2))
-        rawY.set(e.clientY - (rect.top + rect.height / 2))
-        spotX.set(e.clientX - rect.left)
-        spotY.set(e.clientY - rect.top)
-        spotOpacity.set(1)
+        // Throttle with rAF — only one update per frame
+        if (rafMouseRef.current) return
+        rafMouseRef.current = requestAnimationFrame(() => {
+            rafMouseRef.current = null
+            const rect = sectionRef.current?.getBoundingClientRect()
+            if (!rect) return
+            rawX.set(e.clientX - (rect.left + rect.width / 2))
+            rawY.set(e.clientY - (rect.top + rect.height / 2))
+            spotX.set(e.clientX - rect.left)
+            spotY.set(e.clientY - rect.top)
+            spotOpacity.set(1)
+        })
     }, [rawX, rawY, spotX, spotY, spotOpacity])
 
     const onMouseLeave = useCallback(() => {

@@ -17,7 +17,7 @@ const technologies = [
 
 export default function TechStackSection() {
     return (
-        <section className="relative py-24 md:py-32 px-5 md:px-6 overflow-hidden" style={{ background: 'var(--bg-primary)' }}>
+        <section className="relative py-24 md:py-32 px-5 md:px-6 overflow-hidden" style={{ background: 'var(--bg-primary)', contentVisibility: 'auto', containIntrinsicBlockSize: '600px' }}>
             <div className="section-divider absolute top-0 left-0 right-0" />
             
             <div className="relative z-10 max-w-6xl mx-auto">

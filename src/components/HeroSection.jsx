@@ -186,7 +186,7 @@ export default function HeroSection() {
                 <Strands 
                     maskRect={maskRect} 
                     colors={themeConfig.colors} 
-                    count={3} 
+                    count={2} 
                     speed={0.12}
                     waviness={0.6}
                     scale={2.2} 

@@ -24,7 +24,7 @@ const projects = [
 
 export default function PortfolioSection() {
     return (
-        <section id="portfolio" className="relative py-24 md:py-32 px-5 md:px-6 overflow-hidden" style={{ background: 'var(--bg-secondary)' }}>
+        <section id="portfolio" className="relative py-24 md:py-32 px-5 md:px-6 overflow-hidden" style={{ background: 'var(--bg-secondary)', contentVisibility: 'auto', containIntrinsicBlockSize: '700px' }}>
             <div className="relative z-10 max-w-6xl mx-auto">
                 <AnimatedSection className="text-center mb-16 md:mb-20">
                     <span className="section-label">Our Work</span>

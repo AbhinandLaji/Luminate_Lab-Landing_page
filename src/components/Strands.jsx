@@ -262,9 +262,18 @@ export default function Strands({
     document.addEventListener('visibilitychange', onVis);
 
     let animateId = 0;
+    let lastFrameTime = 0;
+    const FRAME_INTERVAL = 1000 / 30; // 30fps cap
+    let lastColors = null;
+
     const update = t => {
       animateId = requestAnimationFrame(update);
       if (!isVisible.current || !isTabVisible.current) return;
+
+      // Throttle to 30fps
+      const elapsed = t - lastFrameTime;
+      if (elapsed < FRAME_INTERVAL) return;
+      lastFrameTime = t - (elapsed % FRAME_INTERVAL);
 
       const current = propsRef.current;
       program.uniforms.uTime.value = t * 0.001;
@@ -279,10 +288,16 @@ export default function Strands({
       smoothMouse.x += (targetMouse.x - smoothMouse.x) * 0.015;
       smoothMouse.y += (targetMouse.y - smoothMouse.y) * 0.015;
       
-      program.uniforms.uMouse.value = [smoothMouse.x, 1.0 - smoothMouse.y]; // flip Y for WebGL coordinates
+      program.uniforms.uMouse.value = [smoothMouse.x, 1.0 - smoothMouse.y];
 
-      program.uniforms.uColors.value = buildPalette(current.colors);
-      program.uniforms.uColorCount.value = Math.min(current.colors.length, MAX_COLORS);
+      // Only rebuild palette if colors actually changed
+      const colorKey = current.colors.join(',');
+      if (colorKey !== lastColors) {
+        program.uniforms.uColors.value = buildPalette(current.colors);
+        program.uniforms.uColorCount.value = Math.min(current.colors.length, MAX_COLORS);
+        lastColors = colorKey;
+      }
+
       program.uniforms.uStrandCount.value = Math.min(Math.max(Math.round(current.count), 1), MAX_STRANDS);
       program.uniforms.uSpeed.value = current.speed;
       program.uniforms.uAmplitude.value = current.amplitude;
