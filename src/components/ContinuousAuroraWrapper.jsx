@@ -1,9 +1,21 @@
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { useScroll, useTransform, motion } from 'framer-motion'
 import AuroraWave from './AuroraWave'
 
 export default function ContinuousAuroraWrapper({ children }) {
     const containerRef = useRef(null)
+    const [isDesktop, setIsDesktop] = useState(false)
+
+    // Only mount AuroraWave on desktop — its per-frame path rebuilds + SVG
+    // filters + mix-blend-mode are too heavy for mobile GPUs and were
+    // causing scroll jank there.
+    useEffect(() => {
+        const mq = window.matchMedia('(min-width: 1024px)')
+        setIsDesktop(mq.matches)
+        const onChange = e => setIsDesktop(e.matches)
+        mq.addEventListener('change', onChange)
+        return () => mq.removeEventListener('change', onChange)
+    }, [])
 
     // Track scroll across all 3 sections
     const { scrollYProgress } = useScroll({
@@ -51,22 +63,24 @@ export default function ContinuousAuroraWrapper({ children }) {
 
     return (
         <div ref={containerRef} style={{ position: 'relative' }}>
-            <motion.div
-                style={{
-                    position: 'fixed',
-                    inset: 0,
-                    zIndex: 0,
-                    pointerEvents: 'none',
-                    opacity: auroraOpacity
-                }}
-            >
-                <AuroraWave
-                    interactive={false}
-                    position="full"
-                    opacity={0.35}
-                    scrollYProgress={scrollYProgress}
-                />
-            </motion.div>
+            {isDesktop && (
+                <motion.div
+                    style={{
+                        position: 'fixed',
+                        inset: 0,
+                        zIndex: 0,
+                        pointerEvents: 'none',
+                        opacity: auroraOpacity
+                    }}
+                >
+                    <AuroraWave
+                        interactive={false}
+                        position="full"
+                        opacity={0.35}
+                        scrollYProgress={scrollYProgress}
+                    />
+                </motion.div>
+            )}
 
             <div style={{ position: 'relative' }}>
                 {children}
