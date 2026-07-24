@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { motion, useScroll, useSpring } from 'framer-motion'
 
 export default function ScrollProgress() {
@@ -22,7 +21,8 @@ export default function ScrollProgress() {
                 background: 'linear-gradient(90deg, #5b7cf7, #8b5cf6, #2dd4bf)',
                 zIndex: 9999,
                 pointerEvents: 'none',
-                boxShadow: '0 0 10px rgba(91,124,247,0.6), 0 0 20px rgba(45,212,191,0.3)',
+                willChange: 'transform',
+                boxShadow: '0 0 6px rgba(91,124,247,0.5)',
             }}
         />
     )

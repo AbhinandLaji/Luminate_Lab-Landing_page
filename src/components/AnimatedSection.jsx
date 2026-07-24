@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { useMemo } from 'react'
 
 /**
  * AnimatedSection — scroll-reveal wrapper.
@@ -8,6 +9,7 @@ import { motion } from 'framer-motion'
  *  - Only opacity, y, x, scale — all compositor-only properties
  *  - 'blur' direction is now treated as a faster fade+y (maintained API compat)
  *  - prefers-reduced-motion: all animations replaced with simple opacity fade
+ *  - variants object is memoized per-instance to avoid recreating on every render
  *
  * direction: 'up' | 'down' | 'left' | 'right' | 'scale' | 'fade' | 'blur'
  */
@@ -60,9 +62,11 @@ export default function AnimatedSection({
     staggerDelay = 0.08,
     as: Tag = 'div',
 }) {
-    const variants = buildVariants(direction, distance)
-    const transition = { duration, delay, ease: [0.16, 1, 0.3, 1] }
-    variants.visible.transition = transition
+    const variants = useMemo(() => {
+        const v = buildVariants(direction, distance)
+        v.visible.transition = { duration, delay, ease: [0.16, 1, 0.3, 1] }
+        return v
+    }, [direction, distance, duration, delay])
 
     if (stagger) {
         return (
@@ -106,8 +110,11 @@ export function AnimatedItem({
     distance = 24,
     duration = 0.55,
 }) {
-    const variants = buildVariants(direction, distance)
-    variants.visible.transition = { duration, ease: [0.16, 1, 0.3, 1] }
+    const variants = useMemo(() => {
+        const v = buildVariants(direction, distance)
+        v.visible.transition = { duration, ease: [0.16, 1, 0.3, 1] }
+        return v
+    }, [direction, distance, duration])
 
     return (
         <motion.div variants={variants} className={className} style={style}>
