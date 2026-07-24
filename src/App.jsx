@@ -66,7 +66,9 @@ function DeepLinksBlock() {
             How We Build Software Products &rarr;
           </a>
           <a
-            href="/details#contact"
+            href="https://wa.me/919496070442"
+            target="_blank"
+            rel="noopener noreferrer"
             className="px-6 py-3.5 rounded-xl border text-sm font-semibold transition-all duration-300"
             style={{
               background: 'var(--bg-card)',

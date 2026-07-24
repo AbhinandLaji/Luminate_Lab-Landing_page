@@ -81,7 +81,9 @@ export default function CTASection() {
                     {/* CTA Button with Framer spring */}
                     <AnimatedItem direction="scale" distance={0}>
                         <motion.a
-                            href="tel:+919496070442"
+                            href="https://wa.me/919496070442"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="btn-primary cta-btn-glow"
                             style={{ 
                                 fontSize: '1rem', 

@@ -134,7 +134,9 @@ export default function Navbar({ currentPath = '/' }) {
                     {/* Desktop CTA */}
                     <div className="hidden md:flex items-center gap-3">
                         <a
-                            href="/details#contact"
+                            href="https://wa.me/919496070442"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="text-sm font-medium px-4 py-2 rounded-lg transition-colors duration-200"
                             style={{ color: 'var(--text-muted)' }}
                             onMouseEnter={e => e.currentTarget.style.color = 'var(--text-primary)'}
@@ -142,7 +144,7 @@ export default function Navbar({ currentPath = '/' }) {
                         >
                             Contact
                         </a>
-                        <a href={isDetails ? '/#cta' : '#cta'} className="btn-primary" style={{ padding: '10px 22px', fontSize: '0.85rem', borderRadius: '12px' }}>
+                        <a href="https://wa.me/919496070442" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ padding: '10px 22px', fontSize: '0.85rem', borderRadius: '12px' }}>
                             Get Started
                             <ArrowRight size={15} />
                         </a>

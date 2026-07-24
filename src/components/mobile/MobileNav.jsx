@@ -22,13 +22,16 @@ function BottomSheet({ open, onClose, theme, onThemeToggle, currentPath = '/' })
     const isDetails = currentPath === '/details'
     const dynamicLinks = NAV_LINKS.map(link => {
         if (link.label === 'Services') {
-            return { ...link, href: isDetails ? '#solution' : '/details#solution' }
+            return { ...link, href: isDetails ? '/#solution' : '#solution' }
         }
         if (link.label === 'Process') {
-            return { ...link, href: isDetails ? '#process' : '/details#process' }
+            return { ...link, href: isDetails ? '/#process' : '#process' }
         }
         if (link.label === 'Portfolio') {
-            return { ...link, href: isDetails ? '#portfolio' : '/details#portfolio' }
+            return { ...link, href: isDetails ? '/#portfolio' : '#portfolio' }
+        }
+        if (link.label === 'About') {
+            return { ...link, href: isDetails ? '/#why-us' : '#why-us' }
         }
         return { ...link, href: isDetails ? `/${link.href}` : link.href }
     })
@@ -151,7 +154,9 @@ function BottomSheet({ open, onClose, theme, onThemeToggle, currentPath = '/' })
 
                             {/* CTA link */}
                             <motion.a
-                                href={isDetails ? '/#cta' : '#cta'}
+                                href="https://wa.me/919496070442"
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 onClick={onClose}
                                 initial={{ opacity: 0, y: 8 }}
                                 animate={{ opacity: 1, y: 0 }}
@@ -184,9 +189,9 @@ function BottomPillNav({ onMenuOpen, currentPath = '/' }) {
     const isDetails = currentPath === '/details'
     const quickLinks = [
         { href: isDetails ? '/' : '#', label: 'Home', icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg> },
-        { href: isDetails ? '/#problem' : '#problem', label: 'Problem', icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></svg> },
-        { href: isDetails ? '#process' : '/details#process', label: 'Process', icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg> },
-        { href: isDetails ? '/#our-edge' : '#our-edge', label: 'Results', icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18" /><polyline points="17 6 23 6 23 12" /></svg> },
+        { href: isDetails ? '/#solution' : '#solution', label: 'Services', icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg> },
+        { href: isDetails ? '/#portfolio' : '#portfolio', label: 'Portfolio', icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18" /><polyline points="17 6 23 6 23 12" /></svg> },
+        { href: 'https://wa.me/919496070442', target: "_blank", rel: "noopener noreferrer", label: 'Contact', icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" /></svg> },
     ]
 
     return (
@@ -217,7 +222,7 @@ function BottomPillNav({ onMenuOpen, currentPath = '/' }) {
             }}>
                 {/* Quick nav links */}
                 {quickLinks.map(item => (
-                    <a key={item.label} href={item.href} style={{ width: 40, height: 40, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', textDecoration: 'none' }} onTouchStart={e => { e.currentTarget.style.background = 'var(--border-subtle)'; e.currentTarget.style.color = 'var(--accent-blue)' }} onTouchEnd={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-muted)' }}>
+                    <a key={item.label} href={item.href} target={item.target} rel={item.rel} style={{ width: 40, height: 40, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', textDecoration: 'none' }} onTouchStart={e => { e.currentTarget.style.background = 'var(--border-subtle)'; e.currentTarget.style.color = 'var(--accent-blue)' }} onTouchEnd={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-muted)' }}>
                         {item.icon}
                     </a>
                 ))}
