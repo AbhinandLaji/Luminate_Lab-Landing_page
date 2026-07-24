@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const navLinks = [
-    { label: 'Problem', href: '#problem' },
-    { label: 'Solution', href: '#solution' },
+    { label: 'Services', href: '#solution' },
     { label: 'Process', href: '#process' },
-    { label: 'Why Us', href: '#why-us' },
+    { label: 'Portfolio', href: '#portfolio' },
+    { label: 'About', href: '#why-us' },
 ]
 
 export default function Navbar({ currentPath = '/' }) {
@@ -20,11 +20,14 @@ export default function Navbar({ currentPath = '/' }) {
 
     const isDetails = currentPath === '/details'
     const dynamicLinks = navLinks.map(link => {
-        if (link.label === 'Solution') {
+        if (link.label === 'Services') {
             return { ...link, href: isDetails ? '#solution' : '/details#solution' }
         }
         if (link.label === 'Process') {
             return { ...link, href: isDetails ? '#process' : '/details#process' }
+        }
+        if (link.label === 'Portfolio') {
+            return { ...link, href: isDetails ? '#portfolio' : '/details#portfolio' }
         }
         return { ...link, href: isDetails ? `/${link.href}` : link.href }
     })
@@ -131,7 +134,7 @@ export default function Navbar({ currentPath = '/' }) {
                     {/* Desktop CTA */}
                     <div className="hidden md:flex items-center gap-3">
                         <a
-                            href="mailto:hello@luminatelabs.com"
+                            href="/details#contact"
                             className="text-sm font-medium px-4 py-2 rounded-lg transition-colors duration-200"
                             style={{ color: 'var(--text-muted)' }}
                             onMouseEnter={e => e.currentTarget.style.color = 'var(--text-primary)'}

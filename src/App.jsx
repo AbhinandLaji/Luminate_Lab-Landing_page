@@ -20,7 +20,7 @@ function DeepLinksBlock() {
     <section className="py-16 border-t" style={{ borderColor: 'var(--border-subtle)', background: 'var(--bg-secondary)' }}>
       <div className="max-w-4xl mx-auto px-6 text-center">
         <h3 style={{ fontSize: '0.82rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.18em', color: 'var(--text-muted)', marginBottom: 28 }}>
-          Explore Detailed Systems & Infrastructure
+          Explore Detailed Services &amp; Process
         </h3>
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 16 }}>
           <a
@@ -42,7 +42,7 @@ function DeepLinksBlock() {
               e.currentTarget.style.transform = 'translateY(0)';
             }}
           >
-            A Complete Revenue Infrastructure &rarr;
+            Comprehensive Software Solutions &rarr;
           </a>
           <a
             href="/details#process"
@@ -63,7 +63,7 @@ function DeepLinksBlock() {
               e.currentTarget.style.transform = 'translateY(0)';
             }}
           >
-            How We Build Acquisition Systems &rarr;
+            How We Build Software Products &rarr;
           </a>
           <a
             href="/details#contact"
@@ -153,7 +153,7 @@ export default function App() {
       <Navbar currentPath={currentPath} />
       <MobileNav currentPath={currentPath} />
 
-      <main id="main-content" aria-label="Luminate Labs — Customer Acquisition Agency" style={{ paddingTop: isDetailsPage ? '80px' : '0px' }}>
+      <main id="main-content" aria-label="Luminate Labs — Software Development Company" style={{ paddingTop: isDetailsPage ? '80px' : '0px' }}>
         {isDetailsPage ? (
           <DetailsPage />
         ) : (

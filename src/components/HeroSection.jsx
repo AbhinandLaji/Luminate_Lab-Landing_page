@@ -4,8 +4,8 @@ import { useTypewriter } from '../hooks/useTypewriter'
 import AuroraWave from './AuroraWave'
 import Strands from './Strands'
 
-const PHRASES = ['Scale Operations.', 'Accelerate Growth.', 'Automate Client Flow.', 'Drive Revenue.', 'Scale Predictably.']
-const TICKER_ITEMS = ['Paid Media', '•', 'Funnel Design', '•', 'Email Nurture', '•', 'CRM Automation', '•', 'SEO & Content', '•', 'Sales Systems', '•', 'Performance Analytics', '•']
+const PHRASES = ['Ship Faster.', 'Scale Smarter.', 'Build to Last.', 'Innovate Daily.', 'Deliver Excellence.']
+const TICKER_ITEMS = ['Web Development', '•', 'Mobile Apps', '•', 'UI/UX Design', '•', 'Custom Software', '•', 'AI Solutions', '•', 'Product Design', '•']
 
     // Inject keyframes once at module load — not on every render
     ; (() => {
@@ -37,7 +37,7 @@ function LiveBadge() {
                 <span className="relative inline-flex rounded-full w-2 h-2" style={{ background: '#5b7cf7' }} />
             </span>
             <span style={{ color: '#a5b4fc', fontSize: '0.76rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-                Performance-Driven Acquisition
+                Software Development Studio
             </span>
         </motion.div>
     )
@@ -100,7 +100,7 @@ function TickerStrip() {
 /* ═══════════════════════════════════
    MAIN HERO SECTION
 ═══════════════════════════════════ */
-const heroWords = ['We', 'Build', 'Systems']
+const heroWords = ['We', 'Build', 'Products']
 
 
 export default function HeroSection() {
@@ -221,23 +221,23 @@ export default function HeroSection() {
                     </h1>
                     <motion.p initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.92 }}
                         style={{ fontSize: 'clamp(1rem,2vw,1.2rem)', color: 'var(--text-muted)', maxWidth: '520px', margin: '1.75rem auto 3.5rem', lineHeight: 1.7 }}>
-                        We architect end-to-end growth systems <br /> that transform demand into measurable revenue.
+                        We design and develop websites, mobile apps, custom software, <br /> intuitive user experiences, and AI-powered solutions.
                     </motion.p>
                 </div>
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 1.08 }}
                     className="flex flex-col sm:flex-row items-center justify-center gap-4">
                     <MagneticButton href="#cta" className="btn-primary" style={{ width: 'auto' }}>
-                        Book a Growth Audit
+                        Start Your Project
                         <ArrowRight />
                     </MagneticButton>
                     <MagneticButton href="#solution" className="btn-ghost" style={{ width: 'auto' }}>
-                        Explore the Framework
+                        Explore Our Services
                     </MagneticButton>
                 </motion.div>
 
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 1.5 }} className="mt-14 flex flex-col items-center">
                     <p style={{ fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 600, color: 'var(--text-faint)' }}>
-                        Built for Growth-Focused Businesses
+                        Trusted by Forward-Thinking Companies
                     </p>
                 </motion.div>
             </div>
@@ -261,7 +261,7 @@ export default function HeroSection() {
                             <span style={{ position: 'relative', display: 'inline-flex', borderRadius: '50%', width: 7, height: 7, background: '#5b7cf7' }} />
                         </span>
                         <span style={{ color: '#a5b4fc', fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.09em', textTransform: 'uppercase' }}>
-                            Performance-Driven Agency
+                            Software Development Studio
                         </span>
                     </motion.div>
 
@@ -273,7 +273,7 @@ export default function HeroSection() {
                                 transition={{ delay: 0.1, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
                                 style={{ display: 'block' }}
                             >
-                                We Scale<br />Brands That
+                                We Build<br />Products That
                             </motion.span>
                             <motion.span
                                 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
@@ -290,7 +290,7 @@ export default function HeroSection() {
                             transition={{ delay: 0.35, duration: 0.55 }}
                             style={{ fontSize: '1rem', color: 'var(--text-muted)', lineHeight: 1.65, marginBottom: 32 }}
                         >
-                            Full-stack acquisition — first click to closed deal.
+                            From concept to deployment — we build scalable digital products.
                         </motion.p>
                     </div>
 
@@ -309,7 +309,7 @@ export default function HeroSection() {
                             marginBottom: 28,
                         }}
                     >
-                        Book a Strategy Call
+                        Book a Free Consultation
                         <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
                             <path d="M4 9h10M10 5l4 4-4 4" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
@@ -330,7 +330,8 @@ export default function HeroSection() {
                     style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, padding: '20px 20px', paddingBottom: 'calc(20px + env(safe-area-inset-bottom, 0px))' }}
                 >
                     <p style={{ fontSize: '0.6rem', letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 600, color: 'var(--text-faint)' }}>
-                        Built for Growth-Focused Businesses                    </p>
+                        Trusted by Forward-Thinking Companies
+                    </p>
                     <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap', justifyContent: 'center' }}>
                         {['Horizon', 'Vela', 'Arcane', 'Lumex', 'Stratus'].map((name) => (
                             <span key={name} style={{ fontSize: '0.78rem', fontWeight: 700, color: 'rgba(255,255,255,0.16)' }}>{name}</span>

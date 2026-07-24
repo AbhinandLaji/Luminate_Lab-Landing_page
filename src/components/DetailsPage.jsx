@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 import SolutionSection from './SolutionSection'
+import TechStackSection from './TechStackSection'
 import ProcessSection from './ProcessSection'
+import PortfolioSection from './PortfolioSection'
 import ContactSection from './ContactSection'
 import AmbientAurora from './AmbientAurora'
 
@@ -27,7 +29,9 @@ export default function DetailsPage() {
             <AmbientAurora position="left" />
             <AmbientAurora position="right" />
             <SolutionSection />
+            <TechStackSection />
             <ProcessSection />
+            <PortfolioSection />
             <ContactSection />
         </div>
     )

@@ -5,42 +5,42 @@ import SwipeCarousel from './mobile/SwipeCarousel'
 const features = [
     {
         accentName: 'blue',
-        label: 'Full Ownership',
-        headline: 'You Own the System. We Build It.',
-        body: "No black boxes. No agency lock-in. We build the infrastructure that you control and understand — forever.",
+        label: 'Custom Engineering',
+        headline: 'You Own What We Build.',
+        body: "No templates. No shortcuts. Every solution is engineered from the ground up for your specific business — clean, maintainable code you fully own.",
         stats: [
-            { value: '100%', label: 'Transparent Reporting' },
-            { value: 'Day 1', label: 'Full Access' },
+            { value: 'Clean', label: 'Code Practices' },
+            { value: 'Yours', label: 'Full Ownership' },
         ],
         icon: (
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                <polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" />
             </svg>
         ),
     },
     {
         accentName: 'violet',
-        label: 'Proven Framework',
-        headline: 'Built on What Actually Works.',
-        body: 'Every strategy is backed by real performance data from $10M+ in tested ad spend across 15+ industries.',
+        label: 'Scalable Architecture',
+        headline: 'Built to Scale With You.',
+        body: 'Every system we design is built with scalability, performance, and maintainability in mind — so your software grows as your business does, without costly rewrites.',
         stats: [
-            { value: '$10M+', label: 'Ad Spend Managed' },
-            { value: '3.8x', label: 'Avg ROAS' },
+            { value: 'Modern', label: 'Tech Stack' },
+            { value: 'Scalable', label: 'By Design' },
         ],
         icon: (
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" /><polyline points="17 6 23 6 23 12" />
+                <polygon points="12 2 22 9 12 22 2 9 12 2" /><polyline points="2 9 12 13 22 9" /><line x1="12" y1="2" x2="12" y2="13" />
             </svg>
         ),
     },
     {
         accentName: 'purple',
-        label: 'Dedicated Team',
-        headline: 'One Team. Complete Accountability.',
-        body: 'A senior specialist handles your account end-to-end — not a revolving door of junior account managers.',
+        label: 'Dedicated Partnership',
+        headline: 'One Team. Full Accountability.',
+        body: 'A committed team handles your project end-to-end with transparent communication, regular updates, and a long-term commitment to your product’s success.',
         stats: [
-            { value: '48hr', label: 'Response Time' },
-            { value: '98%', label: 'Retention Rate' },
+            { value: 'Direct', label: 'Communication' },
+            { value: 'Ongoing', label: 'Support' },
         ],
         icon: (
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
@@ -146,7 +146,7 @@ export default function WhyUsSection() {
 
             <div className="relative max-w-6xl mx-auto">
                 <AnimatedSection className="text-center mb-12 md:mb-20">
-                    <span className="section-label">Our Edge</span>
+                    <span className="section-label">Why Choose Us</span>
                     <h2
                         id="whyus-heading"
                         className="mt-6 font-black tracking-tight max-w-2xl mx-auto"
@@ -155,7 +155,7 @@ export default function WhyUsSection() {
                         Why Luminate Labs
                     </h2>
                     <p className="mt-5 text-lg max-w-md mx-auto" style={{ color: 'var(--text-muted)', lineHeight: 1.7 }}>
-                        We&apos;re not a vendor. We&apos;re your growth partner.
+                        We&apos;re not a vendor. We&apos;re your technology partner.
                     </p>
                 </AnimatedSection>
 

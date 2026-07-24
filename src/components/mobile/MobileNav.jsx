@@ -11,25 +11,24 @@ import { motion, AnimatePresence } from 'framer-motion'
  */
 
 const NAV_LINKS = [
-    { label: 'Problem', href: '#problem', icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></svg> },
-    { label: 'Solution', href: '#solution', icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg> },
+    { label: 'Services', href: '#solution', icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg> },
     { label: 'Process', href: '#process', icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg> },
-    { label: 'Results', href: '#our-edge', icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18" /><polyline points="17 6 23 6 23 12" /></svg> },
-    { label: 'Why Us', href: '#why-us', icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg> },
+    { label: 'Portfolio', href: '#portfolio', icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18" /><polyline points="17 6 23 6 23 12" /></svg> },
+    { label: 'About', href: '#why-us', icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg> },
 ]
 
 /* ─── Bottom sheet overlay ─── */
 function BottomSheet({ open, onClose, theme, onThemeToggle, currentPath = '/' }) {
     const isDetails = currentPath === '/details'
     const dynamicLinks = NAV_LINKS.map(link => {
-        if (link.label === 'Solution') {
+        if (link.label === 'Services') {
             return { ...link, href: isDetails ? '#solution' : '/details#solution' }
         }
         if (link.label === 'Process') {
             return { ...link, href: isDetails ? '#process' : '/details#process' }
         }
-        if (link.label === 'Results') {
-            return { ...link, href: isDetails ? '/#our-edge' : '#our-edge' }
+        if (link.label === 'Portfolio') {
+            return { ...link, href: isDetails ? '#portfolio' : '/details#portfolio' }
         }
         return { ...link, href: isDetails ? `/${link.href}` : link.href }
     })
@@ -81,7 +80,7 @@ function BottomSheet({ open, onClose, theme, onThemeToggle, currentPath = '/' })
                                 Luminate <span style={{ color: 'var(--accent-blue)' }}>Labs</span>
                             </div>
                             <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)', marginTop: 2 }}>
-                                Performance-Driven Acquisition Agency
+                                Software Development Studio
                             </div>
                         </div>
 
@@ -167,7 +166,7 @@ function BottomSheet({ open, onClose, theme, onThemeToggle, currentPath = '/' })
                                     boxShadow: '0 8px 28px var(--accent-blue-bg)',
                                 }}
                             >
-                                Book a Strategy Call
+                                Book a Free Consultation
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                                     <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>

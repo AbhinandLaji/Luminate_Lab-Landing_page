@@ -9,38 +9,38 @@ import GradualBlur from './GradualBlur'
 const problems = [
     {
         number: '01', accentName: 'blue',
-        title: ['No Clear', 'Acquisition', 'System.'],
-        hook: 'Activity without architecture.',
-        desc: 'Businesses invest in ads, hire vendors, test tools — but nothing connects. No unified funnel. No data feedback loop. No scalable system. Just fragmented efforts that never compound.',
-        stat: { value: '60%', unit: 'of marketing spend', context: 'is inefficient due to poor tracking and attribution' },
+        title: ['Outdated', 'Digital', 'Presence.'],
+        hook: 'First impressions define your brand.',
+        desc: 'An outdated or slow website signals distrust. Customers compare you to competitors instantly. Without a modern, fast, and responsive digital presence, you lose opportunities before a conversation even begins.',
+        stat: { value: 'Now', unit: 'the right time to modernize', context: 'A modern digital presence is your most powerful business asset' },
     },
     {
         number: '02', accentName: 'violet',
-        title: ['Traffic That', 'Never', 'Converts.'],
-        hook: 'Clicks without conversion.',
-        desc: 'Traffic is purchased, but the journey breaks down. Offers lack positioning, pages lack structure, and funnels lack optimization. Without engineered conversion paths, attention turns into expense.',
-        stat: { value: '96%', unit: 'of website visitors', context: 'leave without taking action' },
+        title: ['Manual &', 'Repetitive', 'Workflows.'],
+        hook: 'Time spent on repetition is time lost to growth.',
+        desc: 'Teams bogged down by manual data entry, repetitive tasks, and disconnected tools cannot focus on what matters. Custom software automation frees your team to do higher-value work and scales without adding headcount.',
+        stat: { value: 'High', unit: 'cost of manual processes', context: 'Automation eliminates error-prone workflows and unlocks operational efficiency' },
     },
     {
         number: '03', accentName: 'teal',
-        title: ['Leads That', 'Never', 'Close.'],
-        hook: 'Speed determines revenue.',
-        desc: 'Leads enter the pipeline, but follow-up is inconsistent. No automation. No structured nurture. No CRM discipline. Revenue leaks happen not because demand is weak — but because systems are.',
-        stat: { value: '44%', unit: 'of sales reps', context: 'stop after just one follow-up attempt' },
+        title: ['Poor User', 'Experience', 'Design.'],
+        hook: 'Confusion drives users away.',
+        desc: 'Unintuitive interfaces frustrate users and erode trust. Poor UX directly impacts retention, satisfaction, and revenue. Great design is not cosmetic — it is a competitive advantage that drives measurable product success.',
+        stat: { value: 'Critical', unit: 'role of UX in product success', context: 'Intuitive design reduces friction and keeps users engaged with your product' },
     },
     {
         number: '04', accentName: 'rose',
-        title: ['Zero', 'Visibility', 'Into Data.'],
-        hook: 'Scaling without clarity.',
-        desc: 'Without proper attribution and reporting, teams cannot identify which channels drive profit and which drain budget. Growth decisions made on partial data create fragile results.',
-        stat: { value: '$30B+', unit: 'lost annually', context: 'due to poor marketing attribution globally' },
+        title: ['Disconnected', 'Business', 'Systems.'],
+        hook: 'Data silos slow every decision.',
+        desc: 'When your tools do not talk to each other, data lives in silos and teams work with incomplete information. Custom integrations and unified platforms eliminate gaps, streamline operations, and give leadership real-time clarity.',
+        stat: { value: 'Zero', unit: 'tolerance for data silos', context: 'Integrated systems give your team a single source of truth across every department' },
     },
     {
         number: '05', accentName: 'orange',
-        title: ['Feast or', 'Famine', 'Revenue.'],
-        hook: 'Unstable pipelines create unstable pipelines.',
-        desc: 'When growth relies on isolated campaigns instead of infrastructure, revenue fluctuates. Strong months feel accidental. Weak months feel alarming. Predictability is built through systems.',
-        stat: { value: '68%', unit: 'of businesses', context: 'report inconsistent monthly revenue' },
+        title: ['No Tech', 'Competitive', 'Advantage.'],
+        hook: 'Technology is the new differentiator.',
+        desc: 'Businesses that fail to adopt AI, automation, and modern software fall behind those that do. A tailored technology strategy — from intelligent features to scalable architecture — is what separates leaders from followers in every industry.',
+        stat: { value: 'Future', unit: 'built on smart technology', context: 'AI-powered tools and modern platforms give businesses a lasting competitive edge' },
     },
 ]
 const N = problems.length
@@ -188,7 +188,7 @@ function ProblemPanel({ p, idx, activeIdx }) {
                 {/* Label row */}
                 <motion.div className="pb" initial={{ opacity: 0, y: 14 }} style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 44 }}>
                     <span style={{ padding: '5px 14px', borderRadius: 100, background: `var(--accent-${p.accentName}-bg)`, border: `1px solid var(--accent-${p.accentName}-border)`, fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: `var(--accent-${p.accentName})` }}>
-                        The Reality
+                        The Challenge
                     </span>
                     <span style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-faint)', letterSpacing: '0.06em' }}>
                         Problem {p.number}
@@ -246,7 +246,7 @@ function ProblemPanel({ p, idx, activeIdx }) {
                         }}
                     >
                         <div aria-hidden style={{ position: 'absolute', bottom: '-30%', right: '-10%', width: 280, height: 280, borderRadius: '50%', background: `radial-gradient(circle, var(--accent-${p.accentName}-bg) 0%, transparent 70%)`, pointerEvents: 'none' }} />
-                        <div style={{ fontSize: 'clamp(4rem,10vw,8rem)', fontWeight: 900, lineHeight: 1, letterSpacing: '-0.05em', color: `var(--accent-${p.accentName})`, position: 'relative', zIndex: 2 }}>
+                        <div style={{ fontSize: 'clamp(2.5rem,6vw,4.5rem)', fontWeight: 900, lineHeight: 1, letterSpacing: '-0.05em', color: `var(--accent-${p.accentName})`, position: 'relative', zIndex: 2 }}>
                             <StatCountUp value={p.stat.value} isActive={isActive} />
                         </div>
                         <div style={{ marginTop: 14, position: 'relative', zIndex: 2 }}>
@@ -434,11 +434,11 @@ export default function ProblemSection() {
                 </div>
                 {/* Section header */}
                 <div style={{ textAlign: 'center', padding: '64px 20px 32px' }}>
-                    <span className="section-label">The Reality</span>
+                    <span className="section-label">The Challenge</span>
                     <h2 style={{ fontSize: 'clamp(2rem, 8vw, 2.8rem)', fontWeight: 900, letterSpacing: '-0.03em', color: 'var(--text-primary)', marginTop: 16, lineHeight: 1.1 }}>
-                        Most Businesses<br />Don&apos;t Have a System
+                        Most Businesses Are<br />Held Back by Technology
                     </h2>
-                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: 10 }}>Swipe to explore each problem →</p>
+                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: 10 }}>Swipe to explore each challenge →</p>
                 </div>
 
                 <SwipeCarousel
@@ -462,7 +462,7 @@ export default function ProblemSection() {
                                 <span style={{ fontSize: '0.62rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', color: `var(--accent-${p.accentName})`, padding: '4px 12px', borderRadius: 100, background: `var(--accent-${p.accentName}-bg)`, border: `1px solid var(--accent-${p.accentName}-border)` }}>
                                     Problem {p.number}
                                 </span>
-                                <span style={{ fontSize: '0.6rem', color: 'var(--text-faint)', fontWeight: 600, letterSpacing: '0.08em' }}>THE REALITY</span>
+                                <span style={{ fontSize: '0.6rem', color: 'var(--text-faint)', fontWeight: 600, letterSpacing: '0.08em' }}>THE CHALLENGE</span>
                             </div>
 
                             {/* Title */}
@@ -473,7 +473,7 @@ export default function ProblemSection() {
                             </h3>
 
                             {/* Stat big number */}
-                            <div style={{ fontSize: '3.8rem', fontWeight: 900, letterSpacing: '-0.05em', color: `var(--accent-${p.accentName})`, lineHeight: 1, marginBottom: 6 }}>
+                            <div style={{ fontSize: 'clamp(2.2rem,8vw,3rem)', fontWeight: 900, letterSpacing: '-0.05em', color: `var(--accent-${p.accentName})`, lineHeight: 1, marginBottom: 6 }}>
                                 {p.stat.value}
                             </div>
                             <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: 16, lineHeight: 1.5 }}>

@@ -92,10 +92,10 @@ export default function FloatingCTA() {
                         >
                             <div>
                                 <div style={{ fontSize: '0.97rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.01em', lineHeight: 1.2 }}>
-                                    Book a Strategy Call
+                                    Book a Free Consultation
                                 </div>
                                 <div style={{ fontSize: '0.65rem', fontWeight: 600, color: 'rgba(255,255,255,0.65)', letterSpacing: '0.04em', marginTop: '2px' }}>
-                                    Free · No commitment · 50+ brands scaled
+                                    Free · No commitment · Expert engineers
                                 </div>
                             </div>
                             {/* Arrow icon */}

@@ -60,7 +60,7 @@ export default function ContactSection() {
                         Send a Message
                     </h2>
                     <p className="mt-4 max-w-lg mx-auto" style={{ color: 'var(--text-muted)', fontSize: '1.05rem' }}>
-                        Have a specific question or want to discuss a custom acquisition system? Drop us a line below.
+                        Have a project in mind or want to discuss your software needs? We&apos;d love to hear from you.
                     </p>
                 </AnimatedSection>
 
@@ -125,7 +125,7 @@ export default function ContactSection() {
                                     id="message"
                                     name="message"
                                     required
-                                    placeholder="Tell us about your current acquisition bottlenecks..."
+                                    placeholder="Tell us about your project, business requirements, or your idea..."
                                     rows="4"
                                     className="w-full px-4 py-3 rounded-xl transition-all resize-none"
                                     style={{

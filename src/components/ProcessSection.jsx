@@ -7,16 +7,16 @@ import AnimatedSection from './AnimatedSection'
    ══════════════════════════════════════════════════════ */
 const steps = [
     {
-        number: '01', title: 'Discovery', tag: 'Weeks 1–2', accentName: 'blue',
-        headline: 'Revenue System Audit',
-        desc: 'We conduct a comprehensive analysis of your acquisition and revenue ecosystem — identifying bottlenecks, inefficiencies, and unrealized growth levers. Every recommendation is grounded in data, not assumptions.',
+        number: '01', title: 'Discovery', tag: 'Phase 1', accentName: 'blue',
+        headline: 'Requirement Gathering & Analysis',
+        desc: 'We start by deeply understanding your business goals, target audience, and technical constraints. This ensures we build the right solution from day one.',
         bullets: [
-            'End-to-end funnel and pipeline audit',
-            'Competitive landscape and positioning analysis',
-            'Audience segmentation and intent mapping',
-            'Offer structure and messaging evaluation',
+            'Stakeholder interviews and requirement gathering',
+            'Technical feasibility and architecture scoping',
+            'Competitor analysis and market research',
+            'Project roadmap and resource planning',
         ],
-        stats: [{ v: '72hr', l: 'Audit delivery window' }, { v: '100%', l: 'Data-backed recommendations' }],
+        stats: [{ v: 'Clear', l: 'Project Scope' }, { v: 'Aligned', l: 'Business Goals' }],
         icon: (
             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.65" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
@@ -24,16 +24,16 @@ const steps = [
         ),
     },
     {
-        number: '02', title: 'Strategy', tag: 'Weeks 2–3', accentName: 'violet',
-        headline: 'Growth Architecture Blueprint',
-        desc: 'A tailored, channel-agnostic growth strategy engineered around your margins, market dynamics, and long-term expansion objectives.',
+        number: '02', title: 'Planning & Design', tag: 'Phase 2', accentName: 'violet',
+        headline: 'System Architecture & UX/UI',
+        desc: 'Before writing a single line of code, we design the system architecture and create high-fidelity prototypes. This visualizes the final product and technical foundation.',
         bullets: [
-            'Channel prioritization and capital allocation model',
-            'Creative positioning and hypothesis framework',
-            '90-day performance roadmap with defined KPIs',
-            'End-to-end funnel and lifecycle architecture',
+            'System architecture and database design',
+            'Wireframing and user flow mapping',
+            'High-fidelity UI/UX prototyping',
+            'Technology stack finalization',
         ],
-        stats: [{ v: '90-Day', l: 'Strategic roadmap' }, { v: 'Custom', l: 'Built for your model' }],
+        stats: [{ v: 'Visual', l: 'Prototypes' }, { v: 'Solid', l: 'Architecture' }],
         icon: (
             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.65" strokeLinecap="round" strokeLinejoin="round">
                 <polygon points="12 2 2 7 12 12 22 7 12 2" />
@@ -42,16 +42,16 @@ const steps = [
         ),
     },
     {
-        number: '03', title: 'Execution', tag: 'Weeks 3–8', accentName: 'teal',
-        headline: 'Integrated Launch & Deployment',
-        desc: 'We implement and activate every core component of the revenue system — acquisition channels, conversion infrastructure, automation, and lifecycle sequences — in coordinated alignment.',
+        number: '03', title: 'Development & Testing', tag: 'Phase 3', accentName: 'teal',
+        headline: 'Engineering & Quality Assurance',
+        desc: 'Our engineering team brings the designs to life using clean, scalable code. We employ rigorous testing throughout development to ensure a bug-free experience.',
         bullets: [
-            'Multi-channel acquisition rollout',
-            'Conversion environment build and optimization',
-            'Creative production and structured testing cycles',
-            'Performance sprints with continuous iteration',
+            'Agile development sprints',
+            'Front-end and back-end integration',
+            'Automated and manual QA testing',
+            'Performance and security audits',
         ],
-        stats: [{ v: '2–4 Weeks', l: 'Go-live window' }, { v: 'Parallel', l: 'Cross-channel deployment' }],
+        stats: [{ v: 'Clean', l: 'Codebase' }, { v: 'Tested', l: 'Functionality' }],
         icon: (
             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.65" strokeLinecap="round" strokeLinejoin="round">
                 <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
@@ -59,16 +59,16 @@ const steps = [
         ),
     },
     {
-        number: '04', title: 'Scale', tag: 'Month 3+', accentName: 'rose',
-        headline: 'Optimization & Expansion',
-        desc: 'We systematically amplify high-performing channels, optimize retention dynamics, and refine revenue efficiency — driving sustainable, compounding growth.',
+        number: '04', title: 'Deployment & Support', tag: 'Phase 4', accentName: 'rose',
+        headline: 'Launch & Continuous Improvement',
+        desc: 'We manage a smooth deployment to production and provide ongoing support, monitoring, and iterative enhancements to keep your software running flawlessly.',
         bullets: [
-            'Performance-based scaling framework',
-            'Cross-channel reinforcement loops',
-            'Lifetime value and retention optimization',
-            'Executive-level performance reporting',
+            'Production deployment and server setup',
+            'Real-time monitoring and analytics integration',
+            'Ongoing maintenance and issue resolution',
+            'Feature enhancements and scaling',
         ],
-        stats: [{ v: 'MoM', l: 'Compounding growth cycles' }, { v: 'Systemized', l: 'Scale methodology' }],
+        stats: [{ v: 'Smooth', l: 'Launch' }, { v: 'Reliable', l: 'Ongoing Support' }],
         icon: (
             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.65" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" /><polyline points="17 6 23 6 23 12" />
@@ -452,7 +452,7 @@ export default function ProcessSection() {
                         style={{ fontSize: 'clamp(1.95rem, 4vw, 3rem)', letterSpacing: '-0.03em', color: 'var(--text-primary)', lineHeight: 1.1 }}
                     >
                         How We Build Your<br />
-                        <span className="gradient-text">Acquisition Engine</span>
+                        <span className="gradient-text">Software Product</span>
                     </h2>
                     <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', maxWidth: 420, margin: '0 auto' }}>
                         Four phases. No fluff. Just a systematic path from zero to scale.

@@ -14,11 +14,10 @@ import { motion } from 'framer-motion'
         document.head.appendChild(s)
     })()
 
-/* ── Checklist items ─── */
 const points = [
     'No long-term contracts required',
-    'Results-focused engagement model',
-    'Dedicated senior strategist from Day 1',
+    'Custom-built for your business needs',
+    'Dedicated engineering team from Day 1',
 ]
 
 export default function CTASection() {
@@ -74,7 +73,7 @@ export default function CTASection() {
                             boxShadow: 'var(--shadow-card)',
                         }}
                     >
-                        <span className="section-label">Ready to Scale?</span>
+                        <span className="section-label">Ready to Build?</span>
 
                         <h2
                             className="mt-6 md:mt-8 mb-5 md:mb-6 font-black"
@@ -85,15 +84,15 @@ export default function CTASection() {
                                 color: 'var(--text-primary)',
                             }}
                         >
-                            Stop Guessing.<br />
-                            <span className="gradient-text">Start Operating with Precision.</span>
+                            Stop Waiting.<br />
+                            <span className="gradient-text">Start Building Something Great.</span>
                         </h2>
 
                         <p
                             className="mb-10 max-w-lg mx-auto"
                             style={{ fontSize: '1.05rem', color: 'var(--text-muted)', lineHeight: 1.7 }}
                         >
-                            One strategic call. A fully architected acquisition and revenue system designed around your business model.
+                            One conversation to understand your vision. A dedicated team to bring it to life.
                         </p>
 
                         {/* Checklist */}
@@ -122,12 +121,12 @@ export default function CTASection() {
                             whileTap={{ scale: 0.96 }}
                             transition={{ type: 'spring', stiffness: 380, damping: 18 }}
                         >
-                            Book Your Strategy Call
+                            Book a Free Consultation
                             <ArrowRight />
                         </motion.a>
 
                         <p className="mt-6 text-xs" style={{ color: 'var(--text-faint)' }}>
-                            No commitment. No agency jargon. Just results.
+                            No commitment. No technical jargon. Just great software.
                         </p>
                     </div>
                 </AnimatedSection>

@@ -7,46 +7,35 @@ const pillars = [
     {
         icon: (
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                <polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" />
             </svg>
         ),
-        title: 'Paid Media Systems',
-        desc: 'Performance campaigns across major platforms engineered for measurable pipeline impact — not vanity reach.',
-        tag: 'Acquisition',
+        title: 'Web Development',
+        desc: 'We build fast, responsive, and scalable web applications using modern frameworks like React and Next.js — engineered for performance and maintainability.',
+        tag: 'Frontend & Backend',
         accentName: 'blue',
     },
     {
         icon: (
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
+                <rect x="5" y="2" width="14" height="20" rx="2" ry="2" /><line x1="12" y1="18" x2="12.01" y2="18" />
             </svg>
         ),
-        title: 'Search & Content Strategy',
-        desc: 'Compounding organic visibility built on intent, positioning, and long-term discoverability.',
-        tag: 'Authority',
+        title: 'Mobile App Development',
+        desc: 'From iOS to Android, we craft intuitive cross-platform mobile experiences using Flutter and React Native that delight users and drive engagement.',
+        tag: 'iOS & Android',
         accentName: 'indigo',
     },
     {
         icon: (
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" /><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                <circle cx="12" cy="12" r="10" /><path d="M8 14s1.5 2 4 2 4-2 4-2" /><line x1="9" y1="9" x2="9.01" y2="9" /><line x1="15" y1="9" x2="15.01" y2="9" />
             </svg>
         ),
-        title: 'Funnel & Journey Architecture',
-        desc: 'Strategic landing environments and automated buyer journeys designed to maximize intent capture.',
-        tag: 'Conversion',
+        title: 'UI/UX Design',
+        desc: 'We design intuitive, beautiful, and user-centered interfaces — from wireframes and prototypes to polished design systems that elevate product experiences.',
+        tag: 'Design & Prototyping',
         accentName: 'violet',
-    },
-    {
-        icon: (
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" />
-            </svg>
-        ),
-        title: 'Lifecycle & Email Systems',
-        desc: 'Structured follow-up sequences that educate, qualify, and move prospects toward decision.',
-        tag: 'Nurture',
-        accentName: 'purple',
     },
     {
         icon: (
@@ -54,21 +43,32 @@ const pillars = [
                 <rect x="2" y="3" width="20" height="14" rx="2" ry="2" /><line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" />
             </svg>
         ),
-        title: 'CRM & Revenue Operations',
-        desc: 'Integrated pipeline management, automation logic, and reporting systems that eliminate lead leakage.',
-        tag: 'Automation',
-        accentName: 'violet',
+        title: 'Custom Software Solutions',
+        desc: 'We architect and build bespoke software tailored to your business — ERP systems, internal tools, dashboards, and workflow automation platforms built to scale.',
+        tag: 'Tailored Engineering',
+        accentName: 'purple',
     },
     {
         icon: (
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                <path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2z" /><path d="M9 9h.01M15 9h.01M9 15s1 1 3 1 3-1 3-1" /><path d="M8 12h8" />
             </svg>
         ),
-        title: 'Sales & Offer Engineering',
-        desc: 'Structured messaging, scripts, and conversion frameworks designed to improve close rates and revenue velocity.',
-        tag: 'Enablement',
-        accentName: 'purple',
+        title: 'AI-Powered Applications',
+        desc: 'We integrate intelligent AI capabilities into your products — from natural language features and recommendation engines to computer vision and process automation.',
+        tag: 'AI & Machine Learning',
+        accentName: 'teal',
+    },
+    {
+        icon: (
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+        ),
+        title: 'Maintenance & Support',
+        desc: 'We provide ongoing technical support, performance monitoring, security updates, and iterative enhancements to keep your software reliable and future-ready.',
+        tag: 'Long-Term Partnership',
+        accentName: 'rose',
     },
 ]
 
@@ -229,10 +229,10 @@ export default function SolutionSection() {
                         className="mt-6 font-black tracking-tight max-w-2xl mx-auto"
                         style={{ fontSize: 'clamp(2rem, 4.5vw, 3.25rem)', lineHeight: 1.1, letterSpacing: '-0.03em', color: 'var(--text-primary)' }}
                     >
-                        A Complete Revenue Infrastructure
+                        Everything You Need to Build &amp; Scale
                     </h2>
                     <p className="mt-5 text-lg max-w-md mx-auto" style={{ color: 'var(--text-muted)', lineHeight: 1.7 }}>
-                        Six integrated pillars. One unified growth system.
+                        End-to-end software services. One dedicated team.
                     </p>
                 </AnimatedSection>
 

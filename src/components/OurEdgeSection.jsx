@@ -53,11 +53,11 @@ const Icons = {
    BUBBLE CONFIG — SVG icons, no emojis
 ════════════════════════════════════════════════════ */
 const BUBBLES = [
-    { id: 'full-ownership', value: 'Full', label: 'Infrastructure Ownership', accentName: 'blue', icon: Icons.rocket, relX: -0.26, relY: -0.30, fx: 0.012, fy: 0.008, delay: 0.05 },
-    { id: 'transparency', value: '100%', label: 'Operational Transparency', accentName: 'teal', icon: Icons.diamond, relX: 0.26, relY: -0.28, fx: -0.010, fy: 0.010, delay: 0.14 },
-    { id: 'access', value: 'Day 1', label: 'Infrastructure Access', accentName: 'violet', icon: Icons.chart, relX: -0.33, relY: 0.10, fx: 0.014, fy: -0.008, delay: 0.22 },
-    { id: 'capital', value: '$10M+', label: 'Managed Acquisition Capital', accentName: 'rose', icon: Icons.shield, relX: 0.31, relY: 0.12, fx: -0.011, fy: -0.010, delay: 0.10 },
-    { id: 'sla', value: '48hr', label: 'Response SLA', accentName: 'purple', icon: Icons.globe, relX: -0.12, relY: 0.34, fx: 0.007, fy: -0.014, delay: 0.18 },
+    { id: 'custom-solutions', value: 'Custom', label: 'Built Solutions', accentName: 'blue', icon: Icons.rocket, relX: -0.26, relY: -0.30, fx: 0.012, fy: 0.008, delay: 0.05 },
+    { id: 'transparency', value: 'Open', label: 'Transparent Process', accentName: 'teal', icon: Icons.diamond, relX: 0.26, relY: -0.28, fx: -0.010, fy: 0.010, delay: 0.14 },
+    { id: 'tech-stack', value: 'Modern', label: 'Technology Stack', accentName: 'violet', icon: Icons.chart, relX: -0.33, relY: 0.10, fx: 0.014, fy: -0.008, delay: 0.22 },
+    { id: 'scalable', value: 'Scalable', label: 'Architecture Design', accentName: 'rose', icon: Icons.shield, relX: 0.31, relY: 0.12, fx: -0.011, fy: -0.010, delay: 0.10 },
+    { id: 'support', value: 'Swift', label: 'Dedicated Support', accentName: 'purple', icon: Icons.globe, relX: -0.12, relY: 0.34, fx: 0.007, fy: -0.014, delay: 0.18 },
     { id: 'partnerships', value: 'Long-Term', label: 'Client Partnerships', accentName: 'indigo', icon: Icons.zap, relX: 0.14, relY: 0.34, fx: -0.008, fy: -0.012, delay: 0.26 },
 ]
 
@@ -287,7 +287,7 @@ export default function OurEdgeSection() {
                                 Why Luminate Labs<br /><span className="gradient-text">By Design.</span>
                             </h2>
                             <p style={{ fontSize: '1rem', color: 'var(--text-muted)', maxWidth: '320px', lineHeight: 1.75, margin: '0 auto 28px' }}>
-                                We don’t operate as a vendor. We build and embed revenue infrastructure alongside your team.
+                                We don&apos;t operate as a vendor. We become your dedicated technology partner — embedded in your product journey from day one.
                             </p>
                             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '7px 16px', borderRadius: '100px', background: 'var(--accent-blue-bg)', border: '1px solid var(--accent-blue-border)', pointerEvents: 'auto' }}>
                                 <motion.span animate={{ y: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1.6, ease: 'easeInOut' }} style={{ fontSize: '0.95rem', lineHeight: 1, color: 'var(--accent-blue)' }}>↕</motion.span>
@@ -317,7 +317,7 @@ export default function OurEdgeSection() {
                             Why Luminate Labs<br /><span className="gradient-text">By Design.</span>
                         </h2>
                         <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: 1.75 }}>
-                            We don’t operate as a vendor. We build and embed revenue infrastructure alongside your team.
+                            We don&apos;t operate as a vendor. We become your dedicated technology partner — embedded in your product journey from day one.
                         </p>
                     </motion.div>
 
@@ -363,7 +363,7 @@ export default function OurEdgeSection() {
                     <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.4, duration: 0.5 }}
                         className="mt-10 text-center">
                         <a href="#cta" className="btn-primary" style={{ display: 'inline-flex', width: '100%', maxWidth: 300, justifyContent: 'center' }}>
-                            Get These Results
+                            Start Your Project
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
                         </a>
                     </motion.div>

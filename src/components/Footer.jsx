@@ -2,19 +2,19 @@ const columns = [
     {
         heading: 'Services',
         links: [
-            { label: 'Paid Media', href: '#solution' },
-            { label: 'SEO & Content', href: '#solution' },
-            { label: 'Funnel Architecture', href: '#solution' },
-            { label: 'Email Nurture', href: '#solution' },
+            { label: 'Web Development', href: '/details#solution' },
+            { label: 'Mobile Apps', href: '/details#solution' },
+            { label: 'Custom Software', href: '/details#solution' },
+            { label: 'UI/UX Design', href: '/details#solution' },
         ],
     },
     {
         heading: 'Company',
         links: [
-            { label: 'Our Process', href: '#process' },
-            { label: 'Why Us', href: '#why-us' },
-            { label: 'Case Studies', href: '#' },
-            { label: 'Contact', href: 'mailto:hello@luminatelabs.com' },
+            { label: 'Our Process', href: '/details#process' },
+            { label: 'Why Us', href: '/#why-us' },
+            { label: 'Portfolio', href: '/details#portfolio' },
+            { label: 'Contact', href: '/details#contact' },
         ],
     },
 ]
@@ -101,7 +101,7 @@ export default function Footer() {
                         </div>
 
                         <p className="text-sm leading-relaxed max-w-xs" style={{ color: 'var(--text-muted)' }}>
-                            A full-stack acquisition agency for ambitious businesses ready to build real pipelines.
+                            Luminate Labs is a software development company specializing in web applications, mobile apps, custom software, UI/UX design, and AI-powered solutions.
                         </p>
 
                         {/* Social icons */}
