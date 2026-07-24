@@ -51,13 +51,7 @@ const socials = [
 
 function FooterLink({ href, children }) {
     return (
-        <a
-            href={href}
-            className="block text-sm transition-colors duration-200"
-            style={{ color: 'var(--text-muted)' }}
-            onMouseEnter={e => (e.currentTarget.style.color = 'var(--text-secondary)')}
-            onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-muted)')}
-        >
+        <a href={href} className="block text-sm transition-colors duration-200" style={{ color: 'var(--text-muted)' }} onMouseEnter={e => (e.currentTarget.style.color = 'var(--text-secondary)')} onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-muted)')}>
             {children}
         </a>
     )
@@ -66,6 +60,7 @@ function FooterLink({ href, children }) {
 export default function Footer() {
     return (
         <footer
+            className="pb-24 md:pb-0"
             style={{
                 background: 'var(--bg-secondary)',
                 borderTop: '1px solid var(--border-subtle)',
@@ -73,9 +68,9 @@ export default function Footer() {
         >
             {/* Main footer */}
             <div className="max-w-6xl mx-auto px-6 lg:px-10 py-16">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-4 gap-x-6 gap-y-10 md:gap-12">
                     {/* Brand column */}
-                    <div className="md:col-span-2">
+                    <div className="col-span-2 sm:col-span-1 md:col-span-2">
                         {/* Logo */}
                         <div className="flex items-center gap-3 mb-5">
                             <div style={{ width: 44, height: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
@@ -157,7 +152,7 @@ export default function Footer() {
 
             {/* Bottom bar */}
             <div
-                className="max-w-6xl mx-auto px-6 lg:px-10 py-5 flex flex-col sm:flex-row items-center justify-between gap-3"
+                className="max-w-6xl mx-auto px-6 lg:px-10 py-5 flex flex-col items-start sm:flex-row sm:items-center justify-between gap-3"
                 style={{ borderTop: '1px solid var(--border-subtle)' }}
             >
                 <p className="text-xs" style={{ color: 'var(--text-faint)' }}>
