@@ -1,8 +1,7 @@
 import { useRef, useState, useEffect } from 'react'
-import { motion, useScroll, useTransform, useMotionValueEvent, useAnimate, stagger } from 'framer-motion'
+import { motion, useScroll, useTransform, useMotionValueEvent, useMotionValue, useAnimate, stagger } from 'framer-motion'
 import SwipeCarousel from './mobile/SwipeCarousel'
 import GradualBlur from './GradualBlur'
-
 /* ══════════════════════════════════════════════════════
    PROBLEM DATA
 ══════════════════════════════════════════════════════ */
@@ -107,11 +106,11 @@ function StatCountUp({ value, isActive }) {
             if (!startTimestamp) startTimestamp = timestamp
             const elapsed = timestamp - startTimestamp
             const progress = Math.min(elapsed / duration, 1)
-            
+
             const easeProgress = 1 - Math.pow(1 - progress, 3)
             const currentNum = numVal * easeProgress
-            
-            const formattedNum = Number.isInteger(numVal) 
+
+            const formattedNum = Number.isInteger(numVal)
                 ? Math.floor(currentNum).toString()
                 : currentNum.toFixed(1)
 
@@ -168,9 +167,9 @@ function ProblemPanel({ p, idx, activeIdx }) {
     }, [isActive, run])
 
     return (
-        <motion.div 
+        <motion.div
             animate={{ opacity, y, scale, rotate }}
-            transition={{ 
+            transition={{
                 opacity: { duration: 0.4 },
                 y: { type: 'spring', stiffness: 85, damping: 14 },
                 scale: { type: 'spring', stiffness: 85, damping: 14 },
@@ -328,33 +327,18 @@ export default function ProblemSection() {
         }
     })
 
-    const [isScrolling, setIsScrolling] = useState(false)
-    const scrollTimeoutRef = useRef(null)
-    const rafRef = useRef(null)
-
+    const isScrollingMV = useMotionValue(0)
     useEffect(() => {
+        let timeoutId
         const handleScroll = () => {
-            if (rafRef.current) return
-
-            rafRef.current = requestAnimationFrame(() => {
-                rafRef.current = null
-                setIsScrolling(true)
-
-                if (scrollTimeoutRef.current) {
-                    clearTimeout(scrollTimeoutRef.current)
-                }
-
-                scrollTimeoutRef.current = setTimeout(() => {
-                    setIsScrolling(false)
-                }, 35)
-            })
+            isScrollingMV.set(1)
+            clearTimeout(timeoutId)
+            timeoutId = setTimeout(() => isScrollingMV.set(0), 35)
         }
-
         window.addEventListener('scroll', handleScroll, { passive: true })
         return () => {
             window.removeEventListener('scroll', handleScroll)
-            if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current)
-            if (rafRef.current) cancelAnimationFrame(rafRef.current)
+            clearTimeout(timeoutId)
         }
     }, [])
 
@@ -365,7 +349,7 @@ export default function ProblemSection() {
             {/* ══ DESKTOP — 500vh sticky ══ */}
             <div ref={containerRef} className="hidden lg:block" style={{ height: `${N * 100}vh`, position: 'relative' }}>
                 <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden' }}>
-                    <div style={{ opacity: isScrolling ? 1 : 0, transition: 'opacity 75ms ease-out', pointerEvents: 'none', zIndex: 30 }}>
+                    <motion.div style={{ opacity: isScrollingMV, pointerEvents: 'none', zIndex: 30 }}>
                         <GradualBlur
                             target="parent"
                             position="top"
@@ -386,7 +370,7 @@ export default function ProblemSection() {
                             animated={false}
                             opacity={1}
                         />
-                    </div>
+                    </motion.div>
 
                     {/* Subtle grid */}
                     <div aria-hidden style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, backgroundImage: 'linear-gradient(var(--grid-lines) 1px,transparent 1px),linear-gradient(90deg,var(--grid-lines) 1px,transparent 1px)', backgroundSize: '64px 64px', maskImage: 'radial-gradient(ellipse 80% 70% at 50% 50%,black 0%,transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 70% at 50% 50%,black 0%,transparent 100%)' }} />
@@ -410,7 +394,7 @@ export default function ProblemSection() {
 
             {/* ══ MOBILE — horizontal swipe carousel ══ */}
             <div className="lg:hidden relative">
-                <div style={{ opacity: isScrolling ? 1 : 0, transition: 'opacity 75ms ease-out', pointerEvents: 'none', zIndex: 30 }}>
+                <motion.div style={{ opacity: isScrollingMV, pointerEvents: 'none', zIndex: 30 }}>
                     <GradualBlur
                         target="parent"
                         position="top"
@@ -431,7 +415,8 @@ export default function ProblemSection() {
                         animated={false}
                         opacity={1}
                     />
-                </div>
+                </motion.div>
+
                 {/* Section header */}
                 <div style={{ textAlign: 'center', padding: '64px 20px 32px' }}>
                     <span className="section-label">The Challenge</span>
