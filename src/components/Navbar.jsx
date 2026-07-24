@@ -1,11 +1,17 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-const navLinks = [
+const homeLinks = [
+    { label: 'Challenge', href: '#problem' },
+    { label: 'Our Edge', href: '#our-edge' },
+    { label: 'Why Us', href: '#why-us' },
+]
+
+const detailsLinks = [
     { label: 'Services', href: '#solution' },
     { label: 'Process', href: '#process' },
     { label: 'Portfolio', href: '#portfolio' },
-    { label: 'About', href: '#why-us' },
+    { label: 'About', href: '/#why-us' },
 ]
 
 export default function Navbar({ currentPath = '/' }) {
@@ -19,18 +25,7 @@ export default function Navbar({ currentPath = '/' }) {
     })
 
     const isDetails = currentPath === '/details'
-    const dynamicLinks = navLinks.map(link => {
-        if (link.label === 'Services') {
-            return { ...link, href: isDetails ? '#solution' : '/details#solution' }
-        }
-        if (link.label === 'Process') {
-            return { ...link, href: isDetails ? '#process' : '/details#process' }
-        }
-        if (link.label === 'Portfolio') {
-            return { ...link, href: isDetails ? '#portfolio' : '/details#portfolio' }
-        }
-        return { ...link, href: isDetails ? `/${link.href}` : link.href }
-    })
+    const activeLinks = isDetails ? detailsLinks : homeLinks
 
     useEffect(() => {
         const handleThemeChange = () => {
@@ -67,6 +62,38 @@ export default function Navbar({ currentPath = '/' }) {
             if (rafId) cancelAnimationFrame(rafId)
         }
     }, [])
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                let mostVisible = null
+                let maxRatio = 0
+                
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
+                        maxRatio = entry.intersectionRatio
+                        mostVisible = entry.target.id
+                    }
+                })
+                
+                if (mostVisible) {
+                    const link = activeLinks.find(l => l.href.endsWith('#' + mostVisible))
+                    if (link) setActive(link.label)
+                }
+            },
+            { rootMargin: '-10% 0px -70% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] }
+        )
+
+        activeLinks.forEach((link) => {
+            if (link.href.startsWith('#')) {
+                const id = link.href.slice(1)
+                const el = document.getElementById(id)
+                if (el) observer.observe(el)
+            }
+        })
+
+        return () => observer.disconnect()
+    }, [activeLinks])
 
     return (
         <motion.header
@@ -116,7 +143,7 @@ export default function Navbar({ currentPath = '/' }) {
 
                     {/* Desktop links */}
                     <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
-                        {dynamicLinks.map((link) => (
+                        {activeLinks.map((link) => (
                             <a
                                 key={link.label}
                                 href={link.href}

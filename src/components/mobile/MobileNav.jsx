@@ -10,31 +10,23 @@ import { motion, AnimatePresence } from 'framer-motion'
  *  - Bottom sheet: slides up with full section links
  */
 
-const NAV_LINKS = [
+const HOME_LINKS = [
+    { label: 'Challenge', href: '#problem', icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg> },
+    { label: 'Our Edge', href: '#our-edge', icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg> },
+    { label: 'Why Us', href: '#why-us', icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg> },
+]
+
+const DETAILS_LINKS = [
     { label: 'Services', href: '#solution', icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg> },
     { label: 'Process', href: '#process', icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg> },
     { label: 'Portfolio', href: '#portfolio', icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18" /><polyline points="17 6 23 6 23 12" /></svg> },
-    { label: 'About', href: '#why-us', icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg> },
+    { label: 'About', href: '/#why-us', icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg> },
 ]
 
 /* ─── Bottom sheet overlay ─── */
 function BottomSheet({ open, onClose, theme, onThemeToggle, currentPath = '/' }) {
     const isDetails = currentPath === '/details'
-    const dynamicLinks = NAV_LINKS.map(link => {
-        if (link.label === 'Services') {
-            return { ...link, href: isDetails ? '/#solution' : '#solution' }
-        }
-        if (link.label === 'Process') {
-            return { ...link, href: isDetails ? '/#process' : '#process' }
-        }
-        if (link.label === 'Portfolio') {
-            return { ...link, href: isDetails ? '/#portfolio' : '#portfolio' }
-        }
-        if (link.label === 'About') {
-            return { ...link, href: isDetails ? '/#why-us' : '#why-us' }
-        }
-        return { ...link, href: isDetails ? `/${link.href}` : link.href }
-    })
+    const activeLinks = isDetails ? DETAILS_LINKS : HOME_LINKS
 
     return (
         <AnimatePresence>
@@ -89,7 +81,7 @@ function BottomSheet({ open, onClose, theme, onThemeToggle, currentPath = '/' })
 
                         {/* Links */}
                         <nav style={{ padding: '12px 16px' }}>
-                            {dynamicLinks.map((link, i) => (
+                            {activeLinks.map((link, i) => (
                                 <motion.a
                                     key={link.label}
                                     href={link.href}
@@ -119,7 +111,7 @@ function BottomSheet({ open, onClose, theme, onThemeToggle, currentPath = '/' })
                                 onClick={onThemeToggle}
                                 initial={{ opacity: 0, x: -16 }}
                                 animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: NAV_LINKS.length * 0.04 + 0.05, duration: 0.28 }}
+                                transition={{ delay: activeLinks.length * 0.04 + 0.05, duration: 0.28 }}
                                 style={{
                                     display: 'flex', alignItems: 'center', gap: 14,
                                     width: '100%', border: 'none', textAlign: 'left',
