@@ -109,6 +109,7 @@ export default function App() {
   // Universal link interceptor for client-side routing
   useEffect(() => {
     const handleLinkClick = (e) => {
+      if (e.defaultPrevented) return
       const target = e.target.closest('a')
       if (!target) return
 

@@ -1,26 +1,7 @@
 import React from 'react'
 import AnimatedSection from './AnimatedSection'
 
-const projects = [
-    {
-        title: 'Project Name Placeholder 1',
-        category: 'Web Application',
-        desc: 'A scalable web platform built to handle complex workflows and large user bases with ease.',
-        color: 'blue'
-    },
-    {
-        title: 'Project Name Placeholder 2',
-        category: 'Mobile App',
-        desc: 'An intuitive cross-platform mobile application designed for maximum user engagement and performance.',
-        color: 'violet'
-    },
-    {
-        title: 'Project Name Placeholder 3',
-        category: 'Custom Software',
-        desc: 'A tailored internal tool that automated manual processes and unified disconnected business systems.',
-        color: 'teal'
-    }
-]
+import { featuredProjects as projects } from '../data/featuredProjects'
 
 export default function PortfolioSection() {
     return (
@@ -41,8 +22,9 @@ export default function PortfolioSection() {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {projects.map((p, i) => (
-                        <AnimatedSection key={i} delay={i * 0.1}>
+                        <AnimatedSection key={p.id} delay={i * 0.1}>
                             <div 
+                                id={`project-${p.slug}`}
                                 style={{
                                     background: 'var(--bg-primary)',
                                     border: '1px solid var(--border-subtle)',
@@ -62,9 +44,15 @@ export default function PortfolioSection() {
                                     borderBottom: '1px solid var(--border-subtle)',
                                     display: 'flex',
                                     alignItems: 'center',
-                                    justifyContent: 'center'
+                                    justifyContent: 'center',
+                                    color: `var(--accent-${p.color})`
                                 }}>
-                                    <div style={{ padding: '8px 16px', borderRadius: 100, background: 'var(--bg-primary)', fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.05em', color: `var(--accent-${p.color})`, textTransform: 'uppercase' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 16px', borderRadius: 100, background: 'var(--bg-primary)', fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.05em', color: `var(--accent-${p.color})`, textTransform: 'uppercase' }}>
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                                            <circle cx="8.5" cy="8.5" r="1.5" />
+                                            <polyline points="21 15 16 10 5 21" />
+                                        </svg>
                                         Image Placeholder
                                     </div>
                                 </div>

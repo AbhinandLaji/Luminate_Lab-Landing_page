@@ -1,15 +1,10 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import AnimatedSection from './AnimatedSection'
+import { featuredProjects } from '../data/featuredProjects'
 
 // Spring config matching ProblemSection.jsx for consistency
 const springConfig = { type: 'spring', stiffness: 100, damping: 15 }
-
-const placeholderCards = [
-    { id: 1, label: 'Project 1', color: 'blue' },
-    { id: 2, label: 'Project 2', color: 'violet' },
-    { id: 3, label: 'Project 3', color: 'teal' },
-]
 
 export default function GlimpseSection() {
     const [isExpanded, setIsExpanded] = useState(false)
@@ -84,7 +79,7 @@ export default function GlimpseSection() {
                             }}
                         >
                             {/* The Cards */}
-                            {placeholderCards.map((card, index) => {
+                            {featuredProjects.map((card, index) => {
                                 // 0: bottom, 1: middle, 2: top
                                 const isBottom = index === 0;
                                 const isMiddle = index === 1;
@@ -137,7 +132,37 @@ export default function GlimpseSection() {
                                 }
 
                                 return (
-                                    <motion.div
+                                    <motion.a
+                                        href={`/details#project-${card.slug}`}
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            if (!isExpanded) {
+                                                setIsExpanded(true);
+                                            } else {
+                                                // Programmatically trigger the SPA router
+                                                const url = `/details#project-${card.slug}`;
+                                                window.history.pushState({}, '', url);
+                                                window.dispatchEvent(new PopStateEvent('popstate'));
+                                                
+                                                // Handle smooth scroll to anchor
+                                                setTimeout(() => {
+                                                    const id = `project-${card.slug}`;
+                                                    const el = document.getElementById(id);
+                                                    if (el) {
+                                                        const navbar = document.querySelector('header');
+                                                        const navHeight = navbar ? navbar.getBoundingClientRect().height : 80;
+                                                        const offset = navHeight + 24;
+                                                        const elementPosition = el.getBoundingClientRect().top + window.scrollY;
+                                                        
+                                                        window.scrollTo({ 
+                                                            top: elementPosition - offset, 
+                                                            behavior: 'smooth' 
+                                                        });
+                                                    }
+                                                }, 300);
+                                            }
+                                        }}
                                         key={card.id}
                                         className="absolute shadow-lg flex flex-col items-center justify-center overflow-hidden"
                                         style={{
@@ -179,10 +204,10 @@ export default function GlimpseSection() {
                                         </div>
                                         <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
                                             <span style={{ fontSize: '0.7rem', fontWeight: 800, color: 'var(--text-primary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                                                {card.label}
+                                                {card.category}
                                             </span>
                                         </div>
-                                    </motion.div>
+                                    </motion.a>
                                 )
                             })}
                         </div>
