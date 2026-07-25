@@ -26,10 +26,10 @@ export default function ContinuousAuroraWrapper({ children }) {
     // Consolidated opacity transform:
     // 0 -> 0.05: Fade in as the top enters the screen
     // 0.05 -> 0.95: Fully visible throughout the sections
-    // 0.95 -> 1.0: Fade out as the bottom leaves the screen
+    // 0.99 -> 1.0: Fade out as the bottom leaves the screen
     const auroraOpacity = useTransform(
         scrollYProgress,
-        [0, 0.05, 0.95, 1],
+        [0, 0.05, 0.99, 1],
         [0, 1, 1, 0] // Max opacity 1.0 (AuroraWave handles the base 0.35 opacity)
     )
 

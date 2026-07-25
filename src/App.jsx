@@ -6,6 +6,7 @@ import SolutionSection from './components/SolutionSection'
 import OurEdgeSection from './components/OurEdgeSection'
 import ProcessSection from './components/ProcessSection'
 import WhyUsSection from './components/WhyUsSection'
+import GlimpseSection from './components/GlimpseSection'
 import ContactSection from './components/ContactSection'
 import CTASection from './components/CTASection'
 import Footer from './components/Footer'
@@ -166,6 +167,7 @@ export default function App() {
               <OurEdgeSection />
               <WhyUsSection />
             </ContinuousAuroraWrapper>
+            <GlimpseSection />
             <CTASection />
             <DeepLinksBlock />
           </>

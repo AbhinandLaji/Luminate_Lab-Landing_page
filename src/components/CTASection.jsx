@@ -14,8 +14,6 @@ export default function CTASection() {
             className="relative py-8 md:py-12 px-5 md:px-6 overflow-hidden"
             style={{ background: 'var(--bg-primary)' }}
         >
-            <div className="section-divider absolute top-0 left-0 right-0" />
-
             <AnimatedSection stagger={true} staggerDelay={0.06} className="relative z-10 max-w-4xl mx-auto">
                 {/* Mesh Gradient Background (Centered behind the card) */}
                 <div className="absolute inset-0 z-0 overflow-visible pointer-events-none rounded-2xl md:rounded-3xl flex items-center justify-center" aria-hidden="true">
