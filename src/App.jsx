@@ -15,10 +15,11 @@ import FloatingCTA from './components/mobile/FloatingCTA'
 import MobileNav from './components/mobile/MobileNav'
 import DetailsPage from './components/DetailsPage'
 import ContinuousAuroraWrapper from './components/ContinuousAuroraWrapper'
+import AnimatedSection from './components/AnimatedSection'
 
 function DeepLinksBlock() {
   return (
-    <section className="py-16 border-t" style={{ borderColor: 'var(--border-subtle)', background: 'var(--bg-secondary)' }}>
+    <AnimatedSection as="section" className="py-16 border-t" style={{ borderColor: 'var(--border-subtle)', background: 'var(--bg-secondary)' }}>
       <div className="max-w-4xl mx-auto px-6 text-center">
         <h3 style={{ fontSize: '0.82rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.18em', color: 'var(--text-muted)', marginBottom: 28 }}>
           Explore Detailed Services &amp; Process
@@ -91,7 +92,7 @@ function DeepLinksBlock() {
           </a>
         </div>
       </div>
-    </section>
+    </AnimatedSection>
   )
 }
 

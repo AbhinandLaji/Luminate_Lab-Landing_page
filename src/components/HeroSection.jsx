@@ -3,6 +3,7 @@ import { motion, useMotionValue, useSpring, useTransform, useScroll } from 'fram
 import { useTypewriter } from '../hooks/useTypewriter'
 import AuroraWave from './AuroraWave'
 import Strands from './Strands'
+import AnimatedSection from './AnimatedSection'
 
 const PHRASES = ['Ship Faster.', 'Scale Smarter.', 'Build to Last.', 'Innovate Daily.', 'Deliver Excellence.']
 const TICKER_ITEMS = ['Web Development', '•', 'Mobile Apps', '•', 'UI/UX Design', '•', 'Custom Software', '•', 'AI Solutions', '•', 'Product Design', '•']
@@ -316,11 +317,11 @@ export default function HeroSection() {
                     </MagneticButton>
                 </motion.div>
 
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 1.5 }} className="mt-14 flex flex-col items-center">
+                <AnimatedSection delay={0.1} className="mt-14 flex flex-col items-center">
                     <p style={{ fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 600, color: 'var(--text-faint)' }}>
                         Trusted by Forward-Thinking Companies
                     </p>
-                </motion.div>
+                </AnimatedSection>
             </div>
 
             {/* ══════════ MOBILE LAYOUT ══════════ */}
@@ -400,14 +401,13 @@ export default function HeroSection() {
                 </div>
 
                 {/* ── BEAT 2: Below fold ── */}
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.65 }}>
+                <AnimatedSection delay={0.1}>
                     <TickerStrip />
-                </motion.div>
+                </AnimatedSection>
 
                 {/* Social proof */}
-                <motion.div
-                    initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                    transition={{ delay: 0.75 }}
+                <AnimatedSection
+                    delay={0.2}
                     style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, padding: '20px 20px', paddingBottom: 'calc(20px + env(safe-area-inset-bottom, 0px))' }}
                 >
                     <p style={{ fontSize: '0.6rem', letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 600, color: 'var(--text-faint)' }}>
@@ -418,7 +418,7 @@ export default function HeroSection() {
                             <span key={name} style={{ fontSize: '0.78rem', fontWeight: 700, color: 'rgba(255,255,255,0.16)' }}>{name}</span>
                         ))}
                     </div>
-                </motion.div>
+                </AnimatedSection>
             </div>
 
             {/* Bottom fade (desktop) */}

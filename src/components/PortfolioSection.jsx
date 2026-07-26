@@ -1,11 +1,16 @@
 import React from 'react'
 import AnimatedSection from './AnimatedSection'
+import GradualBlur from './GradualBlur'
 
 import { featuredProjects as projects } from '../data/featuredProjects'
 
 export default function PortfolioSection() {
     return (
         <section id="portfolio" className="relative py-24 md:py-32 px-5 md:px-6 overflow-hidden" style={{ background: 'var(--bg-secondary)', contentVisibility: 'auto', containIntrinsicBlockSize: '700px' }}>
+            <div className="section-divider absolute top-0 left-0 right-0" style={{ zIndex: 10 }} />
+            <div className="absolute top-0 left-0 right-0 z-10 pointer-events-none">
+                <GradualBlur target="parent" position="top" height="5.5rem" strength={1.5} divCount={4} curve="bezier" animated={false} opacity={1} />
+            </div>
             <div className="relative z-10 max-w-6xl mx-auto">
                 <AnimatedSection className="text-center mb-16 md:mb-20">
                     <span className="section-label">Our Work</span>
