@@ -223,9 +223,8 @@ function ProblemPanel({ p, idx, activeIdx }) {
                         initial={{ opacity: 0, x: 32, scale: 0.96 }}
                         style={{
                             padding: 40, borderRadius: 24,
-                            background: `linear-gradient(145deg, var(--bg-card), var(--accent-${p.accentName}-bg))`,
-                            border: `1px solid var(--accent-${p.accentName}-border)`,
-                            backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)',
+                            background: `var(--bg-secondary)`,
+                            border: `1px solid var(--border-subtle)`,
                             position: 'relative', overflow: 'hidden',
                             willChange: 'transform,opacity',
                         }}

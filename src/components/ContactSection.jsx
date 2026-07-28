@@ -57,12 +57,11 @@ export default function ContactSection() {
 
                 <AnimatedSection>
                     <div
-                        className="glass rounded-2xl md:rounded-3xl p-6 sm:p-10 mx-auto"
+                        className="rounded-2xl md:rounded-3xl p-6 sm:p-10 mx-auto"
                         style={{
                             maxWidth: '600px',
-                            background: 'var(--glass-bg)',
+                            background: 'var(--bg-secondary)',
                             border: '1px solid var(--border-subtle)',
-                            boxShadow: 'var(--shadow-card)',
                         }}
                     >
                         <form onSubmit={handleSubmit} className="flex flex-col gap-5">

@@ -92,14 +92,12 @@ const EdgeBubble = memo(function EdgeBubble({ bubble, spreadSpring, smX, smY, se
                 style={{
                     padding: '16px 22px',
                     borderRadius: '20px',
-                    background: `linear-gradient(145deg, var(--accent-${bubble.accentName}-bg) 0%, var(--accent-${bubble.accentName}-border) 100%), var(--bg-card)`,
-                    border: `1px solid var(--accent-${bubble.accentName})`,
-                    backdropFilter: 'blur(20px)',
-                    WebkitBackdropFilter: 'blur(20px)',
+                    background: `var(--bg-secondary)`,
+                    border: `1px solid var(--border-subtle)`,
                     textAlign: 'center',
                     userSelect: 'none',
                     minWidth: '128px',
-                    boxShadow: `var(--shadow-card), inset 0 1px 0 rgba(255,255,255,0.05)`,
+                    cursor: 'default',
                     cursor: 'default',
                 }}
             >
@@ -329,12 +327,10 @@ export default function OurEdgeSection() {
                                 whileTap={{ scale: 0.97 }}
                                 style={{
                                     borderRadius: 18,
-                                    background: `linear-gradient(145deg, var(--accent-${bubble.accentName}-bg) 0%, var(--accent-${bubble.accentName}-border) 100%), var(--bg-card)`,
-                                    border: `1px solid var(--accent-${bubble.accentName})`,
+                                    background: `var(--bg-secondary)`,
+                                    border: `1px solid var(--border-subtle)`,
                                     padding: '18px 14px',
                                     display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center',
-                                    backdropFilter: 'blur(12px)',
-                                    WebkitBackdropFilter: 'blur(12px)',
                                 }}
                             >
                                 {/* Icon */}

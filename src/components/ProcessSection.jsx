@@ -490,11 +490,9 @@ export default function ProcessSection() {
                     <AnimatedSection delay={0.18}>
                         <div style={{
                             borderRadius: 20,
-                            border: `1px solid var(--accent-${current.accentName}-border)`,
-                            overflow: 'hidden',
-                            background: 'var(--bg-card)',
-                            boxShadow: `var(--shadow-card), 0 0 0 1px var(--border-subtle), inset 0 1px 0 rgba(255,255,255,0.05)`,
-                            transition: 'border-color 0.4s ease',
+                            background: 'var(--bg-secondary)',
+                            border: '1px solid var(--border-subtle)',
+                            position: 'relative', overflow: 'hidden',
                         }}>
                             <AnimatePresence mode="wait" initial={false}>
                                 <motion.div
