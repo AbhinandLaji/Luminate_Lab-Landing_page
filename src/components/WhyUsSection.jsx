@@ -62,7 +62,7 @@ function FeatureCard({ f, isLarge }) {
             }}
         >
             {/* Left side for large card, or top for small card */}
-            <div className={`flex flex-col ${isLarge ? 'md:w-1/2' : ''} h-full`}>
+            <div className={`flex flex-col gap-5 ${isLarge ? 'md:w-1/2' : ''} h-full w-full`}>
             {/* Icon */}
             <div
                 style={{
@@ -116,14 +116,10 @@ function FeatureCard({ f, isLarge }) {
 
             {/* Right side for large card (optional graphic or abstract shape) */}
             {isLarge && (
-                <div className="hidden md:flex md:w-1/2 h-full items-center justify-center p-8">
-                    <div style={{ width: '100%', height: '100%', borderRadius: '16px', background: `var(--accent-${f.accentName}-bg)`, border: `1px solid var(--accent-${f.accentName}-border)`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                         {/* Abstract placeholder graphic for the large card */}
-                         <svg width="120" height="120" viewBox="0 0 120 120" fill="none" stroke={`var(--accent-${f.accentName})`} strokeWidth="1" opacity="0.3">
-                            <circle cx="60" cy="60" r="40" strokeDasharray="4 4" />
-                            <circle cx="60" cy="60" r="20" />
-                            <path d="M60 20 L60 100 M20 60 L100 60" />
-                         </svg>
+                <div className="hidden md:flex md:w-1/2 h-full p-8">
+                    <div style={{ width: '100%', height: '100%', borderRadius: '16px', border: `1px solid var(--accent-${f.accentName}-border)`, overflow: 'hidden', position: 'relative', display: 'flex' }}>
+                         <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop" alt="Abstract Designer Art" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                         <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(135deg, var(--bg-card) 0%, transparent 100%)`, opacity: 0.4, pointerEvents: 'none' }} />
                     </div>
                 </div>
             )}
@@ -148,7 +144,7 @@ export default function WhyUsSection() {
                         Why Luminate Labs
                     </h2>
                     <p className="mt-6 text-xl max-w-md mx-auto" style={{ color: 'var(--text-muted)', lineHeight: 1.6 }}>
-                        We're not a vendor. We're your technology partner.
+                        We build your software like it's our own.
                     </p>
                 </AnimatedSection>
 

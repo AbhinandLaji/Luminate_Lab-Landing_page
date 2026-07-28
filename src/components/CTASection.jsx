@@ -53,7 +53,7 @@ export default function CTASection() {
                             className="mb-5 max-w-lg mx-auto"
                             style={{ fontSize: '1.05rem', color: 'var(--text-muted)', lineHeight: 1.7 }}
                         >
-                            One conversation to understand your vision. A dedicated team to bring it to life.
+                            Let's talk about what you want to build. We'll handle the rest.
                         </p>
                     </AnimatedItem>
 

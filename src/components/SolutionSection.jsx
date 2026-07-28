@@ -22,7 +22,7 @@ const pillars = [
             </svg>
         ),
         title: 'Mobile App Development',
-        desc: 'From iOS to Android, we craft intuitive cross-platform mobile experiences using Flutter and React Native that delight users and drive engagement.',
+        desc: 'Build fast, native-feeling mobile apps for iOS and Android using React Native and Flutter.',
         tag: 'iOS & Android',
         accentName: 'indigo',
     },
@@ -33,7 +33,7 @@ const pillars = [
             </svg>
         ),
         title: 'UI/UX Design',
-        desc: 'We design intuitive, beautiful, and user-centered interfaces — from wireframes and prototypes to polished design systems that elevate product experiences.',
+        desc: 'We design clean, user-centered interfaces — from wireframes to complete design systems that make your product easier to use.',
         tag: 'Design & Prototyping',
         accentName: 'violet',
     },
@@ -55,7 +55,7 @@ const pillars = [
             </svg>
         ),
         title: 'AI-Powered Applications',
-        desc: 'We integrate intelligent AI capabilities into your products — from natural language features and recommendation engines to computer vision and process automation.',
+        desc: 'Practical AI integrations built directly into your workflows to automate tasks and process data faster.',
         tag: 'AI & Machine Learning',
         accentName: 'teal',
     },

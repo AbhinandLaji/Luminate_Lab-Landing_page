@@ -61,7 +61,7 @@ const steps = [
     {
         number: '04', title: 'Deployment & Support', tag: 'Phase 4', accentName: 'rose',
         headline: 'Launch & Continuous Improvement',
-        desc: 'We manage a smooth deployment to production and provide ongoing support, monitoring, and iterative enhancements to keep your software running flawlessly.',
+        desc: 'We deploy to production and provide ongoing support, monitoring, and updates to keep your software reliable.',
         bullets: [
             'Production deployment and server setup',
             'Real-time monitoring and analytics integration',
