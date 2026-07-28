@@ -12,15 +12,14 @@ export default function PortfolioSection() {
                 <GradualBlur target="parent" position="top" height="5.5rem" strength={1.5} divCount={4} curve="bezier" animated={false} opacity={1} />
             </div>
             <div className="relative z-10 max-w-6xl mx-auto">
-                <AnimatedSection className="text-center mb-16 md:mb-20">
-                    <span className="section-label">Our Work</span>
+                <AnimatedSection className="mb-16 md:mb-20">
                     <h2
-                        className="mt-6 font-black tracking-tight max-w-2xl mx-auto"
-                        style={{ fontSize: 'clamp(2rem, 4.5vw, 3.25rem)', lineHeight: 1.1, letterSpacing: '-0.03em', color: 'var(--text-primary)' }}
+                        className="font-bold tracking-tight max-w-2xl"
+                        style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', lineHeight: 1.05, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}
                     >
                         Featured Projects
                     </h2>
-                    <p className="mt-5 text-lg max-w-md mx-auto" style={{ color: 'var(--text-muted)', lineHeight: 1.7 }}>
+                    <p className="mt-5 text-xl max-w-md" style={{ color: 'var(--text-muted)', lineHeight: 1.6 }}>
                         A selection of digital products we've designed and developed.
                     </p>
                 </AnimatedSection>

@@ -61,11 +61,11 @@ function FeatureCard({ f }) {
         >
             {/* Icon */}
             <div
-                className="w-12 h-12 rounded-2xl flex items-center justify-center"
                 style={{
-                    background: `var(--accent-${f.accentName}-bg)`,
-                    border: `1px solid var(--accent-${f.accentName}-border)`,
                     color: `var(--accent-${f.accentName})`,
+                    transform: 'scale(2.5)',
+                    transformOrigin: 'top left',
+                    marginBottom: '1rem',
                 }}
             >
                 {f.icon}
@@ -123,40 +123,17 @@ export default function WhyUsSection() {
             <div className="absolute inset-0" style={{ background: 'var(--bg-secondary)', zIndex: -10 }} />
             <div className="section-divider absolute top-0 left-0 right-0" />
 
-            {/* Rich ambient background */}
-            <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-                {/* Large purple bottom-center */}
-                <div style={{
-                    position: 'absolute', bottom: '-15%', left: '50%', transform: 'translateX(-50%)',
-                    width: '800px', height: '600px',
-                    background: 'radial-gradient(ellipse, var(--accent-violet-bg) 0%, transparent 70%)',
-                }} />
-                {/* Blue top-left */}
-                <div style={{
-                    position: 'absolute', top: '-10%', left: '-5%',
-                    width: '500px', height: '500px',
-                    background: 'radial-gradient(circle, var(--accent-blue-bg) 0%, transparent 65%)',
-                }} />
-                {/* Rose accent right */}
-                <div style={{
-                    position: 'absolute', top: '30%', right: '-5%',
-                    width: '300px', height: '300px',
-                    background: 'radial-gradient(circle, var(--accent-rose-bg) 0%, transparent 65%)',
-                }} />
-            </div>
-
             <div className="relative max-w-6xl mx-auto">
                 <AnimatedSection className="text-center mb-12 md:mb-20">
-                    <span className="section-label">Why Choose Us</span>
                     <h2
                         id="whyus-heading"
-                        className="mt-6 font-black tracking-tight max-w-2xl mx-auto"
-                        style={{ fontSize: 'clamp(2rem, 4.5vw, 3.25rem)', lineHeight: 1.1, letterSpacing: '-0.03em', color: 'var(--text-primary)' }}
+                        className="font-black tracking-tight max-w-2xl mx-auto"
+                        style={{ fontSize: 'clamp(2.5rem, 5vw, 3.8rem)', lineHeight: 1.05, letterSpacing: '-0.04em', color: 'var(--text-primary)' }}
                     >
                         Why Luminate Labs
                     </h2>
-                    <p className="mt-5 text-lg max-w-md mx-auto" style={{ color: 'var(--text-muted)', lineHeight: 1.7 }}>
-                        We&apos;re not a vendor. We&apos;re your technology partner.
+                    <p className="mt-6 text-xl max-w-md mx-auto" style={{ color: 'var(--text-muted)', lineHeight: 1.6 }}>
+                        We're not a vendor. We're your technology partner.
                     </p>
                 </AnimatedSection>
 
@@ -169,62 +146,62 @@ export default function WhyUsSection() {
                     ))}
                 </div>
 
-                {/* Mobile: swipe carousel */}
-                <div className="md:hidden">
-                    <SwipeCarousel
-                        items={features}
-                        keyProp={f => f.label}
-                        accentFn={f => `var(--accent-${f.accentName})`}
-                        cardWidth="82vw"
-                        gap={12}
-                        renderItem={(f) => (
-                            <div
-                                style={{
-                                    borderRadius: 22,
-                                    background: `linear-gradient(160deg, var(--accent-${f.accentName}-bg) 0%, var(--accent-${f.accentName}-border) 100%), var(--bg-card)`,
-                                    border: `1px solid var(--accent-${f.accentName})`,
-                                    padding: '28px 24px',
-                                    display: 'flex', flexDirection: 'column', gap: 18,
-                                    minHeight: 360,
-                                }}
-                            >
-                                {/* Icon */}
-                                <div style={{ width: 52, height: 52, borderRadius: 16, background: `var(--accent-${f.accentName}-bg)`, border: `1px solid var(--accent-${f.accentName}-border)`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: `var(--accent-${f.accentName})` }}>
-                                    {f.icon}
+                    {/* Mobile: swipe carousel */}
+                    <div className="md:hidden">
+                        <SwipeCarousel
+                            items={features}
+                            keyProp={f => f.label}
+                            accentFn={f => `var(--accent-${f.accentName})`}
+                            cardWidth="82vw"
+                            gap={12}
+                            renderItem={(f) => (
+                                <div
+                                    style={{
+                                        borderRadius: 22,
+                                        background: `linear-gradient(160deg, var(--accent-${f.accentName}-bg) 0%, var(--accent-${f.accentName}-border) 100%), var(--bg-card)`,
+                                        border: `1px solid var(--accent-${f.accentName})`,
+                                        padding: '28px 24px',
+                                        display: 'flex', flexDirection: 'column', gap: 18,
+                                        minHeight: 360,
+                                    }}
+                                >
+                                    {/* Icon */}
+                                    <div style={{ color: `var(--accent-${f.accentName})`, transform: 'scale(2.5)', transformOrigin: 'top left', marginBottom: '1rem' }}>
+                                        {f.icon}
+                                    </div>
+
+                                    {/* Label chip */}
+                                    <span style={{ alignSelf: 'flex-start', fontSize: '0.65rem', fontWeight: 800, padding: '4px 12px', borderRadius: 100, background: `var(--accent-${f.accentName}-bg)`, color: `var(--accent-${f.accentName})`, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+                                        {f.label}
+                                    </span>
+
+                                    {/* Headline */}
+                                    <h3 style={{ fontSize: '1.35rem', fontWeight: 900, letterSpacing: '-0.025em', color: 'var(--text-primary)', lineHeight: 1.2, margin: 0 }}>
+                                        {f.headline}
+                                    </h3>
+
+                                    {/* Body */}
+                                    <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', lineHeight: 1.75, margin: 0 }}>
+                                        {f.body}
+                                    </p>
+
+                                    {/* Stats row */}
+                                    <div style={{ display: 'flex', gap: 24, paddingTop: 14, borderTop: `1px solid var(--accent-${f.accentName}-border)`, marginTop: 'auto' }}>
+                                        {f.stats.map(s => (
+                                            <div key={s.label} style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+                                                <span style={{ fontSize: '1.4rem', fontWeight: 900, color: `var(--accent-${f.accentName})`, letterSpacing: '-0.03em' }}>{s.value}</span>
+                                                <span style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>{s.label}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    {/* Accent line */}
+                                    <div style={{ height: 2, borderRadius: 2, background: `linear-gradient(90deg, var(--accent-${f.accentName}), transparent)`, width: '50%' }} />
                                 </div>
-
-                                {/* Label chip */}
-                                <span style={{ alignSelf: 'flex-start', fontSize: '0.65rem', fontWeight: 800, padding: '4px 12px', borderRadius: 100, background: `var(--accent-${f.accentName}-bg)`, color: `var(--accent-${f.accentName})`, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-                                    {f.label}
-                                </span>
-
-                                {/* Headline */}
-                                <h3 style={{ fontSize: '1.35rem', fontWeight: 900, letterSpacing: '-0.025em', color: 'var(--text-primary)', lineHeight: 1.2, margin: 0 }}>
-                                    {f.headline}
-                                </h3>
-
-                                {/* Body */}
-                                <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', lineHeight: 1.75, margin: 0 }}>
-                                    {f.body}
-                                </p>
-
-                                {/* Stats row */}
-                                <div style={{ display: 'flex', gap: 24, paddingTop: 14, borderTop: `1px solid var(--accent-${f.accentName}-border)`, marginTop: 'auto' }}>
-                                    {f.stats.map(s => (
-                                        <div key={s.label} style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-                                            <span style={{ fontSize: '1.4rem', fontWeight: 900, color: `var(--accent-${f.accentName})`, letterSpacing: '-0.03em' }}>{s.value}</span>
-                                            <span style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>{s.label}</span>
-                                        </div>
-                                    ))}
-                                </div>
-
-                                {/* Accent line */}
-                                <div style={{ height: 2, borderRadius: 2, background: `linear-gradient(90deg, var(--accent-${f.accentName}), transparent)`, width: '50%' }} />
-                            </div>
-                        )}
-                    />
-                    <div style={{ height: 32 }} />
-                </div>
+                            )}
+                        />
+                        <div style={{ height: 32 }} />
+                    </div>
             </div>
 
         </section>

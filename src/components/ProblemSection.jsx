@@ -45,20 +45,6 @@ const problems = [
 const N = problems.length
 
 /* ──────────────────────────────────────────────
-   Ambient background per panel — pure MV
-────────────────────────────────────────────── */
-function ProblemBg({ p, idx, scrollY }) {
-    const phase = useTransform(scrollY, v => (v - (idx + 0.5) / N) * N)
-    const opacity = useTransform(phase, [-0.85, -0.4, 0.4, 0.85], [0, 1, 1, 0])
-    return (
-        <motion.div aria-hidden style={{ position: 'absolute', inset: 0, opacity, pointerEvents: 'none', zIndex: 0, willChange: 'opacity' }}>
-            <div style={{ position: 'absolute', top: '-20%', left: '-10%', width: 700, height: 700, background: `radial-gradient(circle, var(--accent-${p.accentName}-bg) 0%,transparent 70%)` }} />
-            <div style={{ position: 'absolute', bottom: '-10%', right: '-5%', width: 500, height: 500, background: `radial-gradient(circle, var(--accent-${p.accentName}-bg) 0%,transparent 65%)` }} />
-        </motion.div>
-    )
-}
-
-/* ──────────────────────────────────────────────
    Big watermark number — pure MV
 ────────────────────────────────────────────── */
 function Watermark({ p, idx, scrollY }) {
@@ -244,7 +230,6 @@ function ProblemPanel({ p, idx, activeIdx }) {
                             willChange: 'transform,opacity',
                         }}
                     >
-                        <div aria-hidden style={{ position: 'absolute', bottom: '-30%', right: '-10%', width: 280, height: 280, borderRadius: '50%', background: `radial-gradient(circle, var(--accent-${p.accentName}-bg) 0%, transparent 70%)`, pointerEvents: 'none' }} />
                         <div style={{ fontSize: 'clamp(2.5rem,6vw,4.5rem)', fontWeight: 900, lineHeight: 1, letterSpacing: '-0.05em', color: `var(--accent-${p.accentName})`, position: 'relative', zIndex: 2 }}>
                             <StatCountUp value={p.stat.value} isActive={isActive} />
                         </div>
@@ -380,7 +365,6 @@ export default function ProblemSection() {
                     {/* Subtle grid */}
                     <div aria-hidden style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, backgroundImage: 'linear-gradient(var(--grid-lines) 1px,transparent 1px),linear-gradient(90deg,var(--grid-lines) 1px,transparent 1px)', backgroundSize: '64px 64px', maskImage: 'radial-gradient(ellipse 80% 70% at 50% 50%,black 0%,transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 70% at 50% 50%,black 0%,transparent 100%)' }} />
 
-                    {problems.map((p, i) => <ProblemBg key={p.number} p={p} idx={i} scrollY={scrollYProgress} />)}
                     {problems.map((p, i) => <Watermark key={p.number} p={p} idx={i} scrollY={scrollYProgress} />)}
                     {problems.map((p, i) => <ProblemPanel key={p.number} p={p} idx={i} activeIdx={activeIdx} />)}
 
@@ -423,12 +407,11 @@ export default function ProblemSection() {
                 </motion.div>
 
                 {/* Section header */}
-                <div style={{ textAlign: 'center', padding: '64px 20px 32px' }}>
-                    <span className="section-label">The Challenge</span>
-                    <h2 style={{ fontSize: 'clamp(2rem, 8vw, 2.8rem)', fontWeight: 900, letterSpacing: '-0.03em', color: 'var(--text-primary)', marginTop: 16, lineHeight: 1.1 }}>
+                <div style={{ padding: '64px 24px 32px' }}>
+                    <h2 style={{ fontSize: 'clamp(2.5rem, 9vw, 3rem)', fontWeight: 800, letterSpacing: '-0.02em', color: 'var(--text-primary)', lineHeight: 1.05 }}>
                         Most Businesses Are<br />Held Back by Technology
                     </h2>
-                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: 10 }}>Swipe to explore each challenge →</p>
+                    <p style={{ fontSize: '1rem', color: 'var(--text-muted)', marginTop: 12 }}>Swipe to explore each challenge →</p>
                 </div>
 
                 <SwipeCarousel
