@@ -5,4 +5,4 @@ Allow: /
 Disallow: /dist/
 
 # Primary sitemap location
-Sitemap: https://luminatelabs.com/sitemap.xml
+Sitemap: https://luminatelabs.vercel.app/sitemap.xml
