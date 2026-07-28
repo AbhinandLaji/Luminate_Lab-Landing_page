@@ -20,9 +20,9 @@ export default function Navbar({ currentPath = '/' }) {
     const [hoveredLink, setHoveredLink] = useState(null)
     const [theme, setTheme] = useState(() => {
         if (typeof window !== 'undefined') {
-            return document.documentElement.getAttribute('data-theme') || 'light'
+            return document.documentElement.getAttribute('data-theme') || 'dark'
         }
-        return 'light'
+        return 'dark'
     })
 
     const isDetails = currentPath === '/details'
@@ -30,7 +30,7 @@ export default function Navbar({ currentPath = '/' }) {
 
     useEffect(() => {
         const handleThemeChange = () => {
-            setTheme(document.documentElement.getAttribute('data-theme') || 'light')
+            setTheme(document.documentElement.getAttribute('data-theme') || 'dark')
         }
         window.addEventListener('themechange', handleThemeChange)
         return () => window.removeEventListener('themechange', handleThemeChange)

@@ -2,7 +2,7 @@ import { useRef, useEffect, useState, useCallback, memo } from 'react'
 import { motion, useMotionValue, useSpring, useTransform, useScroll } from 'framer-motion'
 import { useTypewriter } from '../hooks/useTypewriter'
 import AuroraWave from './AuroraWave'
-import Strands from './Strands'
+import Lightfall from './Lightfall'
 import AnimatedSection from './AnimatedSection'
 
 const PHRASES = ['Ship Faster.', 'Scale Smarter.', 'Build to Last.', 'Innovate Daily.', 'Deliver Excellence.']
@@ -26,26 +26,7 @@ const TICKER_SPEED_PX_PER_SEC = 40
     })()
 
 
-/* ─── Live badge ─── */
-function LiveBadge() {
-    return (
-        <motion.div
-            initial={{ opacity: 0, y: -12, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.6, type: 'spring', stiffness: 260, damping: 20 }}
-            className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full mb-8"
-            style={{ background: 'rgba(91,124,247,0.10)', border: '1px solid rgba(91,124,247,0.22)', backdropFilter: 'blur(12px)' }}
-        >
-            <span className="relative flex w-2 h-2">
-                <span className="absolute inline-flex h-full w-full rounded-full opacity-75" style={{ background: '#5b7cf7', animation: 'heroPing 1.5s cubic-bezier(0,0,0.2,1) infinite' }} />
-                <span className="relative inline-flex rounded-full w-2 h-2" style={{ background: '#5b7cf7' }} />
-            </span>
-            <span style={{ color: '#a5b4fc', fontSize: '0.76rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-                Software Development Studio
-            </span>
-        </motion.div>
-    )
-}
+
 
 /* ─── Typewriter ─── */
 function TypewriterHeadline() {
@@ -184,6 +165,15 @@ function TickerStrip() {
 ═══════════════════════════════════ */
 const heroWords = ['We', 'Build', 'Products']
 
+function invertHex(hex) {
+    let color = hex.replace('#', '');
+    if (color.length === 3) color = color.split('').map(c => c + c).join('');
+    const r = (255 - parseInt(color.slice(0, 2), 16)).toString(16).padStart(2, '0');
+    const g = (255 - parseInt(color.slice(2, 4), 16)).toString(16).padStart(2, '0');
+    const b = (255 - parseInt(color.slice(4, 6), 16)).toString(16).padStart(2, '0');
+    return `#${r}${g}${b}`;
+}
+
 
 export default function HeroSection() {
     const heroRef = useRef(null)
@@ -208,7 +198,11 @@ export default function HeroSection() {
                 const indigo = style.getPropertyValue('--accent-indigo').trim() || '#6366f1'
                 colors = [blue, violet, indigo, blue]
             } else {
-                colors = ['#1e3a8a', '#4c1d95', '#312e81', '#1e3a8a'] // dark blue, dark violet, dark indigo
+                // Light mode: The shader only looks good on black. We pass inverted target colors 
+                // to the shader, render on black, then use CSS invert(1) to flip it to white!
+                // Requested violet theme for light mode:
+                const lightTargetColors = ['#4c1d95', '#6b21a8', '#581c87', '#4c1d95']
+                colors = lightTargetColors.map(invertHex)
             }
 
             setThemeConfig({ colors, isDark })
@@ -263,28 +257,30 @@ export default function HeroSection() {
             style={{ background: 'var(--bg-primary)', paddingLeft: 'max(16px, env(safe-area-inset-left))', paddingRight: 'max(16px, env(safe-area-inset-right))' }}
         >
 
-            {/* ── Dynamic Aurora Waves ── */}
-            <motion.div style={{ position: 'absolute', inset: 0, opacity: strandsOpacity, zIndex: 0, pointerEvents: 'none' }}>
-                <Strands
-                    maskRect={maskRect}
+            {/* ── Dynamic Lightfall Effect ── */}
+            <motion.div style={{ position: 'absolute', inset: 0, opacity: strandsOpacity, zIndex: 0, pointerEvents: 'none', filter: themeConfig.isDark ? 'none' : 'invert(1)' }}>
+                <Lightfall
                     colors={themeConfig.colors}
-                    count={2}
-                    speed={0.12}
-                    waviness={0.6}
-                    scale={2.2}
-                    amplitude={2.5}
-                    spread={2.5}
-                    glow={themeConfig.isDark ? 2.2 : 1.0}
-                    intensity={themeConfig.isDark ? 0.6 : 0.95}
-                    saturation={themeConfig.isDark ? 1.5 : 2.5}
-                    opacity={themeConfig.isDark ? 0.85 : 1.0}
+                    backgroundColor="#000000"
+                    speed={1}
+                    streakCount={4}        // Increased slightly for more lights
+                    streakWidth={1}
+                    streakLength={1}
+                    glow={0.8}             // Increased for brighter streaks
+                    density={0.65}         // Increased for slightly more frequent streaks
+                    twinkle={0.9}
+                    zoom={2}
+                    backgroundGlow={0}
+                    opacity={themeConfig.isDark ? 0.55 : 0.75} // Boosted opacity for better visibility
+                    mouseInteraction={true}
+                    mouseStrength={0.8}    
+                    mouseRadius={0.6}
                 />
             </motion.div>
             <div style={{ position: 'absolute', inset: 0, backgroundImage: 'var(--hero-grid-pattern)', backgroundSize: '32px 32px', maskImage: 'radial-gradient(ellipse 80% 65% at 50% 50%, black 20%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 65% at 50% 50%, black 20%, transparent 100%)', pointerEvents: 'none', zIndex: 1 }} />
 
             {/* ════════════ DESKTOP LAYOUT ════════════ */}
             <div className="hidden md:flex relative z-10 text-center max-w-5xl w-full mx-auto pt-32 pb-16 flex-col items-center">
-                <LiveBadge />
 
                 {/* Wrapping the main text block to measure it */}
                 <div ref={desktopTextRef} className="flex flex-col items-center w-full">
@@ -331,21 +327,6 @@ export default function HeroSection() {
             >
                 {/* ── BEAT 1: Above fold ── */}
                 <div className="flex flex-col px-5 pt-10 pb-8" style={{ flex: 1, justifyContent: 'center' }}>
-
-                    {/* Badge */}
-                    <motion.div
-                        initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                        style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '7px 16px', borderRadius: 100, background: 'rgba(91,124,247,0.10)', border: '1px solid rgba(91,124,247,0.22)', marginBottom: 28, width: 'fit-content' }}
-                    >
-                        <span className="relative flex" style={{ width: 7, height: 7 }}>
-                            <span style={{ position: 'absolute', inset: 0, borderRadius: '50%', background: '#5b7cf7', animation: 'heroPing 1.5s cubic-bezier(0,0,0.2,1) infinite', opacity: 0.75 }} />
-                            <span style={{ position: 'relative', display: 'inline-flex', borderRadius: '50%', width: 7, height: 7, background: '#5b7cf7' }} />
-                        </span>
-                        <span style={{ color: '#a5b4fc', fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.09em', textTransform: 'uppercase' }}>
-                            Software Development Studio
-                        </span>
-                    </motion.div>
 
                     <div ref={mobileTextRef} className="flex flex-col w-full">
                         {/* H1 — HUGE */}

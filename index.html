@@ -243,10 +243,11 @@
   <script>
     (function() {
       const saved = localStorage.getItem('theme');
-      if (saved === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'dark');
+      // Default to dark mode if no theme is saved or if 'dark' is saved.
+      if (saved === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
       } else {
-        document.documentElement.removeAttribute('data-theme');
+        document.documentElement.setAttribute('data-theme', 'dark');
       }
     })();
   </script>

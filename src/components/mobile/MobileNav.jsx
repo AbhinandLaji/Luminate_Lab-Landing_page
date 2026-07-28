@@ -252,14 +252,14 @@ export default function MobileNav({ currentPath = '/' }) {
 
     const [theme, setTheme] = useState(() => {
         if (typeof window !== 'undefined') {
-            return document.documentElement.getAttribute('data-theme') || 'light'
+            return document.documentElement.getAttribute('data-theme') || 'dark'
         }
-        return 'light'
+        return 'dark'
     })
 
     useEffect(() => {
         const handleThemeChange = () => {
-            setTheme(document.documentElement.getAttribute('data-theme') || 'light')
+            setTheme(document.documentElement.getAttribute('data-theme') || 'dark')
         }
         window.addEventListener('themechange', handleThemeChange)
         return () => window.removeEventListener('themechange', handleThemeChange)

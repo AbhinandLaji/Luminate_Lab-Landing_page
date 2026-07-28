@@ -4,7 +4,6 @@ import Strands from './Strands'
 
 export default function ContinuousAuroraWrapper({ children }) {
     const containerRef = useRef(null)
-    const [isDesktop, setIsDesktop] = useState(false)
     const [themeConfig, setThemeConfig] = useState({
         colors: ['#5b7cf7', '#8b5cf6', '#6366f1', '#5b7cf7'],
         isDark: true
@@ -42,14 +41,6 @@ export default function ContinuousAuroraWrapper({ children }) {
         return () => observer.disconnect()
     }, [])
 
-    useEffect(() => {
-        const mq = window.matchMedia('(min-width: 1024px)')
-        setIsDesktop(mq.matches)
-        const onChange = e => setIsDesktop(e.matches)
-        mq.addEventListener('change', onChange)
-        return () => mq.removeEventListener('change', onChange)
-    }, [])
-
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ['start end', 'end start']
@@ -63,31 +54,29 @@ export default function ContinuousAuroraWrapper({ children }) {
 
     return (
         <div ref={containerRef} style={{ position: 'relative' }}>
-            {isDesktop && (
-                <motion.div
-                    style={{
-                        position: 'fixed',
-                        inset: 0,
-                        zIndex: 0,
-                        pointerEvents: 'none',
-                        opacity: auroraOpacity
-                    }}
-                >
-                    <Strands
-                        colors={themeConfig.colors}
-                        count={2}
-                        speed={0.12}
-                        waviness={0.6}
-                        scale={2.2}
-                        amplitude={2.5}
-                        spread={2.5}
-                        glow={themeConfig.isDark ? 0.8 : 0.5}       // Reduced for less brightness
-                        intensity={themeConfig.isDark ? 0.3 : 0.4}  // Reduced to keep it subtle
-                        saturation={themeConfig.isDark ? 1.0 : 1.5}
-                        opacity={themeConfig.isDark ? 0.35 : 0.5}   // Reduced so text is readable
-                    />
-                </motion.div>
-            )}
+            <motion.div
+                style={{
+                    position: 'fixed',
+                    inset: 0,
+                    zIndex: 0,
+                    pointerEvents: 'none',
+                    opacity: auroraOpacity
+                }}
+            >
+                <Strands
+                    colors={themeConfig.colors}
+                    count={2}
+                    speed={0.12}
+                    waviness={0.6}
+                    scale={2.2}
+                    amplitude={2.5}
+                    spread={2.5}
+                    glow={themeConfig.isDark ? 0.8 : 0.5}       // Reduced for less brightness
+                    intensity={themeConfig.isDark ? 0.3 : 0.4}  // Reduced to keep it subtle
+                    saturation={themeConfig.isDark ? 1.0 : 1.5}
+                    opacity={themeConfig.isDark ? 0.35 : 0.5}   // Reduced so text is readable
+                />
+            </motion.div>
 
             <div style={{ position: 'relative' }}>
                 {children}
