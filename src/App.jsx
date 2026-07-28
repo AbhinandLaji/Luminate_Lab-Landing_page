@@ -6,6 +6,7 @@ import SolutionSection from './components/SolutionSection'
 import OurEdgeSection from './components/OurEdgeSection'
 import ProcessSection from './components/ProcessSection'
 import WhyUsSection from './components/WhyUsSection'
+import GlimpseSection from './components/GlimpseSection'
 import ContactSection from './components/ContactSection'
 import CTASection from './components/CTASection'
 import Footer from './components/Footer'
@@ -13,11 +14,14 @@ import ScrollProgress from './components/ScrollProgress'
 import FloatingCTA from './components/mobile/FloatingCTA'
 import MobileNav from './components/mobile/MobileNav'
 import DetailsPage from './components/DetailsPage'
+import PrivacyPolicy from './components/PrivacyPolicy'
+import TermsOfService from './components/TermsOfService'
 import ContinuousAuroraWrapper from './components/ContinuousAuroraWrapper'
+import AnimatedSection from './components/AnimatedSection'
 
 function DeepLinksBlock() {
   return (
-    <section className="py-16 border-t" style={{ borderColor: 'var(--border-subtle)', background: 'var(--bg-secondary)' }}>
+    <AnimatedSection as="section" className="py-16 border-t" style={{ borderColor: 'var(--border-subtle)', background: 'var(--bg-secondary)' }}>
       <div className="max-w-4xl mx-auto px-6 text-center">
         <h3 style={{ fontSize: '0.82rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.18em', color: 'var(--text-muted)', marginBottom: 28 }}>
           Explore Detailed Services &amp; Process
@@ -90,7 +94,7 @@ function DeepLinksBlock() {
           </a>
         </div>
       </div>
-    </section>
+    </AnimatedSection>
   )
 }
 
@@ -108,6 +112,7 @@ export default function App() {
   // Universal link interceptor for client-side routing
   useEffect(() => {
     const handleLinkClick = (e) => {
+      if (e.defaultPrevented) return
       const target = e.target.closest('a')
       if (!target) return
 
@@ -148,6 +153,8 @@ export default function App() {
   }, [])
 
   const isDetailsPage = currentPath === '/details'
+  const isPrivacyPage = currentPath === '/privacy'
+  const isTermsPage = currentPath === '/terms'
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-primary)' }}>
@@ -155,9 +162,13 @@ export default function App() {
       <Navbar currentPath={currentPath} />
       <MobileNav currentPath={currentPath} />
 
-      <main id="main-content" aria-label="Luminate Labs — Software Development Company" style={{ paddingTop: isDetailsPage ? '80px' : '0px' }}>
+      <main id="main-content" aria-label="Luminate Labs — Software Development Company" style={{ paddingTop: (isDetailsPage || isPrivacyPage || isTermsPage) ? '80px' : '0px' }}>
         {isDetailsPage ? (
           <DetailsPage />
+        ) : isPrivacyPage ? (
+          <PrivacyPolicy />
+        ) : isTermsPage ? (
+          <TermsOfService />
         ) : (
           <>
             <HeroSection />
@@ -166,6 +177,7 @@ export default function App() {
               <OurEdgeSection />
               <WhyUsSection />
             </ContinuousAuroraWrapper>
+            <GlimpseSection />
             <CTASection />
             <DeepLinksBlock />
           </>

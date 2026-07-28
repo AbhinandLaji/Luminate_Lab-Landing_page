@@ -15,7 +15,15 @@ export default function DetailsPage() {
             const timer = setTimeout(() => {
                 const element = document.getElementById(id)
                 if (element) {
-                    element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                    const navbar = document.querySelector('header')
+                    const navHeight = navbar ? navbar.getBoundingClientRect().height : 80
+                    const offset = navHeight + 24 // navbar height + 24px breathing room
+                    const elementPosition = element.getBoundingClientRect().top + window.scrollY
+                    
+                    window.scrollTo({ 
+                        top: elementPosition - offset, 
+                        behavior: 'smooth' 
+                    })
                 }
             }, 300)
             return () => clearTimeout(timer)

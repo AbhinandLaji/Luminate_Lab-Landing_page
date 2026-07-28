@@ -159,18 +159,24 @@ export default function Footer() {
                     © {new Date().getFullYear()} Luminate Labs. All rights reserved.
                 </p>
                 <div className="flex items-center gap-5">
-                    {['Privacy Policy', 'Terms of Service'].map(l => (
-                        <a
-                            key={l}
-                            href="#"
-                            className="text-xs transition-colors duration-200"
-                            style={{ color: 'var(--text-faint)' }}
-                            onMouseEnter={e => (e.currentTarget.style.color = 'var(--text-muted)')}
-                            onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-faint)')}
-                        >
-                            {l}
-                        </a>
-                    ))}
+                    <a
+                        href="/privacy"
+                        className="text-xs transition-colors duration-200"
+                        style={{ color: 'var(--text-faint)' }}
+                        onMouseEnter={e => (e.currentTarget.style.color = 'var(--text-muted)')}
+                        onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-faint)')}
+                    >
+                        Privacy Policy
+                    </a>
+                    <a
+                        href="/terms"
+                        className="text-xs transition-colors duration-200"
+                        style={{ color: 'var(--text-faint)' }}
+                        onMouseEnter={e => (e.currentTarget.style.color = 'var(--text-muted)')}
+                        onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-faint)')}
+                    >
+                        Terms of Service
+                    </a>
                 </div>
             </div>
         </footer>

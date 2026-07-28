@@ -226,7 +226,6 @@ export default function WhyUsSection() {
                 </div>
             </div>
 
-            <div className="section-divider absolute bottom-0 left-0 right-0" />
         </section>
     )
 }
