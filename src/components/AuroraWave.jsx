@@ -413,9 +413,21 @@ const AuroraWave = memo(function AuroraWave({
 
         let time = 0
         let lastFrameTime = 0
-        const TARGET_FPS = 30
+        const TARGET_FPS = 12 // OPTION 3: Dropped from 30 to 12 FPS
         const FRAME_INTERVAL = 1000 / TARGET_FPS
         let isRunning = false
+
+        // OPTION 1: Scroll-Pause logic
+        let isScrolling = false
+        let scrollTimeout = null
+        const handleScroll = () => {
+            isScrolling = true
+            if (scrollTimeout) clearTimeout(scrollTimeout)
+            scrollTimeout = setTimeout(() => {
+                isScrolling = false
+            }, 150)
+        }
+        window.addEventListener('scroll', handleScroll, { passive: true })
 
         const render = (timestamp) => {
             if (isReducedMotion.current) {
@@ -426,7 +438,13 @@ const AuroraWave = memo(function AuroraWave({
             if (!isRunning) return
             requestRef.current = requestAnimationFrame(render)
 
-            // Throttle to ~30fps — halves CPU/GPU usage vs 60fps
+            // OPTION 1: Pause math during scroll
+            if (isScrolling) {
+                lastFrameTime = timestamp // Prevent a massive jump when scrolling stops
+                return 
+            }
+
+            // OPTION 3: Throttle to ~12fps
             const elapsed = timestamp - lastFrameTime
             if (elapsed < FRAME_INTERVAL) return
             lastFrameTime = timestamp - (elapsed % FRAME_INTERVAL)
@@ -480,6 +498,8 @@ const AuroraWave = memo(function AuroraWave({
         return () => {
             stopLoop()
             if (interactive) window.removeEventListener('mousemove', handleMouseMove)
+            window.removeEventListener('scroll', handleScroll)
+            if (scrollTimeout) clearTimeout(scrollTimeout)
             io.disconnect()
             document.removeEventListener('visibilitychange', onVis)
         }
