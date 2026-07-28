@@ -98,7 +98,6 @@ const EdgeBubble = memo(function EdgeBubble({ bubble, spreadSpring, smX, smY, se
                     userSelect: 'none',
                     minWidth: '128px',
                     cursor: 'default',
-                    cursor: 'default',
                 }}
             >
                 {/* Quality SVG icon */}

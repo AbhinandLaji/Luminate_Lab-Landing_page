@@ -50,15 +50,19 @@ const features = [
     },
 ]
 
-function FeatureCard({ f }) {
+function FeatureCard({ f, isLarge }) {
     return (
         <div
-            className="card p-6 md:p-10 flex flex-col gap-5 cursor-default"
+            className={`card p-6 md:p-10 flex ${isLarge ? 'md:flex-row' : 'flex-col'} gap-6 cursor-default h-full items-start`}
             style={{
-                background: `linear-gradient(160deg, var(--accent-${f.accentName}-bg) 0%, var(--accent-${f.accentName}-border) 100%), var(--bg-card)`,
-                borderColor: `var(--accent-${f.accentName})`,
+                background: `var(--bg-secondary)`,
+                borderColor: `var(--border-subtle)`,
+                borderWidth: '1px',
+                borderStyle: 'solid',
             }}
         >
+            {/* Left side for large card, or top for small card */}
+            <div className={`flex flex-col ${isLarge ? 'md:w-1/2' : ''} h-full`}>
             {/* Icon */}
             <div
                 style={{
@@ -93,7 +97,7 @@ function FeatureCard({ f }) {
             </p>
 
             {/* Mini stats */}
-            <div className="flex gap-6 pt-2" style={{ borderTop: `1px solid var(--accent-${f.accentName}-border)` }}>
+            <div className="flex gap-6 pt-6 mt-auto">
                 {f.stats.map(stat => (
                     <div key={stat.label} className="flex flex-col gap-1">
                         <span
@@ -102,16 +106,27 @@ function FeatureCard({ f }) {
                         >
                             {stat.value}
                         </span>
-                        <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{stat.label}</span>
+                        <span className="text-xs font-bold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
+                            {stat.label}
+                        </span>
                     </div>
                 ))}
             </div>
+            </div>
 
-            {/* Bottom accent */}
-            <div
-                className="h-0.5 rounded-full"
-                style={{ background: `linear-gradient(90deg, var(--accent-${f.accentName}), transparent)`, width: '50%' }}
-            />
+            {/* Right side for large card (optional graphic or abstract shape) */}
+            {isLarge && (
+                <div className="hidden md:flex md:w-1/2 h-full items-center justify-center p-8">
+                    <div style={{ width: '100%', height: '100%', borderRadius: '16px', background: `var(--accent-${f.accentName}-bg)`, border: `1px solid var(--accent-${f.accentName}-border)`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                         {/* Abstract placeholder graphic for the large card */}
+                         <svg width="120" height="120" viewBox="0 0 120 120" fill="none" stroke={`var(--accent-${f.accentName})`} strokeWidth="1" opacity="0.3">
+                            <circle cx="60" cy="60" r="40" strokeDasharray="4 4" />
+                            <circle cx="60" cy="60" r="20" />
+                            <path d="M60 20 L60 100 M20 60 L100 60" />
+                         </svg>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
@@ -137,11 +152,11 @@ export default function WhyUsSection() {
                     </p>
                 </AnimatedSection>
 
-                {/* Desktop: 3-col tilt card grid */}
-                <div className="hidden md:grid grid-cols-3 gap-5">
+                {/* Desktop: Asymmetrical bento grid */}
+                <div className="hidden md:grid md:grid-cols-2 gap-5">
                     {features.map((f, i) => (
-                        <AnimatedSection key={f.label} delay={i * 0.1}>
-                            <FeatureCard f={f} />
+                        <AnimatedSection key={f.label} delay={i * 0.1} className={i === 0 ? "md:col-span-2 h-full" : "h-full"}>
+                            <FeatureCard f={f} isLarge={i === 0} />
                         </AnimatedSection>
                     ))}
                 </div>
