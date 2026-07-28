@@ -95,8 +95,8 @@ const EdgeBubble = memo(function EdgeBubble({ bubble, spreadSpring, smX, smY, se
                 style={{
                     padding: '16px 22px',
                     borderRadius: '20px',
-                    background: `linear-gradient(145deg, var(--bg-card) 0%, var(--accent-${bubble.accentName}-bg) 100%)`,
-                    border: `1px solid var(--accent-${bubble.accentName}-border)`,
+                    background: `linear-gradient(145deg, var(--accent-${bubble.accentName}-bg) 0%, var(--accent-${bubble.accentName}-border) 100%), var(--bg-card)`,
+                    border: `1px solid var(--accent-${bubble.accentName})`,
                     backdropFilter: 'blur(20px)',
                     WebkitBackdropFilter: 'blur(20px)',
                     textAlign: 'center',
@@ -339,8 +339,8 @@ export default function OurEdgeSection() {
                                 whileTap={{ scale: 0.97 }}
                                 style={{
                                     borderRadius: 18,
-                                    background: `linear-gradient(145deg, var(--bg-card) 0%, var(--accent-${bubble.accentName}-bg) 100%)`,
-                                    border: `1px solid var(--accent-${bubble.accentName}-border)`,
+                                    background: `linear-gradient(145deg, var(--accent-${bubble.accentName}-bg) 0%, var(--accent-${bubble.accentName}-border) 100%), var(--bg-card)`,
+                                    border: `1px solid var(--accent-${bubble.accentName})`,
                                     padding: '18px 14px',
                                     display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center',
                                     backdropFilter: 'blur(12px)',

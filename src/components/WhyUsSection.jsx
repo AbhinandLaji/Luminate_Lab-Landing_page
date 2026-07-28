@@ -55,7 +55,8 @@ function FeatureCard({ f }) {
         <div
             className="card p-6 md:p-10 flex flex-col gap-5 cursor-default"
             style={{
-                background: `linear-gradient(160deg, var(--bg-card) 0%, var(--accent-${f.accentName}-bg) 100%)`,
+                background: `linear-gradient(160deg, var(--accent-${f.accentName}-bg) 0%, var(--accent-${f.accentName}-border) 100%), var(--bg-card)`,
+                borderColor: `var(--accent-${f.accentName})`,
             }}
         >
             {/* Icon */}
@@ -180,8 +181,8 @@ export default function WhyUsSection() {
                             <div
                                 style={{
                                     borderRadius: 22,
-                                    background: `linear-gradient(160deg, var(--bg-card) 0%, var(--accent-${f.accentName}-bg) 100%)`,
-                                    border: `1px solid var(--accent-${f.accentName}-border)`,
+                                    background: `linear-gradient(160deg, var(--accent-${f.accentName}-bg) 0%, var(--accent-${f.accentName}-border) 100%), var(--bg-card)`,
+                                    border: `1px solid var(--accent-${f.accentName})`,
                                     padding: '28px 24px',
                                     display: 'flex', flexDirection: 'column', gap: 18,
                                     minHeight: 360,
