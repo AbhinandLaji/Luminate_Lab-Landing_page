@@ -28,7 +28,10 @@ export default function PortfolioSection() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {projects.map((p, i) => (
                         <AnimatedSection key={p.id} delay={i * 0.1}>
-                            <div 
+                            <a 
+                                href={p.link || `/details#project-${p.slug}`}
+                                target={p.link ? "_blank" : undefined}
+                                rel={p.link ? "noopener noreferrer" : undefined}
                                 id={`project-${p.slug}`}
                                 style={{
                                     background: 'var(--bg-primary)',
@@ -39,10 +42,11 @@ export default function PortfolioSection() {
                                     display: 'flex',
                                     flexDirection: 'column',
                                     transition: 'all 0.3s ease',
+                                    textDecoration: 'none'
                                 }}
                                 className="group"
                             >
-                                {/* Placeholder Image Area */}
+                                {/* Image Area */}
                                 <div style={{ 
                                     height: 220, 
                                     background: `var(--accent-${p.color}-bg)`,
@@ -50,16 +54,31 @@ export default function PortfolioSection() {
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    color: `var(--accent-${p.color})`
+                                    color: `var(--accent-${p.color})`,
+                                    overflow: 'hidden',
+                                    position: 'relative'
                                 }}>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 16px', borderRadius: 100, background: 'var(--bg-primary)', fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.05em', color: `var(--accent-${p.color})`, textTransform: 'uppercase' }}>
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                                            <circle cx="8.5" cy="8.5" r="1.5" />
-                                            <polyline points="21 15 16 10 5 21" />
-                                        </svg>
-                                        Image Placeholder
-                                    </div>
+                                    {p.image ? (
+                                        <img 
+                                            src={p.image} 
+                                            alt={p.title} 
+                                            style={{ 
+                                                width: '100%', 
+                                                height: '100%', 
+                                                objectFit: 'cover' 
+                                            }}
+                                            className="group-hover:scale-105 transition-transform duration-500"
+                                        />
+                                    ) : (
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 16px', borderRadius: 100, background: 'var(--bg-primary)', fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.05em', color: `var(--accent-${p.color})`, textTransform: 'uppercase' }}>
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                                                <circle cx="8.5" cy="8.5" r="1.5" />
+                                                <polyline points="21 15 16 10 5 21" />
+                                            </svg>
+                                            Image Placeholder
+                                        </div>
+                                    )}
                                 </div>
                                 
                                 {/* Content Area */}
@@ -75,13 +94,13 @@ export default function PortfolioSection() {
                                     </p>
                                     
                                     <div style={{ marginTop: 'auto', display: 'flex', alignItems: 'center', gap: 8, fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-primary)' }}>
-                                        View Case Study
+                                        {p.link ? 'Visit Live Site' : 'View Case Study'}
                                         <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style={{ transition: 'transform 0.2s' }} className="group-hover:translate-x-1">
                                             <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         </AnimatedSection>
                     ))}
                 </div>

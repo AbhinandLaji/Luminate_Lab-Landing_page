@@ -1,11 +1,13 @@
 export const featuredProjects = [
     {
         id: 'featured-1',
-        slug: 'web-application',
-        title: 'Featured Project 1',
-        category: 'Web Application',
-        desc: 'A scalable web platform built to handle complex workflows and large user bases with ease.',
-        color: 'blue'
+        slug: 'aura-3d-watch',
+        title: 'Aura — 3D Watch Showcase',
+        category: '3D Web Experience',
+        desc: 'An immersive, WebGL-powered 3D customizer for premium watches, featuring real-time material styling, fluid configurations, and interactive mechanical views.',
+        color: 'blue',
+        image: '/aura-preview.png',
+        link: 'https://aura-omega-red.vercel.app/'
     },
     {
         id: 'featured-2',

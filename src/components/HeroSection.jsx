@@ -1,9 +1,8 @@
 import { useRef, useEffect, useState, useCallback, memo } from 'react'
 import { motion, useMotionValue, useSpring, useTransform, useScroll } from 'framer-motion'
 import { useTypewriter } from '../hooks/useTypewriter'
-import AuroraWave from './AuroraWave'
-import Lightfall from './Lightfall'
 import AnimatedSection from './AnimatedSection'
+import Prism from './Prism'
 
 const PHRASES = ['Ship Faster.', 'Scale Smarter.', 'Build to Last.', 'Innovate Daily.', 'Deliver Excellence.']
 const TICKER_ITEMS = ['Web Development', '•', 'Mobile Apps', '•', 'UI/UX Design', '•', 'Custom Software', '•', 'AI Solutions', '•', 'Product Design', '•']
@@ -248,7 +247,7 @@ export default function HeroSection() {
 
     // Fade out Strands starting halfway down the hero, fully transparent near the bottom.
     // This provides a generous overlap with the Problem Section fade-in.
-    const strandsOpacity = useTransform(scrollYProgress, [0.5, 0.95], [1, 0])
+    const strandsOpacity = useTransform(scrollYProgress, [0.5, 0.95], [0.35, 0])
 
     return (
         <section
@@ -257,24 +256,18 @@ export default function HeroSection() {
             style={{ background: 'var(--bg-primary)', paddingLeft: 'max(16px, env(safe-area-inset-left))', paddingRight: 'max(16px, env(safe-area-inset-right))' }}
         >
 
-            {/* ── Dynamic Lightfall Effect ── */}
-            <motion.div style={{ position: 'absolute', inset: 0, opacity: strandsOpacity, zIndex: 0, pointerEvents: 'none', filter: themeConfig.isDark ? 'none' : 'invert(1)' }}>
-                <Lightfall
-                    colors={themeConfig.colors}
-                    backgroundColor="#000000"
-                    speed={1}
-                    streakCount={4}        // Increased slightly for more lights
-                    streakWidth={1}
-                    streakLength={1}
-                    glow={0.8}             // Increased for brighter streaks
-                    density={0.65}         // Increased for slightly more frequent streaks
-                    twinkle={0.9}
-                    zoom={2}
-                    backgroundGlow={0}
-                    opacity={themeConfig.isDark ? 0.55 : 0.75} // Boosted opacity for better visibility
-                    mouseInteraction={true}
-                    mouseStrength={0.8}    
-                    mouseRadius={0.6}
+            {/* ── Dynamic Prism Background ── */}
+            <motion.div style={{ position: 'absolute', inset: 0, opacity: strandsOpacity, zIndex: 0, pointerEvents: 'none' }}>
+                <Prism
+                    animationType="rotate"
+                    timeScale={0.5}
+                    height={3.5}
+                    baseWidth={5.5}
+                    scale={3.6}
+                    hueShift={0}
+                    colorFrequency={1}
+                    noise={0.5}
+                    glow={1}
                 />
             </motion.div>
             <div style={{ position: 'absolute', inset: 0, backgroundImage: 'var(--hero-grid-pattern)', backgroundSize: '32px 32px', maskImage: 'radial-gradient(ellipse 80% 65% at 50% 50%, black 20%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 65% at 50% 50%, black 20%, transparent 100%)', pointerEvents: 'none', zIndex: 1 }} />

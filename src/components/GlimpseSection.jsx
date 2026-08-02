@@ -183,29 +183,56 @@ export default function GlimpseSection() {
                                         }}
                                         transition={springConfig}
                                     >
-                                        {/* Card Content - Placeholder */}
+                                        {/* Card Content Wrapper */}
                                         <div 
                                             style={{ 
                                                 width: '100%', 
-                                                height: '60%', 
-                                                background: `var(--accent-${card.color}-bg)`,
-                                                borderBottom: '1px solid var(--border-subtle)',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                color: `var(--accent-${card.color})`
+                                                height: '100%', 
+                                                display: 'flex', 
+                                                flexDirection: 'column',
+                                                opacity: (isExpanded || isTop) ? 1 : 0,
+                                                transition: 'opacity 0.25s ease',
+                                                pointerEvents: (isExpanded || isTop) ? 'auto' : 'none'
                                             }}
                                         >
-                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                                                <circle cx="8.5" cy="8.5" r="1.5" />
-                                                <polyline points="21 15 16 10 5 21" />
-                                            </svg>
-                                        </div>
-                                        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
-                                            <span style={{ fontSize: '0.7rem', fontWeight: 800, color: 'var(--text-primary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                                                {card.category}
-                                            </span>
+                                            {/* Card Content */}
+                                            <div 
+                                                style={{ 
+                                                    width: '100%', 
+                                                    height: '60%', 
+                                                    background: `var(--accent-${card.color}-bg)`,
+                                                    borderBottom: '1px solid var(--border-subtle)',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    color: `var(--accent-${card.color})`,
+                                                    overflow: 'hidden',
+                                                    position: 'relative'
+                                                }}
+                                            >
+                                                {card.image ? (
+                                                    <img 
+                                                        src={card.image} 
+                                                        alt={card.title} 
+                                                        style={{ 
+                                                            width: '100%', 
+                                                            height: '100%', 
+                                                            objectFit: 'cover' 
+                                                        }}
+                                                    />
+                                                ) : (
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                                                        <circle cx="8.5" cy="8.5" r="1.5" />
+                                                        <polyline points="21 15 16 10 5 21" />
+                                                    </svg>
+                                                )}
+                                            </div>
+                                            <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+                                                <span style={{ fontSize: '0.7rem', fontWeight: 800, color: 'var(--text-primary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                                                    {card.category}
+                                                </span>
+                                            </div>
                                         </div>
                                     </motion.a>
                                 )
