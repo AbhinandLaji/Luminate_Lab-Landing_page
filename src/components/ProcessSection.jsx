@@ -61,7 +61,7 @@ const steps = [
     {
         number: '04', title: 'Deployment & Support', tag: 'Phase 4', accentName: 'rose',
         headline: 'Launch & Continuous Improvement',
-        desc: 'We manage a smooth deployment to production and provide ongoing support, monitoring, and iterative enhancements to keep your software running flawlessly.',
+        desc: 'We deploy to production and provide ongoing support, monitoring, and updates to keep your software reliable.',
         bullets: [
             'Production deployment and server setup',
             'Real-time monitoring and analytics integration',
@@ -287,15 +287,6 @@ const StepContent = memo(function StepContent({ step }) {
                         {step.number}
                     </div>
 
-                    {/* Radial glow */}
-                    <div aria-hidden style={{
-                        position: 'absolute', top: '50%', left: '50%',
-                        transform: 'translate(-50%,-50%)',
-                        width: 200, height: 200, borderRadius: '50%',
-                        background: `radial-gradient(circle, var(--accent-${step.accentName}-bg) 0%, transparent 70%)`,
-                        pointerEvents: 'none',
-                    }} />
-
                     {/* Dot grid */}
                     <div aria-hidden style={{
                         position: 'absolute', inset: 0,
@@ -312,14 +303,12 @@ const StepContent = memo(function StepContent({ step }) {
                         animate={{ scale: 1, opacity: 1 }}
                         transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                         style={{
-                            width: 64, height: 64, borderRadius: 18,
-                            background: `var(--accent-${step.accentName}-bg)`,
-                            border: `1px solid var(--accent-${step.accentName}-border)`,
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            color: `var(--accent-${step.accentName})`, marginBottom: 24, position: 'relative', zIndex: 2,
+                            marginBottom: 24, position: 'relative', zIndex: 2,
+                            fontSize: '5rem', fontWeight: 900, lineHeight: 1, color: `var(--text-primary)`, letterSpacing: '-0.04em'
                         }}
                     >
-                        {step.icon}
+                        {step.number}
                     </motion.div>
 
                     {/* Stat chips */}
@@ -438,23 +427,20 @@ export default function ProcessSection() {
 
             {/* Ambient — no filter:blur */}
             <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-                <div style={{ position: 'absolute', top: '-10%', right: '-6%', width: '500px', height: '500px', background: 'radial-gradient(circle, var(--accent-blue-bg) 0%, transparent 68%)' }} />
-                <div style={{ position: 'absolute', bottom: '-8%', left: '-4%', width: '420px', height: '420px', background: 'radial-gradient(circle, var(--accent-violet-bg) 0%, transparent 65%)' }} />
             </div>
 
             <div className="relative max-w-6xl mx-auto px-6 py-28">
 
                 {/* Heading */}
-                <AnimatedSection className="text-center mb-14">
-                    <span className="section-label">Our Process</span>
+                <AnimatedSection className="mb-14">
                     <h2
-                        className="font-black tracking-tight mt-6 mb-5"
-                        style={{ fontSize: 'clamp(1.95rem, 4vw, 3rem)', letterSpacing: '-0.03em', color: 'var(--text-primary)', lineHeight: 1.1 }}
+                        className="font-extrabold tracking-tight mb-5"
+                        style={{ fontSize: 'clamp(2.5rem, 5vw, 3.5rem)', letterSpacing: '-0.02em', color: 'var(--text-primary)', lineHeight: 1.1 }}
                     >
                         How We Build Your<br />
                         <span className="gradient-text">Software Product</span>
                     </h2>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', maxWidth: 420, margin: '0 auto' }}>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', maxWidth: 420 }}>
                         Four phases. No fluff. Just a systematic path from zero to scale.
                     </p>
                 </AnimatedSection>
@@ -504,11 +490,9 @@ export default function ProcessSection() {
                     <AnimatedSection delay={0.18}>
                         <div style={{
                             borderRadius: 20,
-                            border: `1px solid var(--accent-${current.accentName}-border)`,
-                            overflow: 'hidden',
-                            background: 'var(--bg-card)',
-                            boxShadow: `var(--shadow-card), 0 0 0 1px var(--border-subtle), inset 0 1px 0 rgba(255,255,255,0.05)`,
-                            transition: 'border-color 0.4s ease',
+                            background: 'var(--bg-secondary)',
+                            border: '1px solid var(--border-subtle)',
+                            position: 'relative', overflow: 'hidden',
                         }}>
                             <AnimatePresence mode="wait" initial={false}>
                                 <motion.div
@@ -533,16 +517,17 @@ export default function ProcessSection() {
                                             <div aria-hidden style={{ position: 'absolute', bottom: '-14px', right: '-8px', fontSize: '10rem', fontWeight: 900, lineHeight: 1, letterSpacing: '-0.06em', color: `var(--accent-${current.accentName})`, opacity: 0.048, userSelect: 'none', pointerEvents: 'none' }}>
                                                 {current.number}
                                             </div>
-                                            <div aria-hidden style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: 240, height: 240, borderRadius: '50%', background: `radial-gradient(circle, var(--accent-${current.accentName}-bg) 0%, transparent 70%)` }} />
+                                            <div className="absolute inset-0 pointer-events-none">
                                             <div aria-hidden style={{ position: 'absolute', inset: 0, backgroundImage: `radial-gradient(circle, var(--accent-${current.accentName}-border) 1px, transparent 1px)`, backgroundSize: '26px 26px', maskImage: 'radial-gradient(ellipse 90% 80% at 50% 50%, black 10%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 90% 80% at 50% 50%, black 10%, transparent 100%)' }} />
+                                            </div>
                                             <motion.div
                                                 key={current.number + '-icon'}
                                                 initial={{ scale: 0.76, opacity: 0 }}
                                                 animate={{ scale: 1, opacity: 1 }}
                                                 transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
-                                                style={{ width: 68, height: 68, borderRadius: 20, background: `var(--accent-${current.accentName}-bg)`, border: `1px solid var(--accent-${current.accentName}-border)`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: `var(--accent-${current.accentName})`, marginBottom: 28, position: 'relative', zIndex: 2 }}
+                                                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 28, position: 'relative', zIndex: 2, fontSize: '6rem', fontWeight: 900, lineHeight: 1, color: `var(--text-primary)`, letterSpacing: '-0.04em' }}
                                             >
-                                                {current.icon}
+                                                {current.number}
                                             </motion.div>
                                             <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center', position: 'relative', zIndex: 2 }}>
                                                 {current.stats.map((s, i) => (

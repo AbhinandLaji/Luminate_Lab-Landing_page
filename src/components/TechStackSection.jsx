@@ -68,10 +68,9 @@ export default function TechStackSection() {
 
             <div className="relative z-10 max-w-6xl mx-auto">
                 <AnimatedSection className="text-center mb-16 md:mb-24">
-                    <span className="section-label">Our Stack</span>
                     <h2
-                        className="mt-6 font-black tracking-tight max-w-2xl mx-auto"
-                        style={{ fontSize: 'clamp(2rem, 4.5vw, 3.25rem)', lineHeight: 1.1, letterSpacing: '-0.03em', color: 'var(--text-primary)' }}
+                        className="font-bold tracking-tight max-w-2xl mx-auto"
+                        style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3rem)', lineHeight: 1.1, letterSpacing: '-0.01em', color: 'var(--text-primary)' }}
                     >
                         Technologies We Use
                     </h2>

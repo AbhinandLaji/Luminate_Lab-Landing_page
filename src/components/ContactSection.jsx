@@ -39,27 +39,14 @@ export default function ContactSection() {
                 <GradualBlur target="parent" position="top" height="5.5rem" strength={1.5} divCount={4} curve="bezier" animated={false} opacity={1} />
             </div>
 
-            {/* Ambient background glows */}
-            <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-                <div style={{
-                    position: 'absolute', top: '-10%', left: '10%',
-                    width: '600px', height: '600px',
-                    background: 'radial-gradient(circle, var(--accent-blue-bg) 0%, transparent 65%)',
-                }} />
-                <div style={{
-                    position: 'absolute', bottom: '-10%', right: '10%',
-                    width: '500px', height: '500px',
-                    background: 'radial-gradient(circle, var(--accent-violet-bg) 0%, transparent 65%)',
-                }} />
-            </div>
+
 
             <div className="relative z-10 max-w-4xl mx-auto">
                 <AnimatedSection className="text-center mb-12 md:mb-16">
-                    <span className="section-label">Get in Touch</span>
                     <h2
                         id="contact-heading"
-                        className="mt-6 font-black tracking-tight"
-                        style={{ fontSize: 'clamp(2rem, 4.5vw, 3.25rem)', lineHeight: 1.1, color: 'var(--text-primary)' }}
+                        className="font-extrabold tracking-tight"
+                        style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', lineHeight: 1.1, color: 'var(--text-primary)' }}
                     >
                         Send a Message
                     </h2>
@@ -70,12 +57,11 @@ export default function ContactSection() {
 
                 <AnimatedSection>
                     <div
-                        className="glass rounded-2xl md:rounded-3xl p-6 sm:p-10 mx-auto"
+                        className="rounded-2xl md:rounded-3xl p-6 sm:p-10 mx-auto"
                         style={{
                             maxWidth: '600px',
-                            background: 'var(--glass-bg)',
+                            background: 'var(--bg-secondary)',
                             border: '1px solid var(--border-subtle)',
-                            boxShadow: 'var(--shadow-card)',
                         }}
                     >
                         <form onSubmit={handleSubmit} className="flex flex-col gap-5">

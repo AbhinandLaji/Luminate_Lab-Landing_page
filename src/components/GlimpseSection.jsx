@@ -49,10 +49,7 @@ export default function GlimpseSection() {
                         <div 
                             className="absolute inset-0 pointer-events-none"
                             style={{
-                                background: 'var(--glass-bg)',
-                                backdropFilter: 'blur(16px)',
-                                WebkitBackdropFilter: 'blur(16px)',
-                                boxShadow: 'var(--shadow-card)',
+                                background: 'var(--bg-secondary)',
                                 border: '1px solid var(--border-subtle)',
                                 borderRadius: '1.5rem',
                                 zIndex: 0

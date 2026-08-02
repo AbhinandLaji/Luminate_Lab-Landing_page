@@ -22,7 +22,7 @@ const pillars = [
             </svg>
         ),
         title: 'Mobile App Development',
-        desc: 'From iOS to Android, we craft intuitive cross-platform mobile experiences using Flutter and React Native that delight users and drive engagement.',
+        desc: 'Build fast, native-feeling mobile apps for iOS and Android using React Native and Flutter.',
         tag: 'iOS & Android',
         accentName: 'indigo',
     },
@@ -33,7 +33,7 @@ const pillars = [
             </svg>
         ),
         title: 'UI/UX Design',
-        desc: 'We design intuitive, beautiful, and user-centered interfaces — from wireframes and prototypes to polished design systems that elevate product experiences.',
+        desc: 'We design clean, user-centered interfaces — from wireframes to complete design systems that make your product easier to use.',
         tag: 'Design & Prototyping',
         accentName: 'violet',
     },
@@ -55,7 +55,7 @@ const pillars = [
             </svg>
         ),
         title: 'AI-Powered Applications',
-        desc: 'We integrate intelligent AI capabilities into your products — from natural language features and recommendation engines to computer vision and process automation.',
+        desc: 'Practical AI integrations built directly into your workflows to automate tasks and process data faster.',
         tag: 'AI & Machine Learning',
         accentName: 'teal',
     },
@@ -164,12 +164,11 @@ function PillarRow({ pillar, isOpen, onToggle }) {
             >
                 {/* Icon */}
                 <div style={{
-                    width: 40, height: 40, borderRadius: 12, flexShrink: 0,
-                    background: `var(--accent-${pillar.accentName}-bg)`,
-                    border: `1px solid var(--accent-${pillar.accentName}-border)`,
-                    display: 'flex', alignItems: 'center', justifyIntent: 'center', justifyContent: 'center',
+                    flexShrink: 0,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
                     color: `var(--accent-${pillar.accentName})`,
                     transition: 'all 0.25s ease',
+                    marginRight: 8,
                 }}>
                     {pillar.icon}
                 </div>
@@ -214,49 +213,45 @@ export default function SolutionSection() {
         <section id="solution" aria-labelledby="solution-heading" className="relative py-32 px-6 overflow-hidden" style={{ background: 'var(--bg-secondary)' }}>
             <div className="section-divider absolute top-0 left-0 right-0" />
 
-            {/* Static ambient */}
-            <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-                <div style={{ position: 'absolute', top: '-10%', right: '-5%', width: '650px', height: '650px', background: 'radial-gradient(circle, var(--accent-blue-bg) 0%, transparent 70%)' }} />
-                <div style={{ position: 'absolute', top: '30%', left: '-8%', width: '500px', height: '500px', background: 'radial-gradient(circle, var(--accent-indigo-bg) 0%, transparent 65%)' }} />
-                <div style={{ position: 'absolute', bottom: '-5%', left: '40%', transform: 'translateX(-50%)', width: '400px', height: '300px', background: 'radial-gradient(ellipse, var(--accent-teal-bg) 0%, transparent 65%)' }} />
-            </div>
 
-            <div className="relative max-w-6xl mx-auto">
-                <AnimatedSection className="text-center mb-12 md:mb-20">
-                    <span className="section-label">What We Build</span>
+
+            <div className="relative max-w-6xl mx-auto lg:flex lg:gap-16 items-start">
+                <AnimatedSection className="lg:w-1/3 mb-12 lg:mb-0 lg:sticky lg:top-32">
                     <h2
                         id="solution-heading"
-                        className="mt-6 font-black tracking-tight max-w-2xl mx-auto"
-                        style={{ fontSize: 'clamp(2rem, 4.5vw, 3.25rem)', lineHeight: 1.1, letterSpacing: '-0.03em', color: 'var(--text-primary)' }}
+                        className="font-extrabold tracking-tight"
+                        style={{ fontSize: 'clamp(2rem, 4vw, 2.75rem)', lineHeight: 1.1, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}
                     >
                         Everything You Need to Build &amp; Scale
                     </h2>
-                    <p className="mt-5 text-lg max-w-md mx-auto" style={{ color: 'var(--text-muted)', lineHeight: 1.7 }}>
+                    <p className="mt-5 text-lg" style={{ color: 'var(--text-muted)', lineHeight: 1.7 }}>
                         End-to-end software services. One dedicated team.
                     </p>
                 </AnimatedSection>
 
-                {/* Desktop: Tilt card grid */}
-                <div className="hidden sm:grid grid-cols-2 lg:grid-cols-3 gap-5">
-                    {pillars.map((pillar, i) => (
-                        <AnimatedSection key={pillar.title} delay={i * 0.06}>
-                            <TiltCard tiltMax={9} glare tiltScale={1.03} className="h-full">
-                                <PillarCard pillar={pillar} />
-                            </TiltCard>
-                        </AnimatedSection>
-                    ))}
-                </div>
+                <div className="lg:w-2/3">
+                    {/* Desktop: Tilt card grid */}
+                    <div className="hidden sm:grid grid-cols-2 gap-5">
+                        {pillars.map((pillar, i) => (
+                            <AnimatedSection key={pillar.title} delay={i * 0.06}>
+                                <TiltCard tiltMax={9} glare tiltScale={1.03} className="h-full">
+                                    <PillarCard pillar={pillar} />
+                                </TiltCard>
+                            </AnimatedSection>
+                        ))}
+                    </div>
 
-                {/* Mobile: tap-to-expand accordion */}
-                <div className="sm:hidden" style={{ borderRadius: 16, overflow: 'hidden', border: '1px solid var(--border-subtle)', background: 'var(--bg-secondary)' }}>
-                    {pillars.map((pillar) => (
-                        <PillarRow
-                            key={pillar.title}
-                            pillar={pillar}
-                            isOpen={openPillar === pillar.title}
-                            onToggle={() => setOpenPillar(openPillar === pillar.title ? null : pillar.title)}
-                        />
-                    ))}
+                    {/* Mobile: tap-to-expand accordion */}
+                    <div className="sm:hidden" style={{ borderRadius: 16, overflow: 'hidden', border: '1px solid var(--border-subtle)', background: 'var(--bg-secondary)' }}>
+                        {pillars.map((pillar) => (
+                            <PillarRow
+                                key={pillar.title}
+                                pillar={pillar}
+                                isOpen={openPillar === pillar.title}
+                                onToggle={() => setOpenPillar(openPillar === pillar.title ? null : pillar.title)}
+                            />
+                        ))}
+                    </div>
                 </div>
             </div>
 

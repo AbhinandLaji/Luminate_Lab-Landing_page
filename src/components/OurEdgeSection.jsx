@@ -9,42 +9,39 @@ import {
 ════════════════════════════════════════════════════ */
 const Icons = {
     rocket: (
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M4.5 16.5c-1.5 1.5-2 5-2 5s3.5-.5 5-2l7.5-7.5-3-3-7.5 7.5z" />
-            <path d="M14 9l-1 1M12 5c0 0 2.5-3 6-3s3 3.5 3 3.5-1.5.5-3.5 0-2.5-2-4-1.5l-1.5 1" />
-            <path d="M15 8c2-2 4.5-1.5 4.5-1.5" />
-            <circle cx="8.5" cy="15.5" r="1" fill="currentColor" stroke="none" />
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M5 25 Q 15 5, 30 15 T 35 35 Z" fill="currentColor" fillOpacity="0.1" />
+            <circle cx="25" cy="15" r="4" fill="currentColor" />
         </svg>
     ),
     diamond: (
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-            <polygon points="12 2 22 9 12 22 2 9 12 2" />
-            <polyline points="2 9 12 13 22 9" />
-            <line x1="12" y1="2" x2="12" y2="13" />
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polygon points="10,30 20,5 35,20 25,35" fill="currentColor" fillOpacity="0.1" />
+            <line x1="10" y1="30" x2="35" y2="20" />
         </svg>
     ),
     chart: (
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
-            <polyline points="17 6 23 6 23 12" />
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M5 35 L 15 15 L 25 25 L 35 5" stroke="currentColor" strokeWidth="3" />
+            <circle cx="35" cy="5" r="3" fill="currentColor" />
+            <circle cx="15" cy="15" r="3" fill="currentColor" />
         </svg>
     ),
     shield: (
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-            <polyline points="9 12 11 14 15 10" />
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M5 10 Q 20 0, 35 10 L 30 30 Q 20 40, 10 30 Z" fill="currentColor" fillOpacity="0.1" />
+            <circle cx="20" cy="20" r="6" stroke="currentColor" strokeDasharray="2 2" />
         </svg>
     ),
     globe: (
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="12" cy="12" r="10" />
-            <line x1="2" y1="12" x2="22" y2="12" />
-            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <ellipse cx="20" cy="20" rx="15" ry="10" transform="rotate(30 20 20)" stroke="currentColor" />
+            <ellipse cx="20" cy="20" rx="5" ry="15" transform="rotate(-45 20 20)" fill="currentColor" fillOpacity="0.1" />
         </svg>
     ),
     zap: (
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M20 5 L 10 20 L 25 20 L 15 35 L 35 15 L 20 15 Z" fill="currentColor" fillOpacity="0.1" />
         </svg>
     ),
 }
@@ -95,25 +92,20 @@ const EdgeBubble = memo(function EdgeBubble({ bubble, spreadSpring, smX, smY, se
                 style={{
                     padding: '16px 22px',
                     borderRadius: '20px',
-                    background: `linear-gradient(145deg, var(--bg-card) 0%, var(--accent-${bubble.accentName}-bg) 100%)`,
-                    border: `1px solid var(--accent-${bubble.accentName}-border)`,
-                    backdropFilter: 'blur(20px)',
-                    WebkitBackdropFilter: 'blur(20px)',
+                    background: `var(--bg-secondary)`,
+                    border: `1px solid var(--border-subtle)`,
                     textAlign: 'center',
                     userSelect: 'none',
                     minWidth: '128px',
-                    boxShadow: `var(--shadow-card), inset 0 1px 0 rgba(255,255,255,0.05)`,
                     cursor: 'default',
                 }}
             >
                 {/* Quality SVG icon */}
                 <div style={{
-                    width: 38, height: 38, borderRadius: 12,
-                    background: `var(--accent-${bubble.accentName}-bg)`,
-                    border: `1px solid var(--accent-${bubble.accentName}-border)`,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     margin: '0 auto 10px',
                     color: `var(--accent-${bubble.accentName})`,
+                    transform: 'scale(1.2)'
                 }}>
                     {bubble.icon}
                 </div>
@@ -275,7 +267,6 @@ export default function OurEdgeSection() {
             <div className="hidden md:flex flex-col" style={{ minHeight: '90vh' }}>
                 {/* Static ambient */}
                 <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-                    <div style={{ position: 'absolute', top: '-20%', left: '50%', transform: 'translateX(-50%)', width: '900px', height: '700px', background: 'radial-gradient(ellipse, var(--accent-blue-bg) 0%, var(--accent-violet-bg) 40%, transparent 70%)' }} />
                     <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(var(--grid-lines) 1px, transparent 1px), linear-gradient(90deg, var(--grid-lines) 1px, transparent 1px)', backgroundSize: '60px 60px', maskImage: 'radial-gradient(ellipse 80% 70% at 50% 50%, black 20%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 70% at 50% 50%, black 20%, transparent 100%)' }} />
                 </div>
                 {/* Cursor spotlight */}
@@ -288,11 +279,10 @@ export default function OurEdgeSection() {
                     ))}
                     <motion.div style={{ x: headX, y: headY, position: 'relative', zIndex: 20, textAlign: 'center', pointerEvents: 'none' }}>
                         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.5 }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}>
-                            <span className="section-label">Our Edge</span>
-                            <h2 style={{ fontSize: 'clamp(2.6rem, 5.5vw, 4.5rem)', lineHeight: 1.05, fontWeight: 900, letterSpacing: '-0.04em', color: 'var(--text-primary)', margin: '24px 0 18px' }}>
+                            <h2 style={{ fontSize: 'clamp(2.5rem, 5.5vw, 4rem)', lineHeight: 1.05, fontWeight: 800, letterSpacing: '-0.02em', color: 'var(--text-primary)', margin: '0 0 18px' }}>
                                 Why Luminate Labs<br /><span className="gradient-text">By Design.</span>
                             </h2>
-                            <p style={{ fontSize: '1rem', color: 'var(--text-muted)', maxWidth: '320px', lineHeight: 1.75, margin: '0 auto 28px' }}>
+                            <p style={{ fontSize: '1.05rem', color: 'var(--text-muted)', maxWidth: '320px', lineHeight: 1.75, margin: '0 auto 28px' }}>
                                 We don&apos;t operate as a vendor. We become your dedicated technology partner — embedded in your product journey from day one.
                             </p>
                             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '7px 16px', borderRadius: '100px', background: 'var(--accent-blue-bg)', border: '1px solid var(--accent-blue-border)', pointerEvents: 'auto' }}>
@@ -309,8 +299,6 @@ export default function OurEdgeSection() {
             <div className="md:hidden relative" style={{ background: 'transparent' }}>
                 {/* Mobile ambient */}
                 <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-                    <div style={{ position: 'absolute', top: '-10%', left: '50%', transform: 'translateX(-50%)', width: '130vw', height: '60vw', background: 'radial-gradient(ellipse, var(--accent-blue-bg) 0%, var(--accent-violet-bg) 40%, transparent 70%)' }} />
-                    <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '40%', background: 'radial-gradient(ellipse at bottom, var(--accent-teal-bg) 0%, transparent 70%)' }} />
                     <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(var(--grid-lines) 1px, transparent 1px)', backgroundSize: '24px 24px', maskImage: 'radial-gradient(ellipse 90% 70% at 50% 40%, black 0%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 90% 70% at 50% 40%, black 0%, transparent 100%)' }} />
                 </div>
 
@@ -318,11 +306,10 @@ export default function OurEdgeSection() {
                     {/* Heading */}
                     <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.6 }}
                         className="text-center mb-10">
-                        <span className="section-label">Our Edge</span>
-                        <h2 style={{ fontSize: 'clamp(2.2rem, 9vw, 3rem)', lineHeight: 1.08, fontWeight: 900, letterSpacing: '-0.04em', color: 'var(--text-primary)', margin: '18px 0 12px' }}>
+                        <h2 style={{ fontSize: 'clamp(2.2rem, 9vw, 3rem)', lineHeight: 1.08, fontWeight: 800, letterSpacing: '-0.02em', color: 'var(--text-primary)', margin: '0 0 12px' }}>
                             Why Luminate Labs<br /><span className="gradient-text">By Design.</span>
                         </h2>
-                        <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: 1.75 }}>
+                        <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: 1.75 }}>
                             We don&apos;t operate as a vendor. We become your dedicated technology partner — embedded in your product journey from day one.
                         </p>
                     </motion.div>
@@ -339,16 +326,14 @@ export default function OurEdgeSection() {
                                 whileTap={{ scale: 0.97 }}
                                 style={{
                                     borderRadius: 18,
-                                    background: `linear-gradient(145deg, var(--bg-card) 0%, var(--accent-${bubble.accentName}-bg) 100%)`,
-                                    border: `1px solid var(--accent-${bubble.accentName}-border)`,
+                                    background: `var(--bg-secondary)`,
+                                    border: `1px solid var(--border-subtle)`,
                                     padding: '18px 14px',
                                     display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center',
-                                    backdropFilter: 'blur(12px)',
-                                    WebkitBackdropFilter: 'blur(12px)',
                                 }}
                             >
                                 {/* Icon */}
-                                <div style={{ width: 38, height: 38, borderRadius: 11, background: `var(--accent-${bubble.accentName}-bg)`, border: `1px solid var(--accent-${bubble.accentName}-border)`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: `var(--accent-${bubble.accentName})`, marginBottom: 10 }}>
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: `var(--accent-${bubble.accentName})`, marginBottom: 10, transform: 'scale(1.2)' }}>
                                     {bubble.icon}
                                 </div>
                                 {/* Value */}
