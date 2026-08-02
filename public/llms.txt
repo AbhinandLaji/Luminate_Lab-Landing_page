@@ -1,0 +1,39 @@
+# Luminate Labs
+
+> Luminate Labs is a premium software development studio specializing in web applications, mobile apps, custom software, UI/UX design, and AI-powered solutions. We build fast, scalable, and tailored digital products that help forward-thinking businesses grow.
+
+## Services
+
+- Web Development: Custom, high-performance web applications built with modern stacks (React, Next.js, Node.js).
+- Mobile App Development: Cross-platform and native mobile apps for iOS and Android using Flutter and React Native.
+- Custom Software: Bespoke software solutions designed to fit unique business workflows and operational needs.
+- UI/UX Design: Intuitive, beautiful interfaces crafted for maximum user engagement and conversion.
+- AI-Powered Solutions: Intelligent automation, integrations, and AI-driven features embedded into your product.
+
+## Key Pages
+
+- [Home](https://luminatelabs.vercel.app/)
+- [Services & Process](https://luminatelabs.vercel.app/details)
+- [Privacy Policy](https://luminatelabs.vercel.app/privacy)
+- [Terms of Service](https://luminatelabs.vercel.app/terms)
+
+## Sections
+
+- [Challenge: The Problem We Solve](https://luminatelabs.vercel.app/#problem)
+- [Our Edge: Why Luminate Labs](https://luminatelabs.vercel.app/#our-edge)
+- [Why Us](https://luminatelabs.vercel.app/#why-us)
+- [Portfolio](https://luminatelabs.vercel.app/details#portfolio)
+- [Our Process](https://luminatelabs.vercel.app/details#process)
+- [Contact](https://luminatelabs.vercel.app/details#contact)
+
+## Contact
+
+- WhatsApp: https://wa.me/919496070442
+- LinkedIn: https://www.linkedin.com/company/112707161/
+- Twitter/X: https://x.com/luminate_labs
+- Instagram: https://www.instagram.com/luminate_labs_
+
+## Optional
+
+- [Sitemap](https://luminatelabs.vercel.app/sitemap.xml)
+- [Robots](https://luminatelabs.vercel.app/robots.txt)
