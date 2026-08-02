@@ -214,7 +214,7 @@ function BottomPillNav({ onMenuOpen, currentPath = '/' }) {
             }}>
                 {/* Quick nav links */}
                 {quickLinks.map(item => (
-                    <a key={item.label} href={item.href} target={item.target} rel={item.rel} style={{ width: 40, height: 40, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', textDecoration: 'none' }} onTouchStart={e => { e.currentTarget.style.background = 'var(--border-subtle)'; e.currentTarget.style.color = 'var(--accent-blue)' }} onTouchEnd={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-muted)' }}>
+                    <a key={item.label} href={item.href} target={item.target} rel={item.rel} aria-label={item.label} style={{ width: 40, height: 40, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', textDecoration: 'none' }} onTouchStart={e => { e.currentTarget.style.background = 'var(--border-subtle)'; e.currentTarget.style.color = 'var(--accent-blue)' }} onTouchEnd={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-muted)' }}>
                         {item.icon}
                     </a>
                 ))}
@@ -225,6 +225,7 @@ function BottomPillNav({ onMenuOpen, currentPath = '/' }) {
                 {/* Menu button */}
                 <button
                     onClick={onMenuOpen}
+                    aria-label="Open Navigation Menu"
                     style={{
                         width: 40, height: 40, borderRadius: '50%',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',

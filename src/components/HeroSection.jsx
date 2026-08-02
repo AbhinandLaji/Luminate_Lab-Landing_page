@@ -1,8 +1,9 @@
-import { useRef, useEffect, useState, useCallback, memo } from 'react'
+import { useRef, useEffect, useState, useCallback, memo, lazy, Suspense } from 'react'
 import { motion, useMotionValue, useSpring, useTransform, useScroll } from 'framer-motion'
 import { useTypewriter } from '../hooks/useTypewriter'
 import AnimatedSection from './AnimatedSection'
-import Prism from './Prism'
+
+const Prism = lazy(() => import('./Prism'))
 
 const PHRASES = ['Ship Faster.', 'Scale Smarter.', 'Build to Last.', 'Innovate Daily.', 'Deliver Excellence.']
 const TICKER_ITEMS = ['Web Development', '•', 'Mobile Apps', '•', 'UI/UX Design', '•', 'Custom Software', '•', 'AI Solutions', '•', 'Product Design', '•']
@@ -183,6 +184,15 @@ export default function HeroSection() {
         colors: ['#5b7cf7', '#8b5cf6', '#6366f1', '#5b7cf7'],
         isDark: true
     })
+    const [prismScale, setPrismScale] = useState(typeof window !== 'undefined' && window.innerWidth < 768 ? 2.2 : 3.6)
+
+    useEffect(() => {
+        const handleResize = () => {
+            setPrismScale(window.innerWidth < 768 ? 2.2 : 3.6)
+        }
+        window.addEventListener('resize', handleResize)
+        return () => window.removeEventListener('resize', handleResize)
+    }, [])
 
     useEffect(() => {
         const updateTheme = () => {
@@ -258,17 +268,19 @@ export default function HeroSection() {
 
             {/* ── Dynamic Prism Background ── */}
             <motion.div style={{ position: 'absolute', inset: 0, opacity: strandsOpacity, zIndex: 0, pointerEvents: 'none' }}>
-                <Prism
-                    animationType="rotate"
-                    timeScale={0.5}
-                    height={3.5}
-                    baseWidth={5.5}
-                    scale={3.6}
-                    hueShift={0}
-                    colorFrequency={1}
-                    noise={0.5}
-                    glow={1}
-                />
+                <Suspense fallback={null}>
+                    <Prism
+                        animationType="rotate"
+                        timeScale={0.5}
+                        height={3.5}
+                        baseWidth={5.5}
+                        scale={prismScale}
+                        hueShift={0}
+                        colorFrequency={1}
+                        noise={0.5}
+                        glow={1}
+                    />
+                </Suspense>
             </motion.div>
             <div style={{ position: 'absolute', inset: 0, backgroundImage: 'var(--hero-grid-pattern)', backgroundSize: '32px 32px', maskImage: 'radial-gradient(ellipse 80% 65% at 50% 50%, black 20%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 65% at 50% 50%, black 20%, transparent 100%)', pointerEvents: 'none', zIndex: 1 }} />
 
@@ -323,7 +335,7 @@ export default function HeroSection() {
 
                     <div ref={mobileTextRef} className="flex flex-col w-full">
                         {/* H1 — HUGE */}
-                        <h1 style={{ fontSize: 'clamp(3.2rem, 12vw, 4.2rem)', lineHeight: 1.04, letterSpacing: '-0.045em', fontWeight: 900, color: 'var(--text-primary)', marginBottom: 22 }}>
+                        <div role="heading" aria-level="1" style={{ fontSize: 'clamp(3.2rem, 12vw, 4.2rem)', lineHeight: 1.04, letterSpacing: '-0.045em', fontWeight: 900, color: 'var(--text-primary)', marginBottom: 22 }}>
                             <motion.span
                                 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.1, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
@@ -338,7 +350,7 @@ export default function HeroSection() {
                             >
                                 <TypewriterHeadline />
                             </motion.span>
-                        </h1>
+                        </div>
 
                         {/* Sub — one line, punchy */}
                         <motion.p

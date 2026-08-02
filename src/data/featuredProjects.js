@@ -6,7 +6,7 @@ export const featuredProjects = [
         category: '3D Web Experience',
         desc: 'An immersive, WebGL-powered 3D customizer for premium watches, featuring real-time material styling, fluid configurations, and interactive mechanical views.',
         color: 'blue',
-        image: '/aura-preview.png',
+        image: '/aura-preview.webp',
         link: 'https://aura-omega-red.vercel.app/'
     },
     {

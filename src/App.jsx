@@ -1,23 +1,31 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, lazy, Suspense } from 'react'
 import Navbar from './components/Navbar'
 import HeroSection from './components/HeroSection'
-import ProblemSection from './components/ProblemSection'
-import SolutionSection from './components/SolutionSection'
-import OurEdgeSection from './components/OurEdgeSection'
-import ProcessSection from './components/ProcessSection'
-import WhyUsSection from './components/WhyUsSection'
-import GlimpseSection from './components/GlimpseSection'
-import ContactSection from './components/ContactSection'
-import CTASection from './components/CTASection'
-import Footer from './components/Footer'
 import ScrollProgress from './components/ScrollProgress'
-import FloatingCTA from './components/mobile/FloatingCTA'
-import MobileNav from './components/mobile/MobileNav'
-import DetailsPage from './components/DetailsPage'
-import PrivacyPolicy from './components/PrivacyPolicy'
-import TermsOfService from './components/TermsOfService'
-import ContinuousAuroraWrapper from './components/ContinuousAuroraWrapper'
 import AnimatedSection from './components/AnimatedSection'
+
+// ─── Lazy-load all below-fold and route-only sections ───
+const ProblemSection        = lazy(() => import('./components/ProblemSection'))
+const SolutionSection       = lazy(() => import('./components/SolutionSection'))
+const OurEdgeSection        = lazy(() => import('./components/OurEdgeSection'))
+const ProcessSection        = lazy(() => import('./components/ProcessSection'))
+const WhyUsSection          = lazy(() => import('./components/WhyUsSection'))
+const GlimpseSection        = lazy(() => import('./components/GlimpseSection'))
+const ContactSection        = lazy(() => import('./components/ContactSection'))
+const CTASection            = lazy(() => import('./components/CTASection'))
+const Footer                = lazy(() => import('./components/Footer'))
+const FloatingCTA           = lazy(() => import('./components/mobile/FloatingCTA'))
+const MobileNav             = lazy(() => import('./components/mobile/MobileNav'))
+const DetailsPage           = lazy(() => import('./components/DetailsPage'))
+const PrivacyPolicy         = lazy(() => import('./components/PrivacyPolicy'))
+const TermsOfService        = lazy(() => import('./components/TermsOfService'))
+const ContinuousAuroraWrapper = lazy(() => import('./components/ContinuousAuroraWrapper'))
+
+// Minimal spinner shown while lazy chunks load
+function SectionFallback() {
+  return <div style={{ minHeight: '100px' }} aria-hidden="true" />
+}
+
 
 function DeepLinksBlock() {
   return (
@@ -109,6 +117,29 @@ export default function App() {
     return () => window.removeEventListener('popstate', handlePopState)
   }, [])
 
+  // Dynamic SEO Title and Meta Description updater
+  useEffect(() => {
+    let title = 'Luminate Labs — Premium Software Development Studio'
+    let description = 'Luminate Labs builds fast, scalable, and tailored software solutions — web applications, mobile apps, custom software, UI/UX design, and AI integrations.'
+
+    if (currentPath === '/details') {
+      title = 'Services & Process | Luminate Labs'
+      description = 'Explore our custom software solutions, modern tech stack, and agile development process at Luminate Labs.'
+    } else if (currentPath === '/privacy') {
+      title = 'Privacy Policy | Luminate Labs'
+      description = 'Read the privacy policy for Luminate Labs. Learn how we collect, use, and protect your data.'
+    } else if (currentPath === '/terms') {
+      title = 'Terms of Service | Luminate Labs'
+      description = 'Read the terms of service and conditions for working with Luminate Labs.'
+    }
+
+    document.title = title
+    const metaDesc = document.querySelector('meta[name="description"]')
+    if (metaDesc) {
+      metaDesc.setAttribute('content', description)
+    }
+  }, [currentPath])
+
   // Universal link interceptor for client-side routing
   useEffect(() => {
     const handleLinkClick = (e) => {
@@ -160,32 +191,38 @@ export default function App() {
     <div className="min-h-screen" style={{ background: 'var(--bg-primary)' }}>
       <ScrollProgress />
       <Navbar currentPath={currentPath} />
-      <MobileNav currentPath={currentPath} />
+      <Suspense fallback={null}><MobileNav currentPath={currentPath} /></Suspense>
 
       <main id="main-content" aria-label="Luminate Labs — Software Development Company" style={{ paddingTop: (isDetailsPage || isPrivacyPage || isTermsPage) ? '80px' : '0px' }}>
-        {isDetailsPage ? (
-          <DetailsPage />
-        ) : isPrivacyPage ? (
-          <PrivacyPolicy />
-        ) : isTermsPage ? (
-          <TermsOfService />
-        ) : (
-          <>
-            <HeroSection />
-            <ContinuousAuroraWrapper>
-              <ProblemSection />
-              <OurEdgeSection />
-              <WhyUsSection />
-            </ContinuousAuroraWrapper>
-            <GlimpseSection />
-            <CTASection />
-            <DeepLinksBlock />
-          </>
-        )}
+        <Suspense fallback={<SectionFallback />}>
+          {isDetailsPage ? (
+            <DetailsPage />
+          ) : isPrivacyPage ? (
+            <PrivacyPolicy />
+          ) : isTermsPage ? (
+            <TermsOfService />
+          ) : (
+            <>
+              <HeroSection />
+              <Suspense fallback={<SectionFallback />}>
+                <ContinuousAuroraWrapper>
+                  <ProblemSection />
+                  <OurEdgeSection />
+                  <WhyUsSection />
+                </ContinuousAuroraWrapper>
+                <GlimpseSection />
+                <CTASection />
+                <DeepLinksBlock />
+              </Suspense>
+            </>
+          )}
+        </Suspense>
       </main>
 
-      <Footer />
-      <FloatingCTA />
+      <Suspense fallback={null}>
+        <Footer />
+        <FloatingCTA />
+      </Suspense>
     </div>
   )
 }
