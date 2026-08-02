@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState, useCallback, memo, lazy, Suspense } from 'react'
-import { motion, useMotionValue, useSpring, useTransform, useScroll } from 'framer-motion'
+import { motion, useMotionValue, useSpring } from 'framer-motion'
 import { useTypewriter } from '../hooks/useTypewriter'
 import AnimatedSection from './AnimatedSection'
 
@@ -250,14 +250,9 @@ export default function HeroSection() {
         return () => window.removeEventListener('resize', updateMask)
     }, [])
 
-    const { scrollYProgress } = useScroll({
-        target: heroRef,
-        offset: ['start start', 'end start'] // 0 = top of hero at top of viewport, 1 = bottom of hero at top of viewport
-    })
-
-    // Fade out Strands starting halfway down the hero, fully transparent near the bottom.
-    // This provides a generous overlap with the Problem Section fade-in.
-    const strandsOpacity = useTransform(scrollYProgress, [0.5, 0.95], [0.35, 0])
+    // Static opacity — Prism pauses itself via IntersectionObserver (suspendWhenOffscreen)
+    // so no need for a Framer scroll listener driving this RAF continuously.
+    const strandsOpacity = 0.35
 
     return (
         <section
