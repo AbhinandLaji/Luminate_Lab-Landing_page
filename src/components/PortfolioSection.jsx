@@ -60,7 +60,11 @@ export default function PortfolioSection() {
                                     {p.image ? (
                                         <img 
                                             src={p.image} 
-                                            alt={p.title} 
+                                            alt={p.title}
+                                            width="400"
+                                            height="150"
+                                            loading="lazy"
+                                            decoding="async"
                                             style={{ 
                                                 width: '100%', 
                                                 height: '100%', 

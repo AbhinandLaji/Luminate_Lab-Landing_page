@@ -286,13 +286,23 @@ export default function HeroSection() {
                 <div ref={desktopTextRef} className="flex flex-col items-center w-full">
                     <h1 style={{ fontSize: 'clamp(3rem,7.5vw,5.75rem)', lineHeight: 1.06, letterSpacing: '-0.04em', fontWeight: 900, color: 'var(--text-primary)', marginBottom: '0.45rem' }}>
                         {heroWords.map((w, i) => (
-                            <motion.span key={w} initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 + i * 0.13, duration: 0.6, ease: [0.16, 1, 0.3, 1] }} style={{ display: 'inline-block', marginRight: '0.28em' }}>
+                            <motion.span
+                                key={w}
+                                initial={{ opacity: 1, y: 14 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.05 + i * 0.08, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                                style={{ display: 'inline-block', marginRight: '0.28em' }}
+                            >
                                 {w}
                             </motion.span>
                         ))}
                         <br />
-                        <motion.span initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.72, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3em', flexWrap: 'wrap', justifyContent: 'center' }}>
+                        <motion.span
+                            initial={{ opacity: 1, y: 14 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.29, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3em', flexWrap: 'wrap', justifyContent: 'center' }}
+                        >
                             <span style={{ color: 'var(--text-primary)' }}>That&nbsp;</span>
                             <TypewriterHeadline />
                         </motion.span>
@@ -332,15 +342,15 @@ export default function HeroSection() {
                         {/* H1 — HUGE */}
                         <div role="heading" aria-level="1" style={{ fontSize: 'clamp(3.2rem, 12vw, 4.2rem)', lineHeight: 1.04, letterSpacing: '-0.045em', fontWeight: 900, color: 'var(--text-primary)', marginBottom: 22 }}>
                             <motion.span
-                                initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.1, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                                initial={{ opacity: 1, y: 20 }} animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.05, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                                 style={{ display: 'block' }}
                             >
                                 We Build<br />Products That
                             </motion.span>
                             <motion.span
-                                initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.22, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                                initial={{ opacity: 1, y: 20 }} animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.15, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                                 style={{ display: 'block' }}
                             >
                                 <TypewriterHeadline />

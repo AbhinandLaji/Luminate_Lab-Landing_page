@@ -25,12 +25,22 @@ export default function SwipeCarousel({
     const trackRef = useRef(null)
     const activeRef = useRef(0)
     const dotRefs = useRef([])
+    const cardWRef = useRef(0)  // cached card width — avoids offsetWidth reads during scroll
 
-    /* Update active dot on scroll — no React state = zero re-renders */
+    /* Cache card width once via ResizeObserver — zero reflow during scroll */
+    const firstCardRef = useCallback((el) => {
+        if (!el) return
+        const ro = new ResizeObserver((entries) => {
+            cardWRef.current = entries[0].contentRect.width
+        })
+        ro.observe(el)
+    }, [])
+
+    /* Update active dot on scroll — reads cardWRef (cached), no layout reads */
     const onScroll = useCallback(() => {
         const track = trackRef.current
         if (!track) return
-        const cardW = track.firstElementChild?.offsetWidth || track.offsetWidth * 0.84
+        const cardW = cardWRef.current || track.scrollWidth / items.length
         const next = Math.round(track.scrollLeft / (cardW + gap))
         if (next !== activeRef.current) {
             const oldDot = dotRefs.current[activeRef.current]
@@ -39,7 +49,8 @@ export default function SwipeCarousel({
             const newDot = dotRefs.current[next]
             if (newDot) { newDot.style.width = '22px'; newDot.style.opacity = '1' }
         }
-    }, [gap])
+    }, [gap, items.length])
+
 
     return (
         <div className={className} style={{ position: 'relative' }}>
@@ -63,6 +74,7 @@ export default function SwipeCarousel({
                 {items.map((item, i) => (
                     <motion.div
                         key={keyProp(item)}
+                        ref={i === 0 ? firstCardRef : undefined}
                         initial={{ opacity: 0, scale: 0.96 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true, amount: 0.3 }}
@@ -93,7 +105,7 @@ export default function SwipeCarousel({
                         onClick={() => {
                             const track = trackRef.current
                             if (!track) return
-                            const cardW = track.firstElementChild?.offsetWidth || track.offsetWidth * 0.85
+                            const cardW = cardWRef.current || track.scrollWidth / items.length
                             track.scrollTo({ left: i * (cardW + gap), behavior: 'smooth' })
                         }}
                         style={{

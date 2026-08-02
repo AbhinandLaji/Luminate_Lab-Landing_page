@@ -196,11 +196,11 @@ export default function OurEdgeSection() {
 
     const initDims = useCallback((el) => {
         if (!el) { roRef.current?.disconnect(); return }
-        sectionW.set(el.offsetWidth)
-        sectionH.set(el.offsetHeight)
-        roRef.current = new ResizeObserver(() => {
-            sectionW.set(el.offsetWidth)
-            sectionH.set(el.offsetHeight)
+        // Use ResizeObserver entry.contentRect — zero forced reflow
+        roRef.current = new ResizeObserver((entries) => {
+            const { width, height } = entries[0].contentRect
+            sectionW.set(width)
+            sectionH.set(height)
         })
         roRef.current.observe(el)
     }, [sectionW, sectionH])
