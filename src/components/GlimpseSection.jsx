@@ -130,34 +130,41 @@ export default function GlimpseSection() {
 
                                 return (
                                     <motion.a
-                                        href={`/details#project-${card.slug}`}
+                                        href={card.link || `/details#project-${card.slug}`}
+                                        target={card.link ? "_blank" : undefined}
+                                        rel={card.link ? "noopener noreferrer" : undefined}
                                         onClick={(e) => {
-                                            e.preventDefault();
-                                            e.stopPropagation();
                                             if (!isExpanded) {
+                                                e.preventDefault();
+                                                e.stopPropagation();
                                                 setIsExpanded(true);
                                             } else {
-                                                // Programmatically trigger the SPA router
-                                                const url = `/details#project-${card.slug}`;
-                                                window.history.pushState({}, '', url);
-                                                window.dispatchEvent(new PopStateEvent('popstate'));
-                                                
-                                                // Handle smooth scroll to anchor
-                                                setTimeout(() => {
-                                                    const id = `project-${card.slug}`;
-                                                    const el = document.getElementById(id);
-                                                    if (el) {
-                                                        const navbar = document.querySelector('header');
-                                                        const navHeight = navbar ? navbar.getBoundingClientRect().height : 80;
-                                                        const offset = navHeight + 24;
-                                                        const elementPosition = el.getBoundingClientRect().top + window.scrollY;
-                                                        
-                                                        window.scrollTo({ 
-                                                            top: elementPosition - offset, 
-                                                            behavior: 'smooth' 
-                                                        });
-                                                    }
-                                                }, 300);
+                                                if (!card.link) {
+                                                    e.preventDefault();
+                                                    e.stopPropagation();
+                                                    // Programmatically trigger the SPA router
+                                                    const url = `/details#project-${card.slug}`;
+                                                    window.history.pushState({}, '', url);
+                                                    window.dispatchEvent(new PopStateEvent('popstate'));
+                                                    
+                                                    // Handle smooth scroll to anchor
+                                                    setTimeout(() => {
+                                                        const id = `project-${card.slug}`;
+                                                        const el = document.getElementById(id);
+                                                        if (el) {
+                                                            const navbar = document.querySelector('header');
+                                                            const navHeight = navbar ? navbar.getBoundingClientRect().height : 80;
+                                                            const offset = navHeight + 24;
+                                                            const elementPosition = el.getBoundingClientRect().top + window.scrollY;
+                                                            
+                                                            window.scrollTo({ 
+                                                                top: elementPosition - offset, 
+                                                                behavior: 'smooth' 
+                                                            });
+                                                        }
+                                                    }, 300);
+                                                }
+                                                // If card.link exists and isExpanded is true, let the browser handle opening the link naturally.
                                             }
                                         }}
                                         key={card.id}
