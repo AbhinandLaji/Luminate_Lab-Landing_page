@@ -474,9 +474,9 @@ article {
 }
 
 @keyframes ctaButtonGlow {
-  0%   { filter: drop-shadow(0 0 0px rgba(56, 189, 248, 0.5)); }
-  50%  { filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.4)); }
-  100% { filter: drop-shadow(0 0 0px rgba(56, 189, 248, 0)); }
+  0%   { box-shadow: 0 0 0px rgba(56, 189, 248, 0.5), 0 0 36px rgba(91, 124, 247, 0.4); }
+  50%  { box-shadow: 0 0 24px rgba(56, 189, 248, 0.6), 0 0 36px rgba(91, 124, 247, 0.4); }
+  100% { box-shadow: 0 0 0px rgba(56, 189, 248, 0), 0 0 36px rgba(91, 124, 247, 0.4); }
 }
 
 /* Safe area insets for notch devices */

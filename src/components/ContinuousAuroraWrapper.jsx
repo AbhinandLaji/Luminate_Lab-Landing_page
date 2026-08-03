@@ -16,11 +16,8 @@ export default function ContinuousAuroraWrapper({ children }) {
 
             let colors;
             if (isDark) {
-                const style = getComputedStyle(root)
-                const blue = style.getPropertyValue('--accent-blue').trim() || '#5b7cf7'
-                const violet = style.getPropertyValue('--accent-violet').trim() || '#8b5cf6'
-                const indigo = style.getPropertyValue('--accent-indigo').trim() || '#6366f1'
-                colors = [blue, violet, indigo, blue]
+                // Hardcoded to prevent forced synchronous reflow from getComputedStyle
+                colors = ['#5b7cf7', '#8b5cf6', '#6366f1', '#5b7cf7']
             } else {
                 colors = ['#1e3a8a', '#4c1d95', '#312e81', '#1e3a8a'] // dark blue, dark violet, dark indigo
             }
@@ -71,10 +68,10 @@ export default function ContinuousAuroraWrapper({ children }) {
                     scale={2.2}
                     amplitude={2.5}
                     spread={2.5}
-                    glow={themeConfig.isDark ? 0.8 : 0.5}       // Reduced for less brightness
-                    intensity={themeConfig.isDark ? 0.3 : 0.4}  // Reduced to keep it subtle
+                    glow={themeConfig.isDark ? 0.8 : 0.5}
+                    intensity={themeConfig.isDark ? 0.3 : 0.4}
                     saturation={themeConfig.isDark ? 1.0 : 1.5}
-                    opacity={themeConfig.isDark ? 0.35 : 0.5}   // Reduced so text is readable
+                    opacity={themeConfig.isDark ? 0.35 : 0.5}
                 />
             </motion.div>
 

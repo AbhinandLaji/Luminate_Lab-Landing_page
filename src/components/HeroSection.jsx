@@ -21,6 +21,14 @@ const TICKER_SPEED_PX_PER_SEC = 40
         s.textContent = `
         @keyframes heroPing { 75%,100%{ transform:scale(2.2);opacity:0; } }
         @keyframes heroFloat  { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+        @keyframes heroFadeInUp {
+            0% { opacity: 0; transform: translateY(14px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes heroFadeInUpMobile {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
     `
         document.head.appendChild(s)
     })()
@@ -286,26 +294,31 @@ export default function HeroSection() {
                 <div ref={desktopTextRef} className="flex flex-col items-center w-full">
                     <h1 style={{ fontSize: 'clamp(3rem,7.5vw,5.75rem)', lineHeight: 1.06, letterSpacing: '-0.04em', fontWeight: 900, color: 'var(--text-primary)', marginBottom: '0.45rem' }}>
                         {heroWords.map((w, i) => (
-                            <motion.span
+                            <span
                                 key={w}
-                                initial={{ opacity: 1, y: 14 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.05 + i * 0.08, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                                style={{ display: 'inline-block', marginRight: '0.28em' }}
+                                style={{ 
+                                    display: 'inline-block', 
+                                    marginRight: '0.28em',
+                                    animation: `heroFadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${0.05 + i * 0.08}s both`
+                                }}
                             >
                                 {w}
-                            </motion.span>
+                            </span>
                         ))}
                         <br />
-                        <motion.span
-                            initial={{ opacity: 1, y: 14 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.29, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3em', flexWrap: 'wrap', justifyContent: 'center' }}
+                        <span
+                            style={{ 
+                                display: 'inline-flex', 
+                                alignItems: 'center', 
+                                gap: '0.3em', 
+                                flexWrap: 'wrap', 
+                                justifyContent: 'center',
+                                animation: `heroFadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.29s both`
+                            }}
                         >
                             <span style={{ color: 'var(--text-primary)' }}>That&nbsp;</span>
                             <TypewriterHeadline />
-                        </motion.span>
+                        </span>
                     </h1>
                     <motion.p initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.92 }}
                         style={{ fontSize: 'clamp(1rem,2vw,1.2rem)', color: 'var(--text-muted)', maxWidth: '520px', margin: '1.75rem auto 3.5rem', lineHeight: 1.7 }}>
@@ -341,20 +354,22 @@ export default function HeroSection() {
                     <div ref={mobileTextRef} className="flex flex-col w-full">
                         {/* H1 — HUGE */}
                         <div role="heading" aria-level="1" style={{ fontSize: 'clamp(3.2rem, 12vw, 4.2rem)', lineHeight: 1.04, letterSpacing: '-0.045em', fontWeight: 900, color: 'var(--text-primary)', marginBottom: 22 }}>
-                            <motion.span
-                                initial={{ opacity: 1, y: 20 }} animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.05, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                                style={{ display: 'block' }}
+                            <span
+                                style={{ 
+                                    display: 'block',
+                                    animation: `heroFadeInUpMobile 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both`
+                                }}
                             >
                                 We Build<br />Products That
-                            </motion.span>
-                            <motion.span
-                                initial={{ opacity: 1, y: 20 }} animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.15, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                                style={{ display: 'block' }}
+                            </span>
+                            <span
+                                style={{ 
+                                    display: 'block',
+                                    animation: `heroFadeInUpMobile 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both`
+                                }}
                             >
                                 <TypewriterHeadline />
-                            </motion.span>
+                            </span>
                         </div>
 
                         {/* Sub — one line, punchy */}
