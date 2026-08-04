@@ -155,25 +155,25 @@ export default function Footer() {
                 className="max-w-6xl mx-auto px-6 lg:px-10 py-5 flex flex-col items-start sm:flex-row sm:items-center justify-between gap-3"
                 style={{ borderTop: '1px solid var(--border-subtle)' }}
             >
-                <p className="text-xs" style={{ color: 'var(--text-faint)' }}>
+                <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
                     © {new Date().getFullYear()} Luminate Labs. All rights reserved.
                 </p>
                 <div className="flex items-center gap-5">
                     <a
                         href="/privacy"
                         className="text-xs transition-colors duration-200"
-                        style={{ color: 'var(--text-faint)' }}
-                        onMouseEnter={e => (e.currentTarget.style.color = 'var(--text-muted)')}
-                        onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-faint)')}
+                        style={{ color: 'var(--text-muted)' }}
+                        onMouseEnter={e => (e.currentTarget.style.color = 'var(--text-secondary)')}
+                        onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-muted)')}
                     >
                         Privacy Policy
                     </a>
                     <a
                         href="/terms"
                         className="text-xs transition-colors duration-200"
-                        style={{ color: 'var(--text-faint)' }}
-                        onMouseEnter={e => (e.currentTarget.style.color = 'var(--text-muted)')}
-                        onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-faint)')}
+                        style={{ color: 'var(--text-muted)' }}
+                        onMouseEnter={e => (e.currentTarget.style.color = 'var(--text-secondary)')}
+                        onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-muted)')}
                     >
                         Terms of Service
                     </a>
