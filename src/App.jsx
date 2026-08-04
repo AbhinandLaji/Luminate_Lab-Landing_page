@@ -3,6 +3,7 @@ import Navbar from './components/Navbar'
 import HeroSection from './components/HeroSection'
 import ScrollProgress from './components/ScrollProgress'
 import AnimatedSection from './components/AnimatedSection'
+import SplashScreen from './components/SplashScreen'
 
 // ─── Lazy-load all below-fold and route-only sections ───
 const ProblemSection        = lazy(() => import('./components/ProblemSection'))
@@ -108,6 +109,7 @@ function DeepLinksBlock() {
 
 export default function App() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname)
+  const [showSplash, setShowSplash] = useState(true)
 
   useEffect(() => {
     const handlePopState = () => {
@@ -188,8 +190,10 @@ export default function App() {
   const isTermsPage = currentPath === '/terms'
 
   return (
-    <div className="min-h-screen" style={{ background: 'var(--bg-primary)' }}>
-      <ScrollProgress />
+    <>
+      {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
+      <div className="min-h-screen" style={{ background: 'var(--bg-primary)' }}>
+        <ScrollProgress />
       <Navbar currentPath={currentPath} />
       <Suspense fallback={null}><MobileNav currentPath={currentPath} /></Suspense>
 
@@ -224,6 +228,7 @@ export default function App() {
         <FloatingCTA />
       </Suspense>
     </div>
+    </>
   )
 }
 

@@ -1,0 +1,110 @@
+.splash-container {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: #050505;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  overflow: hidden;
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.splash-container.fade-out {
+  opacity: 0;
+  transform: scale(1.05);
+  pointer-events: none;
+}
+
+.splash-content {
+  display: flex;
+  gap: 12px;
+  font-size: 4rem;
+  color: white;
+  position: relative;
+  /* Merge Impact trigger */
+  animation: mergeImpact 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.8s forwards;
+}
+
+/* Word Styling */
+.splash-logo {
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 4px;
+  animation: logoPop 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.splash-word {
+  opacity: 0;
+  will-change: transform, opacity;
+  position: relative;
+}
+
+.splash-luminate {
+  font-weight: 300;
+  animation: slideInLeft 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.splash-labs {
+  font-weight: 700;
+  background: linear-gradient(90deg, #fff, #a5b4fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: slideInRight 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* The glowing sweep effect container */
+.splash-content::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -10%;
+  width: 120%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+  mix-blend-mode: overlay;
+  opacity: 0;
+  transform: skewX(-20deg) translateX(-150%);
+  animation: glowSweep 1.5s ease-in-out 0.8s forwards;
+}
+
+@media (max-width: 768px) {
+  .splash-content {
+    font-size: 2.5rem;
+    gap: 8px;
+  }
+}
+
+/* Keyframes */
+@keyframes slideInLeft {
+  0% { opacity: 0; transform: translateX(-80px); filter: blur(4px); }
+  100% { opacity: 1; transform: translateX(0); filter: blur(0); }
+}
+
+@keyframes slideInRight {
+  0% { opacity: 0; transform: translateX(80px); filter: blur(4px); }
+  100% { opacity: 1; transform: translateX(0); filter: blur(0); }
+}
+
+@keyframes mergeImpact {
+  0% { transform: scale(1); }
+  30% { transform: scale(0.95); }
+  60% { transform: scale(1.03); text-shadow: 0 0 20px rgba(165, 180, 252, 0.4); }
+  100% { transform: scale(1); text-shadow: 0 0 30px rgba(165, 180, 252, 0.8); }
+}
+
+@keyframes glowSweep {
+  0% { transform: skewX(-20deg) translateX(-150%); opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: skewX(-20deg) translateX(150%); opacity: 0; }
+}
+
+@keyframes logoPop {
+  0% { opacity: 0; transform: scale(0.5) rotate(-45deg); filter: blur(4px); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg); filter: blur(0); }
+}
