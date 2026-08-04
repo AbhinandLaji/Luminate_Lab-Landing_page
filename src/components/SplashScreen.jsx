@@ -8,15 +8,15 @@ export default function SplashScreen({ onComplete }) {
     // Prevent scrolling while splash screen is active
     document.body.style.overflow = 'hidden';
     
-    // Start fading out after 2.5s
+    // Start fading out after 3.5s to ensure the full animation completes and is visible
     const fadeTimer = setTimeout(() => {
       setIsFading(true);
-    }, 2500);
+    }, 3500);
 
-    // Completely unmount after 3s (wait for fade transition)
+    // Completely unmount after 4s (wait for fade transition)
     const completeTimer = setTimeout(() => {
       onComplete();
-    }, 3000);
+    }, 4000);
 
     return () => {
       document.body.style.overflow = '';
